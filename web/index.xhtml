@@ -34,7 +34,7 @@
                         <td>EMail </td><td><h:inputSecret redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret></td>
                     </tr>
                 </table>
-                <h:commandButton id="signupUser" value="Signup" action="#{loginController.validateCredentials()}"></h:commandButton>
+                <h:commandButton id="signupUser" value="Signup" action="#{loginController.signUpValidation()}"></h:commandButton>
             </h:form>
         </div><!-- Closing signupFrame DIV -->        
     </h:body>

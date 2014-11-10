@@ -1,0 +1,5 @@
+body{
+    background-image:url("#{resource['images:loginBackground.png']}");
+    background-size: 100%;
+    color:blue;
+}
