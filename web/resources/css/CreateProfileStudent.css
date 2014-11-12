@@ -3,3 +3,11 @@ body{
     background-size: 100%;
     color:blue;
 }
+
+#loginFrame{
+    float:right;
+    width:37%;
+    height:55px;
+    //border:1px solid #333;
+    padding-top:40px;    
+}
