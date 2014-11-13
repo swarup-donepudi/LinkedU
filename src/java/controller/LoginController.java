@@ -6,9 +6,12 @@
 
 package controller;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.LoginBean;
 
 /**
@@ -36,12 +39,20 @@ public class LoginController implements Serializable {
         this.loginBean = loginBean;
     }
     
-    public void validateCredentials(){
-    
+    public void validateCredentials() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("StudentHome.xhtml");
     }
     
-    public void signUpValidation(){
+    public void signUpValidation() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SignedUp.xhtml");        
         
+    }
+    
+    public void createStudentProfile() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("CreateProfileStudent.xhtml");  
     }
     
 }
