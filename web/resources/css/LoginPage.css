@@ -42,5 +42,28 @@ html{
     //border:1px solid #333;    
 }
 
+#createProfileStudentForm{
+    margin-top: 100px;   
+    margin-right: 600px;
+    background-color: gray;
+    float:right;
+    border-radius: 10px;
+    width: 25%;
+    height: 275px;
+    padding:20px;
+    
+}
+
+#createProfileRecruiterForm{
+    margin-top: 100px;   
+    margin-right: 600px;
+    background-color: gray;
+    float:right;
+    border-radius: 10px;
+    width: 25%;
+    height: 315px;
+    padding:20px;
+}
+
 
 
