@@ -6,7 +6,7 @@
         <title>LinkedU Login</title>
         
     </h:head>
-    <h:outputStylesheet library="css" name="LoginPage.css"  />
+    <h:outputStylesheet library="css" name="IndexPage.css"  />
 
     <h:body>
         <div id="logoFrame">
@@ -14,8 +14,8 @@
         </div><!-- Closing Logo Frame DIV -->
         <div id="loginFrame">
             <h:form id="loginForm">
-                Username <h:inputText id="username" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
-                Password <h:inputSecret redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
+                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
+                Password <h:inputSecret class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
                 <h:commandButton id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
             </h:form>
         </div><!-- Closing loginFrame DIV -->
@@ -23,16 +23,16 @@
             <h:form id="signupForm">
                 <table id="signupTable" cellspacing="20">
                     <tr>
-                        <td>Username </td><td><h:inputText id="newUsername" value="#{loginController.loginBean.userName}"></h:inputText></td>
+                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{loginController.loginBean.userName}"></h:inputText></td>
                     </tr>
                     <tr>
-                        <td>Password </td><td><h:inputSecret redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret></td>
+                        <td>Password </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{loginController.loginBean.password}"></h:inputSecret></td>
                     </tr>
                     <tr>
-                        <td>Re-enter Password  </td> <td><h:inputSecret redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret> </td>
+                        <td>Re-enter Password  </td> <td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{loginController.loginBean.password}"></h:inputSecret> </td>
                     </tr>
                     <tr>
-                        <td>EMail </td><td><h:inputSecret redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret></td>
+                        <td>EMail </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{loginController.loginBean.password}"></h:inputSecret></td>
                     </tr>
                 </table>
                 <h:commandButton id="signupUser" value="Signup" action="#{loginController.signUpValidation()}"></h:commandButton>
