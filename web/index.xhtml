@@ -15,32 +15,33 @@
             <h:graphicImage value="resources/images/linkedULogo.png"  height="100" />
         </div><!-- Closing Logo Frame DIV -->
         <div id="loginFrame">
-<!--            <h:form id="loginForm">
-                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
-                Password <h:inputSecret class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
+            <h:form id="loginForm">
+                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}" required="true"></h:inputText>&nbsp;
+                Password <h:inputSecret class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}" required="true"></h:inputSecret>&nbsp;
                 <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
-            </h:form>-->
-        </div><!-- Closing loginFrame DIV -->
+            </h:form>
+        </div>
         <div id="signupFrame">
             Not a member yet? Signup is super simple!!!
             <h:form id="signupForm">
                 <table id="signupTable" cellspacing="20">
                     <tr>
-                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupBean.userName}"></h:inputText></td>
+                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" required="true"></h:inputText></td>
                     </tr>
                     <tr>
-                        <td>Password </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}"></h:inputSecret></td>
+                        <td>Password </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" required="true"></h:inputSecret></td>
                     </tr>
                     <tr>
-                        <td>Re-enter Password  </td> <td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}"></h:inputSecret> </td>
+                        <td>Re-enter Password  </td> <td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" required="true"></h:inputSecret> </td>
                     </tr>
                     <tr>
-                        <td>E-Mail </td><td><h:inputText  class="inputTextBox"  value="#{signupController.signupBean.geteMail}"></h:inputText></td>
+                        <td>E-Mail </td><td><h:inputText  class="inputTextBox"  value="#{signupController.signupBean.eMail}" required="true"></h:inputText></td>
                     </tr>
                     <tr>
-                        <td>I'm a</td><td><h:selectOneRadio value="#{signupController.signupBean.accountType}">
+                        <td>I'm a</td><td><h:selectOneRadio value="#{signupController.signupBean.accountType}" required="true">
                                 <f:selectItem itemValue="S" itemLabel="Student" />
                                 <f:selectItem itemValue="R" itemLabel="Recruiter" />
+                                
                             </h:selectOneRadio></td>
                     </tr>                    
                 </table>

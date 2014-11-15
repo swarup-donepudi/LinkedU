@@ -18,7 +18,7 @@ import model.SignupBean;
  *
  * @author hgindra
  */
-@ManagedBean
+@ManagedBean(name = "signupController")
 @SessionScoped
 public class SignupController {
 
@@ -27,6 +27,7 @@ public class SignupController {
      * Creates a new instance of SignupController
      */
     public SignupController() {
+        signupBean = new SignupBean();
     }
 
     public SignupBean getSignupBean() {

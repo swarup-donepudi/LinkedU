@@ -17,8 +17,9 @@ import model.LoginBean;
  *
  * @author hgindra
  */
-@ManagedBean
+@ManagedBean(name = "loginController")
 @SessionScoped
+
 public class LoginController {
   LoginBean loginBean;
 
