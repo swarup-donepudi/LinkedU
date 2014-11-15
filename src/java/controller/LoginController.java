@@ -6,6 +6,7 @@
 
 package controller;
 
+import DAO.LoginImpl;
 import java.io.IOException;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -45,8 +46,9 @@ public class LoginController implements Serializable {
     }
     
     public void signUpValidation() throws IOException{
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SignedUp.xhtml");        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();       
+        externalContext.redirect("SignedUp.xhtml");  
+       
         
     }
     

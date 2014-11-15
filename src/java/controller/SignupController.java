@@ -5,6 +5,7 @@
  */
 package controller;
 
+import DAO.LoginImpl;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -37,6 +38,13 @@ public class SignupController implements Serializable {
 
     public void signUpValidation() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        LoginImpl create=new LoginImpl();
+        int count=create.createProfile(SignupBean);
+        if(count==1)
+        externalContext.redirect("SignedUp.xhtml");  
+        else 
+            externalContext.redirect("Error.xhtml");
+        
         externalContext.redirect("SignedUp.xhtml");
     }
 }
