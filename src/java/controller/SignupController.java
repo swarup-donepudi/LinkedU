@@ -8,14 +8,17 @@ package controller;
 
 import DAO.LoginImpl;
 import java.io.IOException;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.SignupBean;
 
 /**
  *
  * @author hgindra
  */
-@Named
+@ManagedBean
 @SessionScoped
 public class SignupController {
 
