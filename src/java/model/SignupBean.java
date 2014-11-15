@@ -11,9 +11,9 @@ package model;
  * @author skdonep
  */
 public class SignupBean {
-    String userName;
-    String password;
-    String eMail;
+    String userName="";
+    String password="";
+    String eMail="";
     char accountType;
 
     public String getUserName() {

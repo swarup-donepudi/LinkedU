@@ -39,7 +39,7 @@ public class SignupController implements Serializable {
     public void signUpValidation() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginImpl create=new LoginImpl();
-        int count=create.createProfile(SignupBean);
+        int count=create.createProfile(signupBean);
         if(count==1)
         externalContext.redirect("SignedUp.xhtml");  
         else 

@@ -34,11 +34,17 @@ public class LoginImpl {
             Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
             String insertString;
             Statement stmt = DBConn.createStatement();
+            insertString = "INSERT INTO LINKEDU.USERINFO VALUES ('"
+                    + bean.getUserName()
+                    + "','" + bean.geteMail()
+                    + "','" + bean.getAccountType()
+                    + "')";
+
+            rowCount = stmt.executeUpdate(insertString);
             insertString = "INSERT INTO LINKEDU.LOGIN VALUES ('"
                     + bean.getUserName()
                     + "','" + bean.getPassword()
                     + "')";
-
             rowCount = stmt.executeUpdate(insertString);
             System.out.println("insert string =" + insertString);
             DBConn.close();
