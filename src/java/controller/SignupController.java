@@ -40,11 +40,11 @@ public class SignupController implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginImpl create=new LoginImpl();
         int count=create.createProfile(signupBean);
-        if(count==1)
+//        if(count==1)
         externalContext.redirect("SignedUp.xhtml");  
-        else 
-            externalContext.redirect("Error.xhtml");
-        
-        externalContext.redirect("SignedUp.xhtml");
+//        else 
+//            externalContext.redirect("Error.xhtml");
+//        
+//        externalContext.redirect("SignedUp.xhtml");
     }
 }

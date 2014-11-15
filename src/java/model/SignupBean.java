@@ -6,11 +6,18 @@
 
 package model;
 
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 /**
  *
  * @author skdonep
  */
-public class SignupBean {
+@Named(value = "signupBean")
+@SessionScoped
+
+public class SignupBean implements Serializable {
     String userName="";
     String password="";
     String eMail="";
