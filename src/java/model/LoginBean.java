@@ -13,13 +13,15 @@ package model;
 public class LoginBean {
     private String userName;
     private String password;
+    private char accountType;
     
     public LoginBean(){
         
     }    
-    public LoginBean(String userName,String password){
+    public LoginBean(String userName,String password,char accountType){
         this.userName=userName;
         this.password=password;
+        this.accountType=accountType;
     }
 
     public String getUserName() {
@@ -36,5 +38,14 @@ public class LoginBean {
 
     public void setPassword(String password) {
         this.password = password;
-    }         
+    }        
+
+    public char getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(char accountType) {
+        this.accountType = accountType;
+    }
+    
 }
