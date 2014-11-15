@@ -1,0 +1,15 @@
+Sat Nov 15 14:37:33 CST 2014 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Sat Nov 15 14:37:34 CST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0149-b52c-cf7a-ffffd1c682fc 
+on database directory H:\it353\LinkedU\LinkedU_DB  with class loader sun.misc.Launcher$AppClassLoader@107077e 
+Loaded from file:/C:/java/jdk7/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_25-b17
+user.dir=C:\java\jdk7\db
+derby.system.home=H:\it353\LinkedU
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Nov 15 14:37:41 CST 2014:
+Shutting down instance a816c00e-0149-b52c-cf7a-ffffd1c682fc on database directory H:\it353\LinkedU\LinkedU_DB with class loader sun.misc.Launcher$AppClassLoader@107077e 
+Sat Nov 15 14:37:41 CST 2014 Thread[DRDAConnThread_3,5,main] (DATABASE = LinkedU_DB), (DRDAID = {2}), Database 'LinkedU_DB' shutdown.
