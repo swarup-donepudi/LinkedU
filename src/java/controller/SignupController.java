@@ -3,25 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package controller;
 
 import DAO.LoginImpl;
 import java.io.IOException;
-import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.SessionScoped;
 import model.SignupBean;
 
 /**
  *
- * @author skdonep
+ * @author hgindra
  */
-@Named(value = "signupController")
+@Named
 @SessionScoped
-public class SignupController implements Serializable {
-    SignupBean signupBean;
+public class SignupController {
+
+   SignupBean signupBean;
     /**
      * Creates a new instance of SignupController
      */

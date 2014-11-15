@@ -6,24 +6,19 @@
 
 package controller;
 
-import DAO.LoginImpl;
 import java.io.IOException;
-import javax.inject.Named;
-import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import model.LoginBean;
 
 /**
  *
- * @author skdonep
+ * @author hgindra
  */
-@Named(value = "loginController")
+@ManagedBean
 @SessionScoped
-public class LoginController implements Serializable {
-    
-    LoginBean loginBean;
+public class LoginController {
+  LoginBean loginBean;
 
     /**
      * Creates a new instance of LoginController
