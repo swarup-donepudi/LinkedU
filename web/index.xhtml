@@ -18,10 +18,11 @@
             <h:form id="loginForm">
                 Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
                 Password <h:inputSecret class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
-                <h:commandButton id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
+                <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
             </h:form>
         </div><!-- Closing loginFrame DIV -->
         <div id="signupFrame">
+            Not a member yet? Signup is super simple!!!
             <h:form id="signupForm">
                 <table id="signupTable" cellspacing="20">
                     <tr>
@@ -37,13 +38,13 @@
                         <td>EMail </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{loginController.loginBean.password}"></h:inputSecret></td>
                     </tr>
                     <tr>
-                        <td>You are a </td><td><h:selectOneRadio value="#{loginController.loginBean.accountType}">
+                        <td>I'm a</td><td><h:selectOneRadio value="#{loginController.loginBean.accountType}">
                                 <f:selectItem itemValue="S" itemLabel="Student" />
                                 <f:selectItem itemValue="R" itemLabel="Recruiter" />
                             </h:selectOneRadio></td>
                     </tr>                    
                 </table>
-                <h:commandButton id="signupUser" value="Signup" action="#{loginController.signUpValidation()}"></h:commandButton>
+                <h:commandButton id="signupUser" class="button" value="Signup" action="#{loginController.signUpValidation()}"></h:commandButton>
             </h:form>
         </div><!-- Closing signupFrame DIV -->        
     </h:body>
