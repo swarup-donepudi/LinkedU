@@ -6,7 +6,7 @@
 
 package controller;
 
-import DAO.LoginImpl;
+import DAO.CreateImpl;
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,7 +40,7 @@ public class SignupController {
 
     public void signUpValidation() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        LoginImpl create=new LoginImpl();
+        CreateImpl create=new CreateImpl();
         int count=create.createProfile(signupBean);
 //        if(count==1)
         externalContext.redirect("SignedUp.xhtml");  

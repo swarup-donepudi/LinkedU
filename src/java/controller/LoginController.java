@@ -6,6 +6,7 @@
 
 package controller;
 
+import DAO.LoginImpl;
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,7 +41,15 @@ public class LoginController {
     
     public void validateCredentials() throws IOException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("StudentHome.xhtml");
+        LoginImpl login=new LoginImpl();
+        char check=login.loginQuery(loginBean.getUserName(), loginBean.getPassword());
+        if(check=='S')
+            externalContext.redirect("StudentHome.xhtml");
+        if(check=='R')
+            externalContext.redirect("RecruiterHome.xhtml");
+        else
+            externalContext.redirect("Error.xhtml");
+            
     }
     
     public void signUpValidation() throws IOException{
