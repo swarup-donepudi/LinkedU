@@ -6,9 +6,12 @@
 
 package controller;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.UserProfile;
@@ -27,11 +30,19 @@ public class EditProfileController implements Serializable {
     public EditProfileController() {
     }
     
-    public void editProfile(char accountType){
-        if(accountType == 'S')
+    public void editProfile(char accountType) throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        if(accountType == 'S'){
             profile = new StudentProfile();
-        else
+            externalContext.redirect("EditProfileStudent.xhtml");            
+        }
+        else{
             profile = new RecruiterProfile();
+            externalContext.redirect("EditProfileRecruiter.xhtml");
+        }
+            
+        
+        
         
     }
     
