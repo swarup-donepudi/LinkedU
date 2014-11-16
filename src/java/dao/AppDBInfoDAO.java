@@ -10,12 +10,12 @@ package dao;
  *
  * @author skdonep
  */
-public class AppDBInfo {
+public class AppDBInfoDAO {
     public String databaseURL;
     public String dbUserName;
     public String dbPassword;
     
-    public AppDBInfo(){
+    public AppDBInfoDAO(){
             this.databaseURL = "jdbc:derby://gfish.it.ilstu.edu:1527/skdonep_Fall14_LinkedU";
             this.dbUserName = "linkedu_admin";
             this.dbPassword = "student123";

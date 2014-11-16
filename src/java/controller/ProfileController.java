@@ -35,11 +35,6 @@ public class ProfileController implements Serializable {
      * Creates a new instance of EditProfileController
      */
     public ProfileController() {
-        if (loginController.getLoginBean().getAccountType() == 'S') {
-            profile = new StudentProfile();
-        } else {
-            profile = new RecruiterProfile();
-        }
     }
 
     public LoginController getLoginController() {

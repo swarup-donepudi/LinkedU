@@ -15,7 +15,7 @@ import model.SignupBean;
  *
  * @author harshit
  */
-public class SignupDAO extends AppDBInfo {
+public class SignupDAO extends AppDBInfoDAO {
 
     private Connection DBConn;
 

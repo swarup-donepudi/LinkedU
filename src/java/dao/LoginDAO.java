@@ -16,7 +16,7 @@ import java.sql.Statement;
  *
  * @author hgindra
  */
-public class LoginDAO extends AppDBInfo{ 
+public class LoginDAO extends AppDBInfoDAO{ 
     
     private Connection DBConn;
     

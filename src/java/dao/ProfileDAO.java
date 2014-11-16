@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author skdonep
  */
-public class ProfileDAO extends AppDBInfo{
+public class ProfileDAO extends AppDBInfoDAO{
     
     private Connection DBConn;
     
