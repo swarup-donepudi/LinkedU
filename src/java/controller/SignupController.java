@@ -5,8 +5,9 @@
  */
 package controller;
 
-import DAO.SignupImpl;
+import dao.SignupDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -38,9 +39,9 @@ public class SignupController {
         this.signupBean = signupBean;
     }
 
-    public void signUpValidation() throws IOException {
+    public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        SignupImpl create = new SignupImpl();
+        SignupDAO create = new SignupDAO();
         int count = create.createProfile(signupBean);
 //      if(count == 1)
             externalContext.redirect("SignedUp.xhtml");

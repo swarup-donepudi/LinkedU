@@ -22,13 +22,13 @@ and open the template in the editor.
             
             <h:form id="createProfileRecruiterForm">
             <h:panelGrid columns="2" columnClasses="parameter, values">
-            First Name: <h:inputText id="RectruiterFName" value="#{loginController.loginBean.userName}"></h:inputText>
-            Last Name : <h:inputText id="RectruiterLName" value="#{loginController.loginBean.userName}"></h:inputText>
-            Gender <h:selectOneRadio value="#{loginController.loginBean}">
+                First Name: <h:inputText id="RectruiterFName" value="#{editProfileController.profile.fName}"></h:inputText>
+                Last Name : <h:inputText id="RectruiterLName" value="#{editProfileController.profile.lName}"></h:inputText>
+                Gender <h:selectOneRadio value="#{editProfileController.profile.gender}">
                         <f:selectItem itemValue="male" itemLabel="male" />
                         <f:selectItem itemValue="female" itemLabel="female" />
             </h:selectOneRadio>
-            University URL: <h:inputText id="universityID" value="#{loginController.loginBean.userName}"></h:inputText>
+            University URL: <h:inputText id="univURL" value="#{editProfileController.profile.univURL}"></h:inputText>
             University details: <h:inputTextarea cols="30" rows="3" value="#{loginController.loginBean.userName}"/>
             Contact info <h:inputText id="RPhoneno" value="#{loginController.loginBean.password}"/>
             Alternate info<h:inputText id="RAltPhone" value="#{loginController.loginBean.password}"/>

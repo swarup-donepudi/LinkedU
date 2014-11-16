@@ -6,8 +6,9 @@
 
 package controller;
 
-import DAO.LoginImpl;
+import dao.LoginDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -16,6 +17,8 @@ import model.LoginBean;
 
 /**
  *
+ * This class will be a controller for all login related functions
+ * 
  * @author hgindra
  */
 @ManagedBean(name = "loginController")
@@ -39,9 +42,9 @@ public class LoginController {
         this.loginBean = loginBean;
     }
     
-    public void validateCredentials() throws IOException{
+    public void validateCredentials() throws IOException, SQLException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        LoginImpl login=new LoginImpl();
+        LoginDAO login=new LoginDAO();
         if(login.validCredentials(loginBean.getUserName(), loginBean.getPassword() ))
         {
             if(login.getAccountType(loginBean.getUserName())=='S'){

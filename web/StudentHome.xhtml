@@ -19,11 +19,11 @@ and open the template in the editor.
             <h:graphicImage value="resources/images/linkedULogo.png"  height="100" />
         </div>
         
-            Welcome Mr.Student!!!
-            <br />
-            <br />
-            <h:form>
-                <h:commandButton id="createStudentProfile" value="Create Profile" action="#{loginController.createStudentProfile()}"></h:commandButton>
-            </h:form>
+        Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
+        <br />
+        <br />
+        <h:form>
+            <h:commandButton value="Edit Profile" action="#{profileController.editProfile(loginController.loginBean.accountType)}"></h:commandButton>
+        </h:form>
     </body>
 </html>

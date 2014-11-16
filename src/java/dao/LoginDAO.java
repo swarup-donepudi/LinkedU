@@ -3,21 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package dao;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  *
  * @author hgindra
  */
-public class LoginImpl {
-
+public class LoginDAO extends AppDBInfo{ 
+    
+    private Connection DBConn;
+    
+    public LoginDAO() throws SQLException{
+        super();
+    }
+    
     public boolean validCredentials(String user, String password) {
 
         String selectQuery = "SELECT * FROM LINKEDU.LOGIN ";
@@ -25,29 +31,25 @@ public class LoginImpl {
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-
         } catch (ClassNotFoundException e) {
             System.err.println(e.getMessage());
             System.exit(0);
         }
 
-        int rowCount = 0;
-
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkEDU";
-            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-            Statement stmt = DBConn.createStatement();
+            this.DBConn = DriverManager.getConnection(this.databaseURL,this.dbUserName,this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
 
             ResultSet rs = stmt.executeQuery(selectQuery);
 
             if (rs.next()) {
                 rs.close();
-                DBConn.close();
+                this.DBConn.close();
                 stmt.close();                
                 return true;
             } else {
                 rs.close();
-                DBConn.close();
+                this.DBConn.close();
                 stmt.close();
                 return false;
             }
@@ -69,20 +71,19 @@ public class LoginImpl {
         }
 
         try {
-            String myDB = "jdbc:derby://localhost:1527/LinkEDU";
-            Connection DBConn = DriverManager.getConnection(myDB, "itkstu", "student");
-            Statement stmt = DBConn.createStatement();
+            this.DBConn = DriverManager.getConnection(this.databaseURL,this.dbUserName,this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
             ResultSet rs = stmt.executeQuery(selectQuery);
             if (rs.next()) {
                 return (rs.getString("ACCTYPE").charAt(0));
             }
             rs.close();
             stmt.close();
-            DBConn.close();
+            this.DBConn.close();
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
         }
-        return 'N';
+        return 'E';
     }
 }
