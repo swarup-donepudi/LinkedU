@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
-import DAO.CreateImpl;
+import DAO.SignupImpl;
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,7 +21,8 @@ import model.SignupBean;
 @SessionScoped
 public class SignupController {
 
-   SignupBean signupBean;
+    SignupBean signupBean;
+
     /**
      * Creates a new instance of SignupController
      */
@@ -40,13 +40,11 @@ public class SignupController {
 
     public void signUpValidation() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        CreateImpl create=new CreateImpl();
-        int count=create.createProfile(signupBean);
-//        if(count==1)
-        externalContext.redirect("SignedUp.xhtml");  
-//        else 
-//            externalContext.redirect("Error.xhtml");
-//        
-//        externalContext.redirect("SignedUp.xhtml");
+        SignupImpl create = new SignupImpl();
+        int count = create.createProfile(signupBean);
+//      if(count == 1)
+            externalContext.redirect("SignedUp.xhtml");
+//      else 
+//          externalContext.redirect("Error.xhtml");
     }
 }

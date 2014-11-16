@@ -19,7 +19,7 @@ and open the template in the editor.
             <h:graphicImage value="resources/images/linkedULogo.png"  height="100" />
         </div>
         
-            Welcome Mr.Recruiter!!!
-        
+        Welcome <h:outputText value="#{loginController.loginBean.userName}">!!!
+            <h:commandButton value="Edit Profile" action="#{editProfileController.editProfile(loginController.loginBean.accountType)}editProfileController."
     </body>
 </html>

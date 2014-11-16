@@ -42,13 +42,20 @@ public class LoginController {
     public void validateCredentials() throws IOException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginImpl login=new LoginImpl();
-        char check=login.loginQuery(loginBean.getUserName(), loginBean.getPassword());
-        if(check=='S')
-            externalContext.redirect("StudentHome.xhtml");
-        if(check=='R')
-            externalContext.redirect("RecruiterHome.xhtml");
-        else
+        if(login.validCredentials(loginBean.getUserName(), loginBean.getPassword() ))
+        {
+            if(login.getAccountType(loginBean.getUserName())=='S'){
+                loginBean.setAccountType('S');
+                externalContext.redirect("StudentHome.xhtml");
+            }
+            else{
+                loginBean.setAccountType('R');
+                externalContext.redirect("RecruiterHome.xhtml");
+            }
+        }
+        else{
             externalContext.redirect("Error.xhtml");
+        }
             
     }
     

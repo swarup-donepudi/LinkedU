@@ -15,7 +15,7 @@ import model.SignupBean;
  *
  * @author harshit
  */
-public class CreateImpl {
+public class SignupImpl {
     
     
     
