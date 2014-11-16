@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.UserProfile;
@@ -22,7 +22,7 @@ import model.UserProfile;
  *
  * @author skdonep
  */
-@Named(value = "profileController")
+@ManagedBean(name = "profileController")
 @SessionScoped
 public class ProfileController implements Serializable {
 
@@ -67,9 +67,15 @@ public class ProfileController implements Serializable {
 
     public boolean userHasProfile() throws SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        return profileDao.userHasProfile(loginController.getLoginBean().getAccountType());
+        return profileDao.userHasProfile(loginController.getLoginBean().getUserName(),loginController.getLoginBean().getAccountType());
     }
 
-    public void fetchUserProfile() {
+    public void fetchUserProfile() throws SQLException {
+        ProfileDAO profileDao = new ProfileDAO();
+        if(loginController.getLoginBean().getAccountType()=='S')
+            this.profile = new StudentProfile();
+        if(loginController.getLoginBean().getAccountType()=='R')        
+            this.profile = new RecruiterProfile();
+        profileDao.fetchUserProfile(profile,loginController.getLoginBean().getUserName(),loginController.getLoginBean().getAccountType());
     }
 }
