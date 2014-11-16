@@ -1,12 +1,49 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>LinkedU Login</title>
+        <script language="javascript">
+            function validateLoginForm() {
+                var userName = document.getElementById("loginForm:username");
+                var pwd = document.getElementById("loginForm:pwd");
+                if (userName.value == "") {
+                    return false;
+                }
+                if (pwd.value == "") {
+                    return false;
+                }                
+                return true;
+            }
 
+            function validateSignupForm() {
+                var newUsername = document.getElementById("signupForm:newUsername");
+                var newPwd1 = document.getElementById("signupForm:newPwd1");
+                var newPwd2 = document.getElementById("signupForm:newPwd2");
+                var newEmail = document.getElementById("signupForm:newEmail");
+                var newAccountType = document.getElementById("signupForm:newAccountType");
+                if (newUsername.value == "") {
+                    return false;
+                }
+                if (newPwd1.value == "") {
+                    return false;
+                }
+                if (newPwd2.value == "") {
+                    return false;
+                }
+                if (newEmail.value == "") {
+                    return false;
+                }
+                if (newAccountType.value == "") {
+                    return false;
+                }                
+                return true;                
+            }
+        </script>        
+        <title>LinkedU Login</title>
     </h:head>
     <h:outputStylesheet library="css" name="IndexPage.css"  />
 
@@ -15,33 +52,33 @@
             <h:graphicImage value="resources/images/linkedULogo.png"  height="100" />
         </div><!-- Closing Logo Frame DIV -->
         <div id="loginFrame">
-            <h:form id="loginForm">
-                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}" required="true"></h:inputText>&nbsp;
-                Password <h:inputSecret class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}" required="true"></h:inputSecret>&nbsp;
+            <h:form id="loginForm"  onsubmit="return validateLoginForm()">
+                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
+                Password <h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
                 <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
             </h:form>
         </div>
         <div id="signupFrame">
             Not a member yet? Signup is super simple!!!
-            <h:form id="signupForm">
+            <h:form id="signupForm" onsubmit="return validateSignupForm()">
                 <table id="signupTable" cellspacing="20">
                     <tr>
-                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" required="true"></h:inputText></td>
+                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" ></h:inputText><h3 class="UserWarning" id="noNewUserName"></h3></td>
                     </tr>
                     <tr>
-                        <td>Password </td><td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" required="true"></h:inputSecret></td>
+                        <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret></td>
                     </tr>
                     <tr>
-                        <td>Re-enter Password  </td> <td><h:inputSecret redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" required="true"></h:inputSecret> </td>
+                        <td>Re-enter Password  </td> <td><h:inputSecret id="newPwd2" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret> </td>
                     </tr>
                     <tr>
-                        <td>E-Mail </td><td><h:inputText  class="inputTextBox"  value="#{signupController.signupBean.eMail}" required="true"></h:inputText></td>
+                        <td>E-Mail </td><td><h:inputText  class="inputTextBox" id="newEmail"  value="#{signupController.signupBean.eMail}" ></h:inputText></td>
                     </tr>
                     <tr>
-                        <td>I'm a</td><td><h:selectOneRadio value="#{signupController.signupBean.accountType}" required="true">
+                        <td>I'm a</td><td><h:selectOneRadio id="newAccountType" value="#{signupController.signupBean.accountType}" >
                                 <f:selectItem itemValue="S" itemLabel="Student" />
                                 <f:selectItem itemValue="R" itemLabel="Recruiter" />
-                                
+
                             </h:selectOneRadio></td>
                     </tr>                    
                 </table>
