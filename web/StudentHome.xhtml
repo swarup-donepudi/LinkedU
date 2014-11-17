@@ -8,22 +8,26 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
         <title>Student Homepage</title>
-        
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
         <div id="logoFrame">
             <h:graphicImage value="resources/images/linkedULogo2.png"  height="100" />
         </div>
-        
+
         Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
         <br />
         <br />
         <h:form>
             <h:commandButton value="Edit Profile" action="#{profileController.editProfile(loginController.loginBean.accountType,loginController.loginBean.userName)}"></h:commandButton>
+        </h:form>
+        <br /><br />
+        <h:form>
+            <h:commandLink value="Search Universities" action="#{searchController.showUniversitiesSearchFormToStudent()}"></h:commandLink>        
         </h:form>
     </body>
 </html>
