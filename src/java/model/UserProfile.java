@@ -11,16 +11,16 @@ package model;
  * @author skdonep
  */
 public class UserProfile {
-    String fName;
-    String lName;
-    char gender;
-    int primaryPhCountryCode;
-    int primaryPhNum;
-    int secondaryPhCountryCode;
-    int secondaryPhNum;
-    String Country;
-    String City;
-    String State;
+    public String fName;
+    public String lName;
+    public char gender;
+    public String primaryPhCountryCode;
+    public String primaryPhNum;
+    public String secondaryPhCountryCode;
+    public String secondaryPhNum;
+    public String Country;
+    public String City;
+    public String State;
 
     public String getfName() {
         return fName;
@@ -46,35 +46,35 @@ public class UserProfile {
         this.gender = gender;
     }
 
-    public int getPrimaryPhCountryCode() {
+    public String getPrimaryPhCountryCode() {
         return primaryPhCountryCode;
     }
 
-    public void setPrimaryPhCountryCode(int primaryPhCountryCode) {
+    public void setPrimaryPhCountryCode(String primaryPhCountryCode) {
         this.primaryPhCountryCode = primaryPhCountryCode;
     }
 
-    public int getPrimaryPhNum() {
+    public String getPrimaryPhNum() {
         return primaryPhNum;
     }
 
-    public void setPrimaryPhNum(int primaryPhNum) {
+    public void setPrimaryPhNum(String primaryPhNum) {
         this.primaryPhNum = primaryPhNum;
     }
 
-    public int getSecondaryPhCountryCode() {
+    public String getSecondaryPhCountryCode() {
         return secondaryPhCountryCode;
     }
 
-    public void setSecondaryPhCountryCode(int secondaryPhCountryCode) {
+    public void setSecondaryPhCountryCode(String secondaryPhCountryCode) {
         this.secondaryPhCountryCode = secondaryPhCountryCode;
     }
 
-    public int getSecondaryPhNum() {
+    public String getSecondaryPhNum() {
         return secondaryPhNum;
     }
 
-    public void setSecondaryPhNum(int secondaryPhNum) {
+    public void setSecondaryPhNum(String secondaryPhNum) {
         this.secondaryPhNum = secondaryPhNum;
     }
 

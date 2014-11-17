@@ -14,13 +14,23 @@ and open the template in the editor.
 }
 
 html{
-    background-image:url("#{resource['images:loginBackground.png']}");
+    background-image:url("#{resource['images:loginBackground.jpg']}");
     background-size: 100%;
     color:black;
 }
 
 #logoFrame{
     float:left;
+    margin-top:20px;
+    margin-left:2%;
+    background-image:url("#{resource['images:linkedULogo.png']}");
+    background-color:#fff;
+    background-size: 100%;
+    border-radius: 20px;
+    background-repeat: no-repeat;
+    border:1px solid #333;
+    width:200px;
+    height:60px;
 }
 #loginFrame{
     //float:right;
@@ -29,7 +39,8 @@ html{
     height:55px;
     //border:1px solid #333;
     padding-top:40px;  
-    font-weight: bold;
+    //font-weight: bold;
+    font-size: 20px;
     color:white;
 }
 
@@ -44,7 +55,8 @@ html{
     height:350px;
     //border:1px solid #333;
     opacity:0.8;
-    font-weight: bold;
+    //font-weight: bold;
+    font-size: 20px;
     color:white;
 }
 

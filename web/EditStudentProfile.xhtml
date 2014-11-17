@@ -8,49 +8,130 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-    
+
+
     <h:head>
-        <title>Create Profile</title>
-        
-              
+        <title>Student Profile</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
     </h:head>
     <body>
         <div id="logoFrame">
-            <h:graphicImage value="resources/images/linkedULogo.png"  height="100" />
+            <h:graphicImage value="resources/images/linkedULogo2.png"  height="100" />
         </div>
-       
-        <h:form id="createProfileStudentForm">
-            <h:panelGrid columns="2" columnClasses="parameter, values">
-            First Name: <h:inputText id="fName" value="#{loginController.loginBean.userName}"></h:inputText>
-            Last Name : <h:inputText id="lName" value="#{loginController.loginBean.userName}"></h:inputText>
-            Gender <h:selectOneRadio value="#{loginController.loginBean}">
-                        <f:selectItem itemValue="male" itemLabel="male" />
-                        <f:selectItem itemValue="female" itemLabel="female" />
-            </h:selectOneRadio>
-            Date (MM/DD/YYYY): <h:inputText value="#{loginController.loginBean.userName}">
-                <f:convertDateTime pattern="MM/dd/yyyy" />
-            </h:inputText>
-            <h:outputText value="Highest Degree Earned"/><h:selectOneMenu value="#{loginController.loginBean.userName}">
-                <f:selectItem itemLabel="Select Degree" noSelectionOption="true"/>
-                <f:selectItem itemValue="PHD" itemLabel="PHD" />
-                <f:selectItem itemValue="Masters" itemLabel="Masters" />
-         	<f:selectItem itemValue="Bachelors" itemLabel="Bachelors" />
-                <f:selectItem itemValue="High School" itemLabel="High School"/>
-            </h:selectOneMenu>
-           <h:outputText value="GPA"/><h:inputText id="gpa" value="#{loginController.loginBean.password}"/>
-           Preferred Program <h:inputText id="program" value="#{loginController.loginBean.password}"/>
-           Preferred University <h:inputText id="university" value="#{loginController.loginBean.password}"/>
-           Contact info <h:inputText id="phoneno" value="#{loginController.loginBean.password}"/>
-           Alternate info<h:inputText id="altPhone" value="#{loginController.loginBean.password}"/>
-                                      <h:outputText value="Country"></h:outputText>
-               <h:selectOneMenu value="#{loginController.loginBean.password}">
-                   <f:selectItem itemValue="country"/>
-               </h:selectOneMenu>
-               
-            </h:panelGrid>
-            <h:commandButton value="Create Profile" action="#{loginController.signUpValidation()}"/>
-        </h:form>
-           
+
+        <h:form id="editStudentProfileForm">
+            <table id="studentProfileTablea" cellspacing="20">
+                <tr>
+                    <td>  
+                        First Name </td>
+                    <td>
+                        <h:inputText id="rectruiterFName" value="#{profileController.studentProfile.fName}"></h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                
+                        Last Name  </td>
+                    <td>
+                        <h:inputText id="rectruiterLName" value="#{profileController.studentProfile.lName}"></h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>  
+                        Gender 
+                    </td>
+                    <td> 
+                        <h:selectOneRadio id="gender" value="#{profileController.studentProfile.gender}">
+                            <f:selectItem itemValue="M" itemLabel="Male" />
+                            <f:selectItem itemValue="F" itemLabel="Female" />
+                        </h:selectOneRadio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                          
+                        DOB 
+                    </td>
+                    <td>                 
+                        <h:inputText id="univName" value="#{profileController.studentProfile.dob}"></h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>  
+                        Highest Degree  
+                    </td>
+                    <td> 
+                        <h:inputText id="univURL" value="#{profileController.studentProfile.highestDegree}"></h:inputText>
+                    </td>
+                </tr>  
+                <tr>
+                    <td> 
+                        GPA 
+                    </td>
+                    <td> 
+                        <h:inputText id="gpa" value="#{profileController.studentProfile.GPA}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        Preferred Program 
+                    </td>
+                    <td> 
+                        <h:inputText id="preferredProgram" value="#{profileController.studentProfile.preferredProgram}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        Preferred Universities 
+                    </td>
+                    <td> 
+                        <h:inputText id="preferredUnivs" value="#{profileController.studentProfile.primaryPhCountryCode}"/>
+                    </td>
+                </tr>                
+                <tr>
+                    <td> 
+                        Primary Phone 
+                    </td>
+                    <td> 
+                        <h:inputText id="primaryCode" value="#{profileController.studentProfile.primaryPhCountryCode}"/>
+                        <h:inputText id="primaryNum" value="#{profileController.studentProfile.primaryPhNum}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                                 
+                        Secondary Phone 
+                    </td>
+                    <td>
+                        <h:inputText id="secCode" value="#{profileController.studentProfile.secondaryPhCountryCode}"/>
+                        <h:inputText id="secNum" value="#{profileController.studentProfile.secondaryPhNum}"/>
+                    </td>
+                </tr>
+                <tr>                    
+                    <td>
+                        Country 
+                    </td>
+                    <td>
+                        <h:inputText id="country" value="#{profileController.studentProfile.country}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        State 
+                    </td>
+                    <td>
+                        <h:inputText id="state" value="#{profileController.studentProfile.state}"/>
+                    </td>
+                </tr>
+                <tr>                    
+                    <td>
+                        City 
+                    </td>
+                    <td>
+                        <h:inputText id="city" value="#{profileController.studentProfile.city}"/>
+                    </td>
+                </tr>
+            </table>
+            <h:commandButton value="Update Profile" 
+                             action="#{profileController.updateProfile(loginController.loginBean.accountType,loginController.loginBean.userName)}"/>
+        </h:form><br /><br />
+        <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>        
     </body>
 </html>

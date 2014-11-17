@@ -13,9 +13,9 @@ package model;
 public class StudentProfile extends UserProfile{
     private String dob;
     private String highestDegree;
-    private double GPA;
+    private String GPA;
     private String preferredProgram;
-    private String[] preferredUnivs;
+    private String preferredUnivs;
 
     public String getDob() {
         return dob;
@@ -33,11 +33,11 @@ public class StudentProfile extends UserProfile{
         this.highestDegree = highestDegree;
     }
 
-    public double getGPA() {
+    public String getGPA() {
         return GPA;
     }
 
-    public void setGPA(double GPA) {
+    public void setGPA(String GPA) {
         this.GPA = GPA;
     }
 
@@ -49,11 +49,11 @@ public class StudentProfile extends UserProfile{
         this.preferredProgram = preferredProgram;
     }
 
-    public String[] getPreferredUnivs() {
+    public String getPreferredUnivs() {
         return preferredUnivs;
     }
 
-    public void setPreferredUnivs(String[] preferredUnivs) {
+    public void setPreferredUnivs(String preferredUnivs) {
         this.preferredUnivs = preferredUnivs;
     }
 }

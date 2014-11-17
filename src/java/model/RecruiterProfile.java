@@ -14,19 +14,19 @@ public class RecruiterProfile extends UserProfile{
     private String univName;
     private String univURL;
 
-    public String getUniversity() {
+    public String getUnivName() {
         return univName;
     }
 
-    public void setUniversity(String university) {
+    public void setUnivName(String university) {
         this.univName = university;
     }
 
-    public String getUniversityURL() {
+    public String getUnivURL() {
         return univURL;
     }
 
-    public void setUniversityURL(String universityURL) {
+    public void setUnivURL(String universityURL) {
         this.univURL = universityURL;
     }
 }
