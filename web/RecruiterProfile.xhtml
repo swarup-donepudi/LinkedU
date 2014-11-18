@@ -7,111 +7,112 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:head>
         <title>Recruiter Profile</title>
         <h:outputStylesheet library="css" name="AppTheme.css"  />
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <div id="logoFrame">
-            <h:graphicImage value="resources/images/linkedULogo2.png"  height="100" />
-        </div>            
-        <h:form id="recruiterProfileForm">
-            <table id="recruiterProfileTable" cellspacing="20">
-                <tr>
-                    <td>  
-                        First Name </td>
-                    <td>
-                        <h:inputText id="rectruiterFName" value="#{profileController.recruiterProfile.fName}"></h:inputText>
-                    </td>
-                </tr>
-                <tr>
-                    <td>                
-                        Last Name  </td>
-                    <td>
-                        <h:inputText id="rectruiterLName" value="#{profileController.recruiterProfile.lName}"></h:inputText>
-                    </td>
-                </tr>
-                <tr>
-                    <td>  
-                        Gender 
-                    </td>
-                    <td> 
-                        <h:selectOneRadio id="gender" value="#{profileController.recruiterProfile.gender}">
-                            <f:selectItem itemValue="M" itemLabel="Male" />
-                            <f:selectItem itemValue="F" itemLabel="Female" />
-                        </h:selectOneRadio>
-                    </td>
-                </tr>
-                <tr>
-                    <td>                          
-                        University Name 
-                    </td>
-                    <td>                 
-                        <h:inputText id="univName" value="#{profileController.recruiterProfile.univName}"></h:inputText>
-                    </td>
-                </tr>
-                <tr>
-                    <td>  
-                        University URL  
-                    </td>
-                    <td> 
-                        <h:inputText id="univURL" value="#{profileController.recruiterProfile.univURL}"></h:inputText>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        Primary Phone 
-                    </td>
-                    <td> 
-                        <h:inputText id="primaryCode" value="#{profileController.recruiterProfile.primaryPhCountryCode}"/>
-                        <h:inputText id="primaryNum" value="#{profileController.recruiterProfile.primaryPhNum}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>                                 
-                        Secondary Phone 
-                    </td>
-                    <td>
-                        <h:inputText id="secCode" value="#{profileController.recruiterProfile.secondaryPhCountryCode}"/>
-                        <h:inputText id="secNum" value="#{profileController.recruiterProfile.secondaryPhNum}"/>
-                    </td>
-                </tr>
-                <tr>                    
-                    <td>
-                        Country 
-                    </td>
-                    <td>
-                        <h:inputText id="country" value="#{profileController.recruiterProfile.country}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        State 
-                    </td>
-                    <td>
-                        <h:inputText id="state" value="#{profileController.recruiterProfile.state}"/>
-                    </td>
-                </tr>
-                <tr>                    
-                    <td>
-                        City 
-                    </td>
-                    <td>
-                        <h:inputText id="city" value="#{profileController.recruiterProfile.city}"/>
-                    </td>
-                </tr>
-                <tr>                    
-                    <td>
-                        <h:commandButton value="Update Profile" 
-                                         action="#{profileController.updateRecruiterProfile()}"/>
-                    </td>
-                </tr>                
-            </table>
-        </h:form> <br/>
-        <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>
+        <ui:composition template="templates\AppThemeTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="recruiterProfileForm">
+                    <table id="recruiterProfileTable" cellspacing="20">
+                        <tr>
+                            <td>  
+                                First Name </td>
+                            <td>
+                                <h:inputText id="rectruiterFName" value="#{profileController.recruiterProfile.fName}"></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                
+                                Last Name  </td>
+                            <td>
+                                <h:inputText id="rectruiterLName" value="#{profileController.recruiterProfile.lName}"></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  
+                                Gender 
+                            </td>
+                            <td> 
+                                <h:selectOneRadio id="gender" value="#{profileController.recruiterProfile.gender}">
+                                    <f:selectItem itemValue="M" itemLabel="Male" />
+                                    <f:selectItem itemValue="F" itemLabel="Female" />
+                                </h:selectOneRadio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                          
+                                University Name 
+                            </td>
+                            <td>                 
+                                <h:inputText id="univName" value="#{profileController.recruiterProfile.univName}"></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  
+                                University URL  
+                            </td>
+                            <td> 
+                                <h:inputText id="univURL" value="#{profileController.recruiterProfile.univURL}"></h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 
+                                Primary Phone 
+                            </td>
+                            <td> 
+                                <h:inputText id="primaryCode" value="#{profileController.recruiterProfile.primaryPhCountryCode}"/>
+                                <h:inputText id="primaryNum" value="#{profileController.recruiterProfile.primaryPhNum}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                                 
+                                Secondary Phone 
+                            </td>
+                            <td>
+                                <h:inputText id="secCode" value="#{profileController.recruiterProfile.secondaryPhCountryCode}"/>
+                                <h:inputText id="secNum" value="#{profileController.recruiterProfile.secondaryPhNum}"/>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                Country 
+                            </td>
+                            <td>
+                                <h:inputText id="country" value="#{profileController.recruiterProfile.country}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                State 
+                            </td>
+                            <td>
+                                <h:inputText id="state" value="#{profileController.recruiterProfile.state}"/>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                City 
+                            </td>
+                            <td>
+                                <h:inputText id="city" value="#{profileController.recruiterProfile.city}"/>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                <h:commandButton value="Update Profile" 
+                                                 action="#{profileController.updateRecruiterProfile()}"/>
+                            </td>
+                        </tr>                
+                    </table>
+                </h:form> <br/>
+                <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>
+            </ui:define>
+        </ui:composition>           
     </body>
 </html>

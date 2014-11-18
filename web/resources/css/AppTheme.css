@@ -7,6 +7,42 @@ and open the template in the editor.
     Created on : Nov 16, 2014, 7:24:59 PM
     Author     : skdonep
 */
+
+*{
+    font-family:sans-serif;
+}
+
+#header{
+    //border:5px solid #333;
+    background-color: #2d44f2;
+    height:80px;
+    margin-bottom: 20px;
+    padding-top:5px;
+}
+
+#logo{
+    width:200px;
+    height:60px;
+    margin-top:5px;
+    padding:0px;
+    margin-left:2%;
+    background: url("#{resource['images:linkedULogo2.png']}");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color:#fff;
+    border-radius: 20px;
+    border:1px solid #333;
+}
+
+#content{
+    min-height: 500px;
+    //border:5px solid #D41414;
+}
+
+#footer{
+    //border:5px solid #008000;
+}
+
 input[type="text"]{
     width:180px;
     height:20px;

@@ -15,7 +15,7 @@
                 }
                 if (pwd.value == "") {
                     return false;
-                }                
+                }
                 return true;
             }
 
@@ -39,17 +39,17 @@
                 }
                 if (newAccountType.value == "") {
                     return false;
-                }                
-                return true;                
+                }
+                return true;
             }
         </script>        
         <title>LinkedU Login</title>
+        <h:outputStylesheet library="css" name="IndexPage.css"  />
     </h:head>
-    <h:outputStylesheet library="css" name="IndexPage.css"  />
 
     <h:body>
         <div id="logoFrame">
-            
+
         </div><!-- Closing Logo Frame DIV -->
         <div id="loginFrame">
             <h:form id="loginForm"  onsubmit="return validateLoginForm()">
@@ -59,9 +59,11 @@
             </h:form>
         </div>
         <div id="signupFrame">
-            Not a member yet? Signup is super simple!!!
             <h:form id="signupForm" onsubmit="return validateSignupForm()">
                 <table id="signupTable" cellspacing="20">
+                    <tr>
+                        <td colspan="2">Not a member yet? Signup is super simple!!!</td>
+                    </tr>
                     <tr>
                         <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" ></h:inputText><h3 class="UserWarning" id="noNewUserName"></h3></td>
                     </tr>
@@ -80,9 +82,11 @@
                                 <f:selectItem itemValue="R" itemLabel="Recruiter" />
 
                             </h:selectOneRadio></td>
-                    </tr>                    
+                    </tr>
+                    <tr>
+                        <td><h:commandButton id="signupUser" class="button" value="Signup" action="#{signupController.signUpValidation()}"></h:commandButton></td>
+                    </tr>
                 </table>
-                <h:commandButton id="signupUser" class="button" value="Signup" action="#{signupController.signUpValidation()}"></h:commandButton>
             </h:form>
         </div><!-- Closing signupFrame DIV -->        
     </h:body>
