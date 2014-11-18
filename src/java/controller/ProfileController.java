@@ -12,11 +12,8 @@ import java.sql.SQLException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
-import model.UserProfile;
 
 /**
  *
@@ -30,7 +27,7 @@ public class ProfileController implements Serializable {
 
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
-    
+
     private StudentProfile studentProfile;
     private RecruiterProfile recruiterProfile;
 
@@ -39,7 +36,7 @@ public class ProfileController implements Serializable {
      */
     public ProfileController() {
         studentProfile = new StudentProfile();
-                recruiterProfile = new RecruiterProfile();
+        recruiterProfile = new RecruiterProfile();
     }
 
     public StudentProfile getStudentProfile() {
@@ -58,7 +55,6 @@ public class ProfileController implements Serializable {
         this.recruiterProfile = recruiterProfile;
     }
 
-    
     public String getProfileUpdateMessage() {
         return profileUpdateMessage;
     }
@@ -75,57 +71,39 @@ public class ProfileController implements Serializable {
         this.loginController = loginController;
     }
 
-    public void editProfile(char accountType, String username) throws IOException, SQLException {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        if (this.userHasProfile(accountType, username)) {
-            this.fetchUserProfile(accountType, username);
+    public String showStudentHisProfile() throws IOException, SQLException {
+        ProfileDAO profileDao = new ProfileDAO();
+        if (profileDao.studentHasProfile(loginController.loginBean.getUserName())) {
+            this.studentProfile = profileDao.fetchStudentProfile(loginController.loginBean.getUserName());
         }
-        if (accountType == 'S') {
-            externalContext.redirect("EditStudentProfile.xhtml");
+        return ("StudentProfile.xhtml");
+    }
+
+    public String showRecruiterHisProfile() throws IOException, SQLException {
+        ProfileDAO profileDao = new ProfileDAO();
+        if (profileDao.recruiterHasProfile(loginController.loginBean.getUserName())) {
+            this.recruiterProfile = profileDao.fetchRecruiterProfile(loginController.loginBean.getUserName());
+        }
+        return ("RecruiterProfile.xhtml");
+    }
+
+    public void updateStudentProfile() throws SQLException {
+        ProfileDAO profileDao = new ProfileDAO();
+        if (profileDao.studentHasProfile(loginController.loginBean.getUserName())) {
+            profileDao.updateStudentProfile(this.studentProfile, loginController.loginBean.getUserName());
         } else {
-            externalContext.redirect("EditRecruiterProfile.xhtml");
+            profileDao.createStudentProfile(this.studentProfile, loginController.loginBean.getUserName());
         }
+        this.profileUpdateMessage="Profile updated successfully.";
     }
-
-    public boolean userHasProfile(char accountType, String username) throws SQLException {
+    
+    public void updateRecruiterProfile() throws SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        if (accountType == 'S') {
-            return profileDao.studentHasProfile(username);
-        } else if (accountType == 'R') {
-            return profileDao.recruiterHasProfile(username);
+        if (profileDao.recruiterHasProfile(loginController.loginBean.getUserName())) {
+            profileDao.updateRecruiterProfile(this.recruiterProfile, loginController.loginBean.getUserName());
+        } else {
+            profileDao.createRecruiterProfile(this.recruiterProfile, loginController.loginBean.getUserName());
         }
-        return false;
-    }
-
-    public void fetchUserProfile(char accountType, String username) throws SQLException {
-        ProfileDAO profileDao = new ProfileDAO();
-        if (accountType == 'S') {
-            this.studentProfile = profileDao.fetchStudentProfile(username);
-        }
-        if (accountType == 'R') {
-            this.recruiterProfile= profileDao.fetchRecruiterProfile(username);
-        }        
-    }
-
-    public void updateProfile(char accountType, String username) throws SQLException {
-        ProfileDAO profileDao = new ProfileDAO();
-        if (this.userHasProfile(accountType, username)) {
-            if (accountType == 'S') {
-                profileDao.updateStudentProfile(this.studentProfile, username);
-            }
-            if (accountType == 'R') {
-                profileDao.updateRecruiterProfile(this.recruiterProfile, username);
-            } 
-        }
-        else
-        {
-            if (accountType == 'S') {
-                profileDao.createStudentProfile(this.studentProfile,username);
-            }
-            if (accountType == 'R') {
-                profileDao.createRecruiterProfile(this.recruiterProfile,username);
-            }             
-        }
-        this.profileUpdateMessage = "Profile has been updated successfully!!";
-    }
+        this.profileUpdateMessage="Profile updated successfully.";
+    }    
 }

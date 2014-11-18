@@ -104,10 +104,14 @@ and open the template in the editor.
                         <h:inputText id="city" value="#{profileController.recruiterProfile.city}"/>
                     </td>
                 </tr>
+                <tr>                    
+                    <td>
+                        <h:commandButton value="Update Profile" 
+                                         action="#{profileController.updateRecruiterProfile()}"/>
+                    </td>
+                </tr>                
             </table>
-            <h:commandButton value="Update Profile" 
-                             action="#{profileController.updateProfile(loginController.loginBean.accountType,loginController.loginBean.userName)}"/>
-        </h:form> 
+        </h:form> <br/>
         <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>
     </body>
 </html>

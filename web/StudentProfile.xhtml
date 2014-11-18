@@ -51,7 +51,7 @@ and open the template in the editor.
                         DOB 
                     </td>
                     <td>                 
-                        <h:inputText id="univName" value="#{profileController.studentProfile.dob}"></h:inputText>
+                        <h:inputText id="dob" value="#{profileController.studentProfile.dob}"></h:inputText>
                     </td>
                 </tr>
                 <tr>
@@ -130,7 +130,7 @@ and open the template in the editor.
                 </tr>
             </table>
             <h:commandButton value="Update Profile" 
-                             action="#{profileController.updateProfile(loginController.loginBean.accountType,loginController.loginBean.userName)}"/>
+                             action="#{profileController.updateStudentProfile()}"/>
         </h:form><br /><br />
         <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>        
     </body>

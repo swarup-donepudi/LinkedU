@@ -3,13 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/H:/it353/LinkedU/src/java/dao/ProfileDAO.java</file>
-            <file>file:/H:/it353/LinkedU/src/java/dao/LoginDAO.java</file>
-            <file>file:/H:/it353/LinkedU/web/EditRecruiterProfile.xhtml</file>
-            <file>file:/H:/it353/LinkedU/src/java/model/StudentProfile.java</file>
             <file>file:/H:/it353/LinkedU/src/java/controller/ProfileController.java</file>
-            <file>file:/H:/it353/LinkedU/src/java/controller/LoginController.java</file>
-            <file>file:/H:/it353/LinkedU/src/java/dao/AppDBInfoDAO.java</file>
+            <file>file:/H:/it353/LinkedU/src/java/dao/ProfileDAO.java</file>
+            <file>file:/H:/it353/LinkedU/web/StudentHome.xhtml</file>
         </group>
     </open-files>
 </project-private>

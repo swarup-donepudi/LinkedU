@@ -112,7 +112,7 @@ public class ProfileDAO extends AppDBInfoDAO {
     public RecruiterProfile fetchRecruiterProfile(String username) {
         RecruiterProfile recruiterProfile = new RecruiterProfile();
 
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE USERNAME = '" + username + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -184,7 +184,7 @@ public class ProfileDAO extends AppDBInfoDAO {
     }
 
     public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
-        String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
+        String updateQuery = "UPDATE LINKEDU.RECRUITER_PROFILE SET FIRST_NAME = '"
                 + recruiterProfile.getfName() + "', "
                 + "LAST_NAME = '"
                 + recruiterProfile.getlName() + "', "
@@ -203,7 +203,7 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + recruiterProfile.getState() + "', "
                 + "CITY = '"
-                + recruiterProfile.getCity() + ");";
+                + recruiterProfile.getCity() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -217,12 +217,12 @@ public class ProfileDAO extends AppDBInfoDAO {
     }
 
     public void createStudentProfile(StudentProfile studentProfile,String username) {
-        String insertQuery = "INSERT INTO STUDENT_PROFILE(FIRST_NAME,"
+        String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
                 + "DOB,"
-                + "HIGHEST_DEGREE"
-                + "GPA"
+                + "HIGHEST_DEGREE,"
+                + "GPA,"
                 + "PREFERRED_PROGRAM,"
                 + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
@@ -231,7 +231,7 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "STATE,"
                 + "CITY,"
                 + "USERNAME) "
-                + "VALUES("
+                + "VALUES('"
                 + studentProfile.getfName() + "','"
                 + studentProfile.getlName() + "','"
                 + studentProfile.getGender() + "','"
@@ -245,13 +245,12 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + username + "';";
+                + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
-            try (Statement stmt = this.DBConn.createStatement()) {
-                stmt.execute(insertQuery);
-                this.DBConn.close();
-            }
+            Statement stmt = this.DBConn.createStatement();
+            stmt.execute(insertQuery);
+            this.DBConn.close();            
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
@@ -260,21 +259,18 @@ public class ProfileDAO extends AppDBInfoDAO {
 
     public void createRecruiterProfile(RecruiterProfile recruiterProfile,String username) {
         
-        String insertQuery = "INSERT INTO STUDENT_PROFILE(FIRST_NAME,"
+        String insertQuery = "INSERT INTO LINKEDU.RECRUITER_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
                 + "UNIVERSITY,"
-                + "UNIV_URL"
-                + "GPA"
-                + "PREFERRED_PROGRAM,"
-                + "PREFERRED_UNIVS,"
+                + "UNIV_URL,"
                 + "PRIMARY_PHONE,"
                 + "SECONDARY_PHONE,"
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
                 + "USERNAME) "
-                + "VALUES("
+                + "VALUES('"
                 + recruiterProfile.getfName() + "','"
                 + recruiterProfile.getlName() + "','"
                 + recruiterProfile.getGender() + "','"
@@ -285,13 +281,12 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + recruiterProfile.getCountry() + "','"
                 + recruiterProfile.getState() + "','"
                 + recruiterProfile.getCity() + "','"
-                + username + "';";  
+                + username + "')";  
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
-            try (Statement stmt = this.DBConn.createStatement()) {
-                stmt.execute(insertQuery);
-                this.DBConn.close();
-            }
+            Statement stmt = this.DBConn.createStatement();
+            stmt.execute(insertQuery);
+            this.DBConn.close();
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
