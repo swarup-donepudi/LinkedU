@@ -25,6 +25,7 @@ import model.LoginBean;
 @SessionScoped
 
 public class LoginController {
+    String errorMessage;
   LoginBean loginBean;
 
     /**
@@ -40,6 +41,14 @@ public class LoginController {
 
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
     
     public void validateCredentials() throws IOException, SQLException{
@@ -57,7 +66,8 @@ public class LoginController {
             }
         }
         else{
-            externalContext.redirect("Error.xhtml");
+            this.errorMessage="Invalid Username/Password";
+            externalContext.redirect("LoginFailed.xhtml");
         }
             
     }

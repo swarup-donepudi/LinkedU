@@ -43,7 +43,7 @@ and open the template in the editor.
     //border:5px solid #008000;
 }
 
-input[type="text"]{
+input[type="text"],input[type="password"]{
     width:180px;
     height:20px;
     border-radius:5px;
@@ -57,3 +57,8 @@ input[type="submit"]{
     font-weight: bold;
     border-radius:5px;  
 }
+
+.errorMessage{
+    color:#da1c5b;
+}
+

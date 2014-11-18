@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <h:head>
+        <title>Student Profile</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
+    </h:head>
+    <body>
+        <ui:composition template="templates\AppThemeTemplate.xhtml">
+            <ui:define name="content">
+                <div>
+
+                    <h:outputLabel class="errorMessage" value="#{loginController.errorMessage}"></h:outputLabel><br/>
+                    <h:form id="loginForm"  onsubmit="return validateLoginForm()">
+                        <table cellspacing="20">
+                            <tr>
+                                <td>Username</td> <td><h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText></td>
+                            </tr>
+                            <tr>
+                                <td>Password</td> <td><h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret></td>
+                            </tr>
+                            <tr>
+                                <td><h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton></td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
