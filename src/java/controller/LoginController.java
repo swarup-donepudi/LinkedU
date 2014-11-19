@@ -34,7 +34,7 @@ public class LoginController {
      */
     public LoginController() {
         loginBean = new LoginBean();
-        this.setLoggedIn(false);
+        
     }
 
     public LoginBean getLoginBean() {

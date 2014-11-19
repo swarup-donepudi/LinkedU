@@ -16,23 +16,30 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-    <ui:composition template="templates\AppThemeTemplate.xhtml">
-        <ui:define name="content">
-            Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
-            <br />
-            <br />
-            <h:form>
-                <h:commandButton value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandButton>
-            </h:form>
-            <br /><br />
-            <h:form>
-                <h:commandButton value="My Watch List" action="#{profileController.showWatchList()}"></h:commandButton>
-            </h:form>
-            <br /><br />            
-            <h:form>
-                <h:commandLink value="Search Students" action="#{searchController.showStudentSearchFormToRecruiter()}"></h:commandLink>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</body>
+        <ui:composition template="templates\AppThemeTemplate.xhtml">
+            <ui:define name="content">
+                Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
+                <br />
+                <br />
+                <div id="NavBar">
+                <ul>
+                    <li>
+                        <h:form>
+                            <h:commandButton value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandButton>
+                        </h:form>
+                    </li>
+                    
+                    <li><h:form>
+                        <h:commandButton value="My Watch List" action="#{profileController.showWatchList()}"></h:commandButton>
+                    </h:form></li>
+
+                    <li><h:form>
+                            <h:commandButton value="Search Students" action="#{searchController.showStudentSearchFormToRecruiter()}"></h:commandButton>
+                        </h:form>
+                    </li>
+                </ul>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
 </html>

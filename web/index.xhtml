@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      >
     <h:head>
         <script language="javascript">
             function validateLoginForm() {
@@ -97,15 +97,11 @@
                         <td colspan="2">Not a member yet? Signup is super simple!!!</td>
                     </tr>
                     <tr>
-<<<<<<< HEAD
                         <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" >
                                               <f:ajax event="keyup" render="userIDResult"/> 
                                               </h:inputText>
                                           </td>
-                        <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                            
-=======
-                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" ></h:inputText><h4 class="UserWarning" id="noNewUserName"></h4></td>
->>>>>>> 3bdd3016b693e21d127562dbc2a8f3eb6f0af32e
+                        <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                                                    
                     </tr>
                     <tr>
                         <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret><h4 class="UserWarning" id="noPwd1"></h4></td>

@@ -65,7 +65,7 @@ public class SignupController {
     public String checkDuplicateUsername() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
-            usernameMsg = "User Name Already Exists !!!";
+            usernameMsg = "Username Already Exists";
         } else {
             usernameMsg = "";
         }
@@ -75,7 +75,7 @@ public class SignupController {
     public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
-        int count = create.createProfile(signupBean);
+        int count = create.createAccount(signupBean);
         triggerMail();        
         if (count == 1) {
             loginController.getLoginBean().setUserName(signupBean.getUserName());

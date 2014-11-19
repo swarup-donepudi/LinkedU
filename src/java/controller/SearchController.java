@@ -8,10 +8,10 @@ package controller;
 
 import dao.SearchDAO;
 import java.io.IOException;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
@@ -104,13 +104,12 @@ public class SearchController implements Serializable {
         externalContext.redirect("SearchUniversities.xhtml");  
     }    
     
-    public void searchStudents() throws SQLException, IOException {
+    public String searchStudents() throws SQLException, IOException {
         studentSearchResults.clear();
         SearchDAO db = new SearchDAO();
-        db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);
-        studentSearchCriteria.setGPA(null);
-        studentSearchCriteria.setPreferredProgram(null);
-        studentSearchCriteria.setPreferredUniv(null);                
+        db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);  
+        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        return("StudentsSearchResults.xhtml");        
     }
 
     public void fetchStudentProfile(String studentUsername) throws IOException {

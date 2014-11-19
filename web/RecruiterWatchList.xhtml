@@ -18,15 +18,8 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates\AppThemeTemplate.xhtml">
             <ui:define name="content">
-                <ui:repeat value="#{profileController.recruiterProfile.watchList}" var="wl">
-   <ui:repeat value="#{wl}" var="s">
-      #{s}
-      <h:commandLink action="#{searchController.fetchStudentProfile(wl)}" value="#{wl}">#{wl}</h:commandLink>
-   </ui:repeat>
-</ui:repeat
-                
+                You have not added any students to your watchlist
             </ui:define>
         </ui:composition>
-
     </body>
 </html>

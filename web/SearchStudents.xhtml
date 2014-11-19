@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>Search Students</title>
+        <title>Student Homepage</title>
         <h:outputStylesheet library="css" name="AppTheme.css"  />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
@@ -33,32 +33,6 @@ and open the template in the editor.
                                 <h:commandButton id="searchButton" action="#{searchController.searchStudents()}" value="Search"></h:commandButton></td>
                         </tr>
                     </table>
-                </h:form>
-                <h:form>
-                    <h:dataTable value="#{searchController.studentSearchResults}" var="sr"
-                                 styleClass="order-table"
-                                 headerClass="order-table-header"
-                                 rowClasses="order-table-odd-row,order-table-even-row"
-                                 id="searchResults"
-                                 >
-                        <h:column>
-                            <!-- column header -->
-                            <f:facet name="header">Click</f:facet>
-                            <!-- row record -->
-                            <h:commandLink action="#{searchController.fetchStudentProfile(sr.username)}">View Profile</h:commandLink>
-                        </h:column>             
-
-                        <h:column>
-                            <!-- column header -->
-                            <f:facet name="header">First Name</f:facet>
-                            <!-- row record -->
-                            #{sr.fName}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">GPA</f:facet>
-                                #{sr.GPA}
-                        </h:column> 
-                    </h:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>
