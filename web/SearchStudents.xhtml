@@ -20,7 +20,24 @@ and open the template in the editor.
                 <h:form id="StudentSearchForm">
                     Preferred University <h:inputText id="preferredUniv" value="#{searchController.studentSearchCriteria.preferredUniv}"></h:inputText>
                     <h:commandButton action="#{searchController.searchStudents()}" value="Search"></h:commandButton>
-                </h:form>                                        
+                </h:form>
+                <p:dataTable var="car" value="#{dtBasicView.cars}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{car.id}" />
+                    </p:column>
+
+                    <p:column headerText="Year">
+                        <h:outputText value="#{car.year}" />
+                    </p:column>
+
+                    <p:column headerText="Brand">
+                        <h:outputText value="#{car.brand}" />
+                    </p:column>
+
+                    <p:column headerText="Color">
+                        <h:outputText value="#{car.color}" />
+                    </p:column>
+                </p:dataTable>
             </ui:define>
         </ui:composition>
     </body>
