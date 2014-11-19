@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import mail.SendMail;
 import model.SignupBean;
 
 /**
@@ -27,12 +28,14 @@ public class SignupController {
     String usernameMsg;
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
+    private SendMail mailObj;
 
     /**
      * Creates a new instance of SignupController
      */
     public SignupController() {
         signupBean = new SignupBean();
+        mailObj = new SendMail();
     }
 
     public SignupBean getSignupBean() {
@@ -73,6 +76,7 @@ public class SignupController {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
         int count = create.createProfile(signupBean);
+        triggerMail();        
         if (count == 1) {
             loginController.getLoginBean().setUserName(signupBean.getUserName());
             loginController.getLoginBean().setAccountType(signupBean.getAccountType());
@@ -84,5 +88,10 @@ public class SignupController {
         } else {
             externalContext.redirect("Error.xhtml");
         }
+    }
+    
+    public void triggerMail(){
+        //mailObj.triggerMail(theModel.getUserID(), theModel.getFirstName(), theModel.getLastName(), theModel.getPassword(), theModel.getEmail());
+        mailObj.triggerMail(signupBean.getUserName(), signupBean.geteMail());
     }
 }
