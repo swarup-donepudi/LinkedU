@@ -55,6 +55,8 @@ public class UserProfile {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    
 
     public String getPrimaryPhCountryCode() {
         return primaryPhCountryCode;

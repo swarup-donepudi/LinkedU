@@ -110,7 +110,7 @@ public class SearchController implements Serializable {
         db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);
         studentSearchCriteria.setGPA(null);
         studentSearchCriteria.setPreferredProgram(null);
-        studentSearchCriteria.setPreferredUniv(null);
+        studentSearchCriteria.setPreferredUniv(null);                
     }
 
     public void fetchStudentProfile(String studentUsername) throws IOException {

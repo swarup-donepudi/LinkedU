@@ -9,15 +9,17 @@ and open the template in the editor.
 */
 
 *{
+    margin:0px;
+    padding:0px;
     font-family:sans-serif;
 }
 
 #header{
-    //border:5px solid #333;
-    background-color: #2d44f2;
-    height:80px;
     margin-bottom: 20px;
     padding-top:5px;
+    height:80px;
+    //border:5px solid #333;
+    background-color: #2d44f2;
 }
 
 #logo{

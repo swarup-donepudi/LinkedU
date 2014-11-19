@@ -33,6 +33,8 @@ and open the template in the editor.
                                 <h:commandButton id="searchButton" action="#{searchController.searchStudents()}" value="Search"></h:commandButton></td>
                         </tr>
                     </table>
+                </h:form>
+                <h:form>
                     <h:dataTable value="#{searchController.studentSearchResults}" var="sr"
                                  styleClass="order-table"
                                  headerClass="order-table-header"
@@ -44,7 +46,7 @@ and open the template in the editor.
                             <f:facet name="header">Click</f:facet>
                             <!-- row record -->
                             <h:commandLink action="#{searchController.fetchStudentProfile(sr.username)}">View Profile</h:commandLink>
-                        </h:column>            
+                        </h:column>             
 
                         <h:column>
                             <!-- column header -->

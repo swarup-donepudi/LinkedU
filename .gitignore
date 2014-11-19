@@ -44,3 +44,7 @@ Temporary Items
 .apdisk
 /build/
 /dist/
+*.log
+*.log
+*.properties
+nbproject/private/private.properties
