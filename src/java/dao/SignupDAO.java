@@ -60,7 +60,7 @@ public class SignupDAO extends AppDBInfoDAO {
     
     
 
-    public int createProfile(SignupBean bean) {
+    public int createAccount(SignupBean bean) {
         int rowCount = 0;
         try {
             this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);

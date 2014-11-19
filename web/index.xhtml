@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <script language="javascript">
             function validateLoginForm() {
@@ -26,20 +27,52 @@
                 var newEmail = document.getElementById("signupForm:newEmail");
                 var newAccountType = document.getElementById("signupForm:newAccountType");
                 if (newUsername.value == "") {
+                    document.getElementById("noNewUserName").innerHTML = "pls enter the user name";
                     return false;
+                }
+                else{
+                    document.getElementById("noNewUserName").innerHTML = "";                    
                 }
                 if (newPwd1.value == "") {
+                    document.getElementById("noPwd1").innerHTML = "Password Missing";
                     return false;
                 }
+                else{
+                    document.getElementById("noPwd1").innerHTML = "";                    
+                }
+                    
                 if (newPwd2.value == "") {
+                    document.getElementById("noPwd2").innerHTML = "Retype the password";
                     return false;
                 }
-                if (newEmail.value == "") {
+                else{
+                    document.getElementById("noPwd2").innerHTML = "";                                        
+                }
+                
+                if (newPwd1.equals(newPwd2)) {
+                    document.getElementById("noPwd2").innerHTML = "Password do not match.";
                     return false;
+                }
+                else{
+                    document.getElementById("noPwd2").innerHTML = "";                    
+                }
+                
+                if (newEmail.value == "") {
+                    document.getElementById("noEmail").innerHTML = "Email Field Empty";
+                    return false;
+                }
+                else{
+                    document.getElementById("noEmail").innerHTML = "Email Field Empty";   
                 }
                 if (newAccountType.value == "") {
+                    document.getElementById("noType").innerHTML = "Pls select the type of account";
                     return false;
                 }
+                else{
+                    document.getElementById("noType").innerHTML = "";
+                }
+                
+                
                 return true;
             }
         </script>        
@@ -64,26 +97,29 @@
                         <td colspan="2">Not a member yet? Signup is super simple!!!</td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
                         <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" >
                                               <f:ajax event="keyup" render="userIDResult"/> 
                                               </h:inputText>
                                           </td>
                         <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                            
+=======
+                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" ></h:inputText><h4 class="UserWarning" id="noNewUserName"></h4></td>
+>>>>>>> 3bdd3016b693e21d127562dbc2a8f3eb6f0af32e
                     </tr>
                     <tr>
-                        <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret></td>
+                        <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret><h4 class="UserWarning" id="noPwd1"></h4></td>
                     </tr>
                     <tr>
-                        <td>Re-enter Password  </td> <td><h:inputSecret id="newPwd2" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret> </td>
+                        <td>Re-enter Password  </td> <td><h:inputSecret id="newPwd2" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret> <h4 class="UserWarning" id="noPwd2"></h4></td>
                     </tr>
                     <tr>
-                        <td>E-Mail </td><td><h:inputText  class="inputTextBox" id="newEmail"  value="#{signupController.signupBean.eMail}" ></h:inputText></td>
+                        <td>E-Mail </td><td><h:inputText  class="inputTextBox" id="newEmail"  value="#{signupController.signupBean.eMail}" ></h:inputText><h4 class="UserWarning" id="noEmail"></h4></td>
                     </tr>
                     <tr>
-                        <td>I'm a</td><td><h:selectOneRadio id="newAccountType" value="#{signupController.signupBean.accountType}" >
+                        <td>I'm a</td><td><h:selectOneRadio id="newAccountType" value="#{signupController.signupBean.accountType}" ><h4 class="UserWarning" id="noType"></h4>
                                 <f:selectItem itemValue="S" itemLabel="Student" />
                                 <f:selectItem itemValue="R" itemLabel="Recruiter" />
-
                             </h:selectOneRadio></td>
                     </tr>
                     <tr>

@@ -3,16 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author skdonep
  */
-public class RecruiterProfile extends UserProfile{
+public class RecruiterProfile extends UserProfile {
+
     private String univName;
     private String univURL;
+    private ArrayList<String> watchList;
+
+    public ArrayList<String> getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchList(ArrayList<String> watchList) {
+        this.watchList = watchList;
+    }
 
     public String getUnivName() {
         return univName;

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import model.StudentProfile;
 import model.RecruiterProfile;
 
@@ -96,6 +97,7 @@ public class ProfileDAO extends AppDBInfoDAO {
                 studentProfile.setCity(rs.getString("COUNTRY"));
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
+                studentProfile.setUsername(rs.getString("USERNAME"));
             }
 
             rs.close();
@@ -193,7 +195,7 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "UNIVERSITY = '"
                 + recruiterProfile.getUnivName() + "', "
                 + "UNIV_URL = '"
-                + recruiterProfile.getUnivURL()+ "', "
+                + recruiterProfile.getUnivURL() + "', "
                 + "PRIMARY_PHONE = '"
                 + recruiterProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
@@ -216,7 +218,7 @@ public class ProfileDAO extends AppDBInfoDAO {
         }
     }
 
-    public void createStudentProfile(StudentProfile studentProfile,String username) {
+    public void createStudentProfile(StudentProfile studentProfile, String username) {
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -250,15 +252,15 @@ public class ProfileDAO extends AppDBInfoDAO {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
             stmt.execute(insertQuery);
-            this.DBConn.close();            
+            this.DBConn.close();
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
         }
     }
 
-    public void createRecruiterProfile(RecruiterProfile recruiterProfile,String username) {
-        
+    public void createRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
+
         String insertQuery = "INSERT INTO LINKEDU.RECRUITER_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -274,14 +276,14 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + recruiterProfile.getfName() + "','"
                 + recruiterProfile.getlName() + "','"
                 + recruiterProfile.getGender() + "','"
-                + recruiterProfile.getUnivName()+ "','"
+                + recruiterProfile.getUnivName() + "','"
                 + recruiterProfile.getUnivURL() + "','"
                 + recruiterProfile.getPrimaryPhNum() + "','"
                 + recruiterProfile.getSecondaryPhNum() + "','"
                 + recruiterProfile.getCountry() + "','"
                 + recruiterProfile.getState() + "','"
                 + recruiterProfile.getCity() + "','"
-                + username + "')";  
+                + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -290,6 +292,25 @@ public class ProfileDAO extends AppDBInfoDAO {
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
-        }        
+        }
+    }
+
+    public ArrayList<String> retrieveRecruiterWatchList(String username) {
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITERWATCHLIST WHERE RECRUITERUSERNAME = '" + username + "'";
+        ArrayList<String> watchList = new  ArrayList<String>();
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+            int i = 0;
+            while (rs.next()) {
+                watchList.add(rs.getString("STUDENTUSERNAME"));
+                i++;
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        return watchList;
     }
 }

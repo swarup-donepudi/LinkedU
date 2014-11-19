@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <h:head>
+        <title>Student Profile</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
+    </h:head>
+    <body>
+        <ui:composition template="templates\AppThemeTemplate.xhtml">
+            <ui:define name="content">
+                <h:form id="editStudentProfileForm">
+                    <table id="studentProfileTablea" cellspacing="20">
+                        <tr>
+                            <td>  
+                                First Name </td>
+                            <td>
+                                <h:outputLabel id="rectruiterFName" value="#{searchController.selectedProfile.fName}"></h:outputLabel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                
+                                Last Name  </td>
+                            <td>
+                                <h:outputLabel id="rectruiterLName" value="#{searchController.selectedProfile.lName}"></h:outputLabel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  
+                                Gender 
+                            </td>
+                            <td> 
+                                <h:selectOneRadio id="gender" value="#{searchController.selectedProfile.gender}">
+                                    <f:selectItem itemValue="M" itemLabel="Male" />
+                                    <f:selectItem itemValue="F" itemLabel="Female" />
+                                </h:selectOneRadio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                          
+                                DOB 
+                            </td>
+                            <td>                 
+                                <h:outputLabel id="dob" value="#{searchController.selectedProfile.dob}"></h:outputLabel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  
+                                Highest Degree  
+                            </td>
+                            <td> 
+                                <h:outputLabel id="univURL" value="#{searchController.selectedProfile.highestDegree}"></h:outputLabel>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td> 
+                                GPA 
+                            </td>
+                            <td> 
+                                <h:outputLabel id="gpa" value="#{searchController.selectedProfile.GPA}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 
+                                Preferred Program 
+                            </td>
+                            <td> 
+                                <h:outputLabel id="preferredProgram" value="#{searchController.selectedProfile.preferredProgram}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> 
+                                Preferred Universities 
+                            </td>
+                            <td> 
+                                <h:outputLabel id="preferredUnivs" value="#{searchController.selectedProfile.primaryPhCountryCode}"/>
+                            </td>
+                        </tr>                
+                        <tr>
+                            <td> 
+                                Primary Phone 
+                            </td>
+                            <td> 
+                                <h:outputLabel id="primaryCode" value="#{searchController.selectedProfile.primaryPhCountryCode}"/>
+                                <h:outputLabel id="primaryNum" value="#{searchController.selectedProfile.primaryPhNum}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>                                 
+                                Secondary Phone 
+                            </td>
+                            <td>
+                                <h:outputLabel id="secCode" value="#{searchController.selectedProfile.secondaryPhCountryCode}"/>
+                                <h:outputLabel id="secNum" value="#{searchController.selectedProfile.secondaryPhNum}"/>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                Country 
+                            </td>
+                            <td>
+                                <h:outputLabel id="country" value="#{searchController.selectedProfile.country}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                State 
+                            </td>
+                            <td>
+                                <h:outputLabel id="state" value="#{searchController.selectedProfile.state}"/>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                City 
+                            </td>
+                            <td>
+                                <h:outputLabel id="city" value="#{searchController.selectedProfile.city}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton value="Add to Watch List" 
+                                                 action="#{searchController.addStudentToWatchList(searchController.selectedProfile.username)}"/></td>
+                        </tr>
+                    </table>
+                </h:form>
+                                  
+            </ui:define>
+        </ui:composition>                
+    </body>
+</html>

@@ -21,6 +21,8 @@ public class UserProfile {
     public String Country;
     public String City;
     public String State;
+    public String email;
+    public String username;
 
     public String getfName() {
         return fName;
@@ -44,6 +46,14 @@ public class UserProfile {
 
     public void setGender(char gender) {
         this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPrimaryPhCountryCode() {
@@ -101,6 +111,13 @@ public class UserProfile {
     public void setState(String State) {
         this.State = State;
     }
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     
 }

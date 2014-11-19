@@ -18,26 +18,46 @@ and open the template in the editor.
         <ui:composition template="templates\AppThemeTemplate.xhtml">
             <ui:define name="content">
                 <h:form id="StudentSearchForm">
-                    Preferred University <h:inputText id="preferredUniv" value="#{searchController.studentSearchCriteria.preferredUniv}"></h:inputText>
-                    <h:commandButton action="#{searchController.searchStudents()}" value="Search"></h:commandButton>
+                    <table cellspacing="20">
+                        <tr>
+                            <td>Preferred University</td><td><h:inputText id="preferredUniv" value="#{searchController.studentSearchCriteria.preferredUniv}"></h:inputText></td>
+                        </tr>
+                        <tr>
+                            <td>GPA</td><td><h:inputText id="GPA" value="#{searchController.studentSearchCriteria.GPA}"></h:inputText></td>
+                        </tr>
+                        <tr>
+                            <td>Preferred Program</td><td><h:inputText id="preferredProg" value="#{searchController.studentSearchCriteria.preferredProgram}"></h:inputText></td>
+                        </tr>
+                        <tr>
+                            <td>                        
+                                <h:commandButton id="searchButton" action="#{searchController.searchStudents()}" value="Search"></h:commandButton></td>
+                        </tr>
+                    </table>
+                    <h:dataTable value="#{searchController.studentSearchResults}" var="sr"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row"
+                                 id="searchResults"
+                                 >
+                        <h:column>
+                            <!-- column header -->
+                            <f:facet name="header">Click</f:facet>
+                            <!-- row record -->
+                            <h:commandLink action="#{searchController.fetchStudentProfile(sr.username)}">View Profile</h:commandLink>
+                        </h:column>            
+
+                        <h:column>
+                            <!-- column header -->
+                            <f:facet name="header">First Name</f:facet>
+                            <!-- row record -->
+                            #{sr.fName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">GPA</f:facet>
+                                #{sr.GPA}
+                        </h:column> 
+                    </h:dataTable>
                 </h:form>
-                <p:dataTable var="car" value="#{dtBasicView.cars}">
-                    <p:column headerText="Id">
-                        <h:outputText value="#{car.id}" />
-                    </p:column>
-
-                    <p:column headerText="Year">
-                        <h:outputText value="#{car.year}" />
-                    </p:column>
-
-                    <p:column headerText="Brand">
-                        <h:outputText value="#{car.brand}" />
-                    </p:column>
-
-                    <p:column headerText="Color">
-                        <h:outputText value="#{car.color}" />
-                    </p:column>
-                </p:dataTable>
             </ui:define>
         </ui:composition>
     </body>
