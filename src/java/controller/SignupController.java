@@ -70,7 +70,7 @@ public class SignupController {
     public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
-        int count = create.createProfile(signupBean);
+        int count = create.createAccount(signupBean);
         if(count == 1){
             loginController.getLoginBean().setUserName(signupBean.getUserName());
             loginController.getLoginBean().setAccountType(signupBean.getAccountType());

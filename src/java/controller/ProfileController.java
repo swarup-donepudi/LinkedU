@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
 
@@ -105,5 +107,12 @@ public class ProfileController implements Serializable {
             profileDao.createRecruiterProfile(this.recruiterProfile, loginController.getLoginBean().getUserName());
         }
         this.profileUpdateMessage="Profile updated successfully.";
-    }    
+    }
+    
+    public void showWatchList() throws SQLException, IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        ProfileDAO profileDao = new ProfileDAO();
+        this.recruiterProfile.setWatchList(profileDao.retrieveRecruiterWatchList(loginController.getLoginBean().getUserName()));
+        externalContext.redirect("RecruiterWatchList.xhtml");   
+    }
 }

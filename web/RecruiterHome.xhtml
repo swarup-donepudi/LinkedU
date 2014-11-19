@@ -26,6 +26,10 @@ and open the template in the editor.
             </h:form>
             <br /><br />
             <h:form>
+                <h:commandButton value="My Watch List" action="#{profileController.showWatchList()}"></h:commandButton>
+            </h:form>
+            <br /><br />            
+            <h:form>
                 <h:commandLink value="Search Students" action="#{searchController.showStudentSearchFormToRecruiter()}"></h:commandLink>
             </h:form>
         </ui:define>
