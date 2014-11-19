@@ -9,7 +9,6 @@ import dao.SignupDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,10 +23,6 @@ import model.SignupBean;
 public class SignupController {
 
     SignupBean signupBean;
-    String usernameMsg;
-    
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;
 
     /**
      * Creates a new instance of SignupController
@@ -44,45 +39,13 @@ public class SignupController {
         this.signupBean = signupBean;
     }
 
-    public String getUsernameMsg() {
-        return usernameMsg;
-    }
-
-    public void setUsernameMsg(String usernameMsg) {
-        this.usernameMsg = usernameMsg;
-    }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-    
-    public void checkDuplicateUsername() throws SQLException{
-       SignupDAO signupDB = new SignupDAO();
-       if(signupDB.usernameAlreadyExists(this.signupBean.getUserName())){
-           
-       }
-    }
-
     public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
         int count = create.createProfile(signupBean);
-        if(count == 1){
-            loginController.getLoginBean().setUserName(signupBean.getUserName());
-            loginController.getLoginBean().setAccountType(signupBean.getAccountType());
-            if(signupBean.getAccountType()=='S'){
-                externalContext.redirect("StudentHome.xhtml");
-            }
-            else{
-                externalContext.redirect("RecruiterHome.xhtml");
-            }
-        }
-        else{ 
-            externalContext.redirect("Error.xhtml");
-        }
+//      if(count == 1)
+            externalContext.redirect("SignedUp.xhtml");
+//      else 
+//          externalContext.redirect("Error.xhtml");
     }
 }

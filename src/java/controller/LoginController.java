@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package controller;
 
 import dao.LoginDAO;
@@ -17,24 +18,21 @@ import model.LoginBean;
 /**
  *
  * This class will be a controller for all login related functions
- *
+ * 
  * @author hgindra
  */
 @ManagedBean(name = "loginController")
 @SessionScoped
 
 public class LoginController {
-
-    private String errorMessage;
-    private boolean loggedIn;
-    private LoginBean loginBean;
+    String errorMessage;
+  LoginBean loginBean;
 
     /**
      * Creates a new instance of LoginController
      */
     public LoginController() {
         loginBean = new LoginBean();
-        this.setLoggedIn(false);
     }
 
     public LoginBean getLoginBean() {
@@ -52,43 +50,38 @@ public class LoginController {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    public void validateCredentials() throws IOException, SQLException {
+    
+    public void validateCredentials() throws IOException, SQLException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        LoginDAO login = new LoginDAO();
-        if (login.validCredentials(loginBean.getUserName(), loginBean.getPassword())) {
-            if (login.getAccountType(loginBean.getUserName()) == 'S') {
+        LoginDAO login=new LoginDAO();
+        if(login.validCredentials(loginBean.getUserName(), loginBean.getPassword() ))
+        {
+            if(login.getAccountType(loginBean.getUserName())=='S'){
                 loginBean.setAccountType('S');
                 externalContext.redirect("StudentHome.xhtml");
-            } else {
+            }
+            else{
                 loginBean.setAccountType('R');
                 externalContext.redirect("RecruiterHome.xhtml");
             }
-            this.setLoggedIn(true);
-        } else {
-            this.errorMessage = "Invalid Username/Password";
+        }
+        else{
+            this.errorMessage="Invalid Username/Password";
             externalContext.redirect("LoginFailed.xhtml");
         }
-
+            
     }
-
-    public void signUpValidation() throws IOException {
+    
+    public void signUpValidation() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();       
+        externalContext.redirect("SignedUp.xhtml");  
+       
+        
+    }
+    
+    public void createStudentProfile() throws IOException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SignedUp.xhtml");
-
+        externalContext.redirect("CreateProfileStudent.xhtml");  
     }
-
-    public void createStudentProfile() throws IOException {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("CreateProfileStudent.xhtml");
-    }
-
+    
 }

@@ -6,7 +6,7 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import model.SignupBean;
@@ -23,27 +23,17 @@ public class SignupDAO extends AppDBInfoDAO {
         super();
     }
 
-    public boolean usernameAlreadyExists(String Username) throws SQLException {
-        boolean usernameExists = false;
-        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
-        String selectStatement = "SELECT * FROM LINKEDU.LOGIN WHERE USERNAME='" + Username + "'";
-
-        Statement stmt = DBConn.createStatement();
-        ResultSet rs = stmt.executeQuery(selectStatement);
-
-        if (rs.next()) {
-            usernameExists = true;
-        }
-        rs.close();
-        this.DBConn.close();
-        stmt.close();
-        return usernameExists;
-    }
-
     public int createProfile(SignupBean bean) {
         int rowCount = 0;
         try {
-            this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+
+        try {
+            this.DBConn = DriverManager.getConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             String insertString;
             Statement stmt = DBConn.createStatement();
             insertString = "INSERT INTO LINKEDU.USERINFO VALUES ('"

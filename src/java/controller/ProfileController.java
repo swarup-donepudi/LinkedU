@@ -73,36 +73,36 @@ public class ProfileController implements Serializable {
 
     public String showStudentHisProfile() throws IOException, SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        if (profileDao.studentHasProfile(loginController.getLoginBean().getUserName())) {
-            this.studentProfile = profileDao.fetchStudentProfile(loginController.getLoginBean().getUserName());
+        if (profileDao.studentHasProfile(loginController.loginBean.getUserName())) {
+            this.studentProfile = profileDao.fetchStudentProfile(loginController.loginBean.getUserName());
         }
         return ("StudentProfile.xhtml");
     }
 
     public String showRecruiterHisProfile() throws IOException, SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        if (profileDao.recruiterHasProfile(loginController.getLoginBean().getUserName())) {
-            this.recruiterProfile = profileDao.fetchRecruiterProfile(loginController.getLoginBean().getUserName());
+        if (profileDao.recruiterHasProfile(loginController.loginBean.getUserName())) {
+            this.recruiterProfile = profileDao.fetchRecruiterProfile(loginController.loginBean.getUserName());
         }
         return ("RecruiterProfile.xhtml");
     }
 
     public void updateStudentProfile() throws SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        if (profileDao.studentHasProfile(loginController.getLoginBean().getUserName())) {
-            profileDao.updateStudentProfile(this.studentProfile, loginController.getLoginBean().getUserName());
+        if (profileDao.studentHasProfile(loginController.loginBean.getUserName())) {
+            profileDao.updateStudentProfile(this.studentProfile, loginController.loginBean.getUserName());
         } else {
-            profileDao.createStudentProfile(this.studentProfile, loginController.getLoginBean().getUserName());
+            profileDao.createStudentProfile(this.studentProfile, loginController.loginBean.getUserName());
         }
         this.profileUpdateMessage="Profile updated successfully.";
     }
     
     public void updateRecruiterProfile() throws SQLException {
         ProfileDAO profileDao = new ProfileDAO();
-        if (profileDao.recruiterHasProfile(loginController.getLoginBean().getUserName())) {
-            profileDao.updateRecruiterProfile(this.recruiterProfile, loginController.getLoginBean().getUserName());
+        if (profileDao.recruiterHasProfile(loginController.loginBean.getUserName())) {
+            profileDao.updateRecruiterProfile(this.recruiterProfile, loginController.loginBean.getUserName());
         } else {
-            profileDao.createRecruiterProfile(this.recruiterProfile, loginController.getLoginBean().getUserName());
+            profileDao.createRecruiterProfile(this.recruiterProfile, loginController.loginBean.getUserName());
         }
         this.profileUpdateMessage="Profile updated successfully.";
     }    
