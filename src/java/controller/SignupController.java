@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import mail.SendMail;
 import model.SignupBean;
 
 /**
@@ -25,15 +26,16 @@ public class SignupController {
 
     SignupBean signupBean;
     String usernameMsg;
-    
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
+    private SendMail mailObj;
 
     /**
      * Creates a new instance of SignupController
      */
     public SignupController() {
         signupBean = new SignupBean();
+        mailObj = new SendMail();
     }
 
     public SignupBean getSignupBean() {
@@ -59,30 +61,37 @@ public class SignupController {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
-    
-    public void checkDuplicateUsername() throws SQLException{
-       SignupDAO signupDB = new SignupDAO();
-       if(signupDB.usernameAlreadyExists(this.signupBean.getUserName())){
-           
-       }
+
+    public String checkDuplicateUsername() throws SQLException {
+        SignupDAO signupDB = new SignupDAO();
+        if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
+            usernameMsg = "User Name Already Exists !!!";
+        } else {
+            usernameMsg = "";
+        }
+        return usernameMsg;
     }
 
     public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
-        int count = create.createAccount(signupBean);
-        if(count == 1){
+        int count = create.createProfile(signupBean);
+        triggerMail();        
+        if (count == 1) {
             loginController.getLoginBean().setUserName(signupBean.getUserName());
             loginController.getLoginBean().setAccountType(signupBean.getAccountType());
-            if(signupBean.getAccountType()=='S'){
+            if (signupBean.getAccountType() == 'S') {
                 externalContext.redirect("StudentHome.xhtml");
-            }
-            else{
+            } else {
                 externalContext.redirect("RecruiterHome.xhtml");
             }
-        }
-        else{ 
+        } else {
             externalContext.redirect("Error.xhtml");
         }
+    }
+    
+    public void triggerMail(){
+        //mailObj.triggerMail(theModel.getUserID(), theModel.getFirstName(), theModel.getLastName(), theModel.getPassword(), theModel.getEmail());
+        mailObj.triggerMail(signupBean.getUserName(), signupBean.geteMail());
     }
 }
