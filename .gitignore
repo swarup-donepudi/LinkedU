@@ -48,3 +48,4 @@ Temporary Items
 *.log
 *.properties
 nbproject/private/private.properties
+*.log
