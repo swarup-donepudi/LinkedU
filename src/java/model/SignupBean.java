@@ -18,9 +18,9 @@ import javax.inject.Named;
 @SessionScoped
 
 public class SignupBean implements Serializable {
-    String userName="";
-    String password="";
-    String eMail="";
+    String userName;
+    String password;
+    String eMail;
     char accountType;
 
     public String getUserName() {

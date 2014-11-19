@@ -39,6 +39,26 @@ public class SignupDAO extends AppDBInfoDAO {
         stmt.close();
         return usernameExists;
     }
+    
+    public boolean emailAlreadyExits(String emailID) throws SQLException {
+        boolean emailExits=false;
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String selectStatement = "SELECT * FROM LINKEDU.USERINFO WHERE EMAILID='" + emailID + "'";
+        
+        Statement stmt = DBConn.createStatement();
+        ResultSet rs = stmt.executeQuery(selectStatement);
+
+        if (rs.next()) {
+            emailExits = true;
+        }
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
+        return emailExits;
+    }
+    
+    
+    
 
     public int createProfile(SignupBean bean) {
         int rowCount = 0;
