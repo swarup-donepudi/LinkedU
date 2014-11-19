@@ -37,7 +37,7 @@ public class NavigationController implements Serializable {
     }
     
     public String redirectToUserHomepage(){
-        if(loginController.loginBean.getAccountType()=='S')
+        if(loginController.getLoginBean().getAccountType()=='S')
             return ("StudentHome.xhtml");
         else
             return ("RecruiterHome.xhtml");
