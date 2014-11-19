@@ -25,7 +25,6 @@ public class SignupController {
 
     SignupBean signupBean;
     String usernameMsg;
-    
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
 
@@ -59,29 +58,30 @@ public class SignupController {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
-    
-    public void checkDuplicateUsername() throws SQLException{
-       SignupDAO signupDB = new SignupDAO();
-       if(signupDB.usernameAlreadyExists(this.signupBean.getUserName())){
-           
-       }
+
+    public String checkDuplicateUsername() throws SQLException {
+        SignupDAO signupDB = new SignupDAO();
+        if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
+            usernameMsg = "User Name Already Exists !!!";
+        } else {
+            usernameMsg = "";
+        }
+        return usernameMsg;
     }
 
     public void signUpValidation() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
         int count = create.createProfile(signupBean);
-        if(count == 1){
+        if (count == 1) {
             loginController.getLoginBean().setUserName(signupBean.getUserName());
             loginController.getLoginBean().setAccountType(signupBean.getAccountType());
-            if(signupBean.getAccountType()=='S'){
+            if (signupBean.getAccountType() == 'S') {
                 externalContext.redirect("StudentHome.xhtml");
-            }
-            else{
+            } else {
                 externalContext.redirect("RecruiterHome.xhtml");
             }
-        }
-        else{ 
+        } else {
             externalContext.redirect("Error.xhtml");
         }
     }

@@ -64,7 +64,11 @@
                         <td colspan="2">Not a member yet? Signup is super simple!!!</td>
                     </tr>
                     <tr>
-                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" ></h:inputText><h3 class="UserWarning" id="noNewUserName"></h3></td>
+                        <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" >
+                                              <f:ajax event="keyup" render="userIDResult"/> 
+                                              </h:inputText>
+                                          </td>
+                        <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                            
                     </tr>
                     <tr>
                         <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret></td>
@@ -86,6 +90,7 @@
                         <td><h:commandButton id="signupUser" class="button" value="Signup" action="#{signupController.signUpValidation()}"></h:commandButton></td>
                     </tr>
                 </table>
+                
             </h:form>
         </div><!-- Closing signupFrame DIV -->        
     </h:body>
