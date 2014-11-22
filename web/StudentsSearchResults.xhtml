@@ -17,7 +17,7 @@ and open the template in the editor.
         <ui:composition template="templates\AppThemeTemplate.xhtml">
             <ui:define name="content">
                 <h:form>
-                <h:dataTable value="#{searchController.studentSearchResults}" var="sr"
+                <h:dataTable value="#{searchController2.studentSearchResults}" var="sr"
     			styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row"
@@ -26,7 +26,7 @@ and open the template in the editor.
     				<!-- column header -->
     				<f:facet name="header">Click</f:facet>
     				<!-- row record -->
-                                <h:link outcome="StudentProfileForRecruiter">View Profile</h:link>
+                                <h:commandLink action="#{searchController2.fetchStudentProfile(sr.username)}">View Profile</h:commandLink>
     			</h:column>            
  
     			<h:column>

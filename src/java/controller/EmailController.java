@@ -1,10 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mail;
 
-import java.io.IOException;
+package controller;
+
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -21,9 +22,9 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  *
- * @author mananda
+ * @author skdonep
  */
-public class SendMail {
+public class EmailController {
     /*
      * To change this template, choose Tools | Templates
      * and open the template in the editor.
@@ -101,5 +102,6 @@ public class SendMail {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-    }
+    }    
+    
 }

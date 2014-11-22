@@ -30,49 +30,49 @@
                     document.getElementById("noNewUserName").innerHTML = "pls enter the user name";
                     return false;
                 }
-                else{
-                    document.getElementById("noNewUserName").innerHTML = "";                    
+                else {
+                    document.getElementById("noNewUserName").innerHTML = "";
                 }
                 if (newPwd1.value == "") {
                     document.getElementById("noPwd1").innerHTML = "Password Missing";
                     return false;
                 }
-                else{
-                    document.getElementById("noPwd1").innerHTML = "";                    
+                else {
+                    document.getElementById("noPwd1").innerHTML = "";
                 }
-                    
+
                 if (newPwd2.value == "") {
                     document.getElementById("noPwd2").innerHTML = "Retype the password";
                     return false;
                 }
-                else{
-                    document.getElementById("noPwd2").innerHTML = "";                                        
+                else {
+                    document.getElementById("noPwd2").innerHTML = "";
                 }
-                
+
                 if (newPwd1.equals(newPwd2)) {
                     document.getElementById("noPwd2").innerHTML = "Password do not match.";
                     return false;
                 }
-                else{
-                    document.getElementById("noPwd2").innerHTML = "";                    
+                else {
+                    document.getElementById("noPwd2").innerHTML = "";
                 }
-                
+
                 if (newEmail.value == "") {
                     document.getElementById("noEmail").innerHTML = "Email Field Empty";
                     return false;
                 }
-                else{
-                    document.getElementById("noEmail").innerHTML = "Email Field Empty";   
+                else {
+                    document.getElementById("noEmail").innerHTML = "Email Field Empty";
                 }
                 if (newAccountType.value == "") {
                     document.getElementById("noType").innerHTML = "Pls select the type of account";
                     return false;
                 }
-                else{
+                else {
                     document.getElementById("noType").innerHTML = "";
                 }
-                
-                
+
+
                 return true;
             }
         </script>        
@@ -80,15 +80,15 @@
     </h:head>
     <h:outputStylesheet library="css" name="IndexPage.css"  />
     <h:body>
-        <div id="logoFrame">
-
-        </div><!-- Closing Logo Frame DIV -->
-        <div id="loginFrame">
-            <h:form id="loginForm"  onsubmit="return validateLoginForm()">
-                Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
-                Password <h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
-                <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
-            </h:form>
+        <div id="indexHeader">
+            <div id="logo"></div><!-- Closing Logo Frame DIV -->
+            <div id="loginFrame">
+                <h:form id="loginForm"  onsubmit="return validateLoginForm()">
+                    Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
+                    Password <h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
+                    <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
+                </h:form>
+            </div>            
         </div>
         <div id="signupFrame">
             <h:form id="signupForm" onsubmit="return validateSignupForm()">
@@ -98,9 +98,9 @@
                     </tr>
                     <tr>
                         <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" >
-                                              <f:ajax event="keyup" render="userIDResult"/> 
-                                              </h:inputText>
-                                          </td>
+                                <f:ajax event="keyup" render="userIDResult"/> 
+                            </h:inputText>
+                        </td>
                         <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                                                    
                     </tr>
                     <tr>
@@ -122,7 +122,6 @@
                         <td><h:commandButton id="signupUser" class="button" value="Signup" action="#{signupController.signUpValidation()}"></h:commandButton></td>
                     </tr>
                 </table>
-                
             </h:form>
         </div><!-- Closing signupFrame DIV -->        
     </h:body>

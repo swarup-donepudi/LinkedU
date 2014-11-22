@@ -14,78 +14,59 @@ and open the template in the editor.
 }
 
 html{
-    background-image:url("#{resource['images:loginBackground.jpg']}");
+    background-image:url("#{resource['images:IndexBackground.jpg']}");
     background-size: 100%;
     color:black;
 }
 
-#logoFrame{
+#indexHeader{
+    margin-bottom: 20px;
+    padding-top:5px;
+    height:85px; 
+    background-color:red;
+}
+
+#logo{
     float:left;
-    margin-top:20px;
-    margin-left:2%;
-    background-image:url("#{resource['images:linkedULogo.png']}");
-    background-color:#fff;
-    background-size: 100%;
-    border-radius: 20px;
-    background-repeat: no-repeat;
-    border:1px solid #333;
     width:200px;
     height:60px;
-}
-#loginFrame{
-    //float:right;
-    margin-left:55%;
-    width:45%;
-    height:55px;
+    margin-top:8px;
+    padding:0px;
+    margin-left:2%;
+    background: url("#{resource['images:linkedULogo2.png']}");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color:#fff;
+    border-radius: 20px;
     //border:1px solid #333;
-    padding-top:40px;  
-    //font-weight: bold;
+}
+
+#loginFrame{
+    padding:20px;
+    margin-left:59%;    
+    margin-bottom: 20px; 
+    width:45%;
+    height:30px;    
+   //border:5px solid #333;   
+    font-weight: bold;
     font-size: 17px;
     color:white;
 }
-
-
 
 #signupFrame{
-    margin-top:100px;
+    margin-top:75px;
     margin-left:60%;
     padding:20px;
-    padding-bottom: 40px;
     padding-top: 10px;
-    background-color:#2c44f1;
+    background-color:red;
     border-radius: 10px;
-    //float:right;
-    width:30%;
-    height:350px;
+    width:35%;
+    height:450px;
     //border:1px solid #333;
-    opacity:0.65;
+    opacity:0.8;
+    font-size: 20px;
     //font-weight: bold;
-    font-size: 17px;
-    font-weight: bold;
     color:white;
-}
-
-#createProfileStudentForm{
-    margin-top: 100px;   
-    margin-right: 600px;
-    background-color: gray;
-    float:right;
-    border-radius: 10px;
-    width: 25%;
-    height: 275px;
-    padding:20px;
-    
-}
-
-#createProfileRecruiterForm{
-    margin-top: 100px;   
-    margin-right: 600px;
-    background-color: gray;
-    float:right;
-    border-radius: 10px;
-    width: 25%;
-    height: 315px;
-    padding:20px;
 }
 
 .inputTextBox{

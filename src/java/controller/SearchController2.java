@@ -8,11 +8,11 @@ package controller;
 
 import dao.SearchDAO;
 import java.io.IOException;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.StudentProfile;
@@ -23,12 +23,10 @@ import model.UniversitySearchCriteria;
  *
  * @author skdonep
  */
-@ManagedBean(name = "searchController")
+@Named(value = "searchController2")
 @SessionScoped
-public class SearchController implements Serializable {
-    
-    
-    private StudentSearchCriteria studentSearchCriteria;
+public class SearchController2 implements Serializable {
+private StudentSearchCriteria studentSearchCriteria;
     private UniversitySearchCriteria universitySearchCriteria;
     private ArrayList<StudentProfile>  studentSearchResults;
     private StudentProfile selectedProfile;
@@ -37,7 +35,7 @@ public class SearchController implements Serializable {
     /**
      * Creates a new instance of SearchController
      */
-    public SearchController() {
+    public SearchController2() {
         studentSearchCriteria = new StudentSearchCriteria();
         universitySearchCriteria = new UniversitySearchCriteria();
         studentSearchResults = new ArrayList<StudentProfile>();
@@ -96,12 +94,12 @@ public class SearchController implements Serializable {
         externalContext.redirect("SearchUniversities.xhtml");  
     }    
     
-    public String searchStudents() throws SQLException, IOException {
+    public void searchStudents() throws SQLException, IOException {
         studentSearchResults.clear();
         SearchDAO db = new SearchDAO();
         db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);  
-        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        return("StudentsSearchResults.xhtml");        
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("StudentsSearchResults.xhtml");        
     }
 
     public void fetchStudentProfile(String studentUsername) throws IOException {

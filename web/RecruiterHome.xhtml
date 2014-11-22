@@ -25,16 +25,16 @@ and open the template in the editor.
                 <ul>
                     <li>
                         <h:form>
-                            <h:commandButton value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandButton>
+                            <h:commandLink value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandLink>
                         </h:form>
                     </li>
                     
                     <li><h:form>
-                        <h:commandButton value="My Watch List" action="#{profileController.showWatchList()}"></h:commandButton>
+                        <h:commandLink value="My Watch List" action="#{profileController.showWatchList()}"></h:commandLink>
                     </h:form></li>
 
                     <li><h:form>
-                            <h:commandButton value="Search Students" action="#{searchController.showStudentSearchFormToRecruiter()}"></h:commandButton>
+                            <h:commandLink value="Search Students" action="#{searchController2.showStudentSearchFormToRecruiter()}"></h:commandLink>
                         </h:form>
                     </li>
                 </ul>

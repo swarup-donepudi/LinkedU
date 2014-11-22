@@ -17,15 +17,15 @@ and open the template in the editor.
 #header{
     margin-bottom: 20px;
     padding-top:5px;
-    height:80px;
+    height:85px;
     //border:5px solid #333;
-    background-color: #2d44f2;
+    background-color: red;
 }
 
 #logo{
     width:200px;
     height:60px;
-    margin-top:5px;
+    margin-top:8px;
     padding:0px;
     margin-left:2%;
     background: url("#{resource['images:linkedULogo2.png']}");
@@ -33,7 +33,7 @@ and open the template in the editor.
     background-size: 100%;
     background-color:#fff;
     border-radius: 20px;
-    border:1px solid #333;
+    //border:1px solid #333;
 }
 
 #content{
@@ -44,6 +44,25 @@ and open the template in the editor.
 
 #footer{
     //border:5px solid #008000;
+}
+
+.inputTextBox{
+    border-radius: 10px;
+    height: 30px;
+    padding:4px;
+    border:none;
+}
+
+.inputTextBox:focus{
+    outline: none;
+    box-shadow: 0px 0px 10px #fff;
+    border-color: #fff;
+}
+
+.inputTextBox:hover{
+    outline: none;
+    box-shadow: 0px 0px 10px #da1c5b;
+    border-color: #da1c5b;
 }
 
 input[type="text"],input[type="password"]{
@@ -68,15 +87,35 @@ input[type="submit"]{
 }
 
 #NavBar{
-    backgroung-color:#2c44f1;   
+    //background-color:#2c44f1;   
 }
 
 #NavBar ul{
     list-style-type:none;
+    float: left;
+}
+
+
+
+#NavBar ul li a{
+    margin:10px;
+    float: left;
+    padding:6px;
+    text-decoration: none;
+    color:black;
+    //border:2px solid #333;
+    border-radius:10px;
+    background-color: #2c44f1;
+    color:#fff;
+    font-weight: bold;
+}
+
+#NavBar ul li a:hover {
+    background-color: red;
 }
 
 #NavBar ul li{
-    margin:10px;
     display:inline;
+    
 }
 
