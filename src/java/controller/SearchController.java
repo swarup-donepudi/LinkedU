@@ -35,7 +35,7 @@ public class SearchController implements Serializable {
     private ArrayList<StudentProfile>  studentSearchResults;
     private StudentProfile selectedProfile;
     private String watchListUpdateMsg;
-    private String selectedStudentUsername;
+
     
     @ManagedProperty(value="#{loginController}")
     private LoginController loginController;
@@ -55,14 +55,6 @@ public class SearchController implements Serializable {
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
-    }
-    
-    public String getSelectedStudentUsername() {
-        return selectedStudentUsername;
-    }
-
-    public void setSelectedStudentUsername(String selectedStudentUsername) {
-        this.selectedStudentUsername = selectedStudentUsername;
     }
 
     public String getWatchListUpdateMsg() {
@@ -127,9 +119,10 @@ public class SearchController implements Serializable {
     public void fetchSelectedStudentProfile()  throws IOException {
         FacesContext fc =FacesContext.getCurrentInstance();
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-	this.selectedStudentUsername  = params.get("selectedUsername");
+        String selectedStudentUsername  = params.get("selectedUsername");        
+	
         for (StudentProfile studentProfile : studentSearchResults){
-            if ((studentProfile.getUsername().equals(this.selectedStudentUsername))){
+            if ((studentProfile.getUsername().equals(selectedStudentUsername))){
                 this.setSelectedProfile(studentProfile);
             }
         } 

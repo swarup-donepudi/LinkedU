@@ -27,14 +27,16 @@ and open the template in the editor.
                             <!-- column header -->
                             <f:facet name="header">Click</f:facet>
                             <!-- row record -->
-                            #{rwl}
+                            <h:link id="selectedUsername" outcome="StudentProfileInRecruiterWL" value="View" includeViewParams="true">
+                                <f:param  name="selectedUsername" value="#{rwl}" /> 
+                            </h:link>
                         </h:column>            
 
                         <h:column>
                             <!-- column header -->
                             <f:facet name="header">Username</f:facet>
                             <!-- row record -->
-                            hello2
+                            #{rwl}
                         </h:column>
                     </h:dataTable>
             </ui:define>
