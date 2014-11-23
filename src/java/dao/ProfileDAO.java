@@ -133,6 +133,7 @@ public class ProfileDAO extends AppDBInfoDAO {
                 recruiterProfile.setCity(rs.getString("COUNTRY"));
                 recruiterProfile.setState(rs.getString("STATE"));
                 recruiterProfile.setCity(rs.getString("CITY"));
+                recruiterProfile.setUsername(rs.getString("USERNAME"));
             }
 
             rs.close();

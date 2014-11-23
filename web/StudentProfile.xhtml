@@ -22,18 +22,46 @@ and open the template in the editor.
                     <table id="studentProfileTablea" cellspacing="20">
                         <tr>
                             <td>  
-                                First Name </td>
+                                Username </td>
                             <td>
-                                <h:inputText id="rectruiterFName" value="#{profileController.studentProfile.fName}"></h:inputText>
+                                <h:inputText disabled="true" id="studentUsername" value="#{profileController.studentProfile.username}"></h:inputText>
                             </td>
                         </tr>
+                        <tr>
+                            <td>  
+                                Password </td>
+                            <td>
+                                <h:inputSecret id="pwd" value="#{profileController.studentProfile.password}"></h:inputSecret>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td>  
+                                Re-Enter Password </td>
+                            <td>
+                                <h:inputSecret id="pwd2" value="#{profileController.studentProfile.password}"></h:inputSecret>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>  
+                                First Name </td>
+                            <td>
+                                <h:inputText id="studentFName" value="#{profileController.studentProfile.fName}"></h:inputText>
+                            </td>
+                        </tr>                        
                         <tr>
                             <td>                
                                 Last Name  </td>
                             <td>
-                                <h:inputText id="rectruiterLName" value="#{profileController.studentProfile.lName}"></h:inputText>
+                                <h:inputText id="studentLName" value="#{profileController.studentProfile.lName}"></h:inputText>
                             </td>
                         </tr>
+                        <tr>
+                            <td>  
+                                E-Mail </td>
+                            <td>
+                                <h:inputText id="email" value="#{profileController.studentProfile.email}"></h:inputText>
+                            </td>
+                        </tr>                        
                         <tr>
                             <td>  
                                 Gender 
