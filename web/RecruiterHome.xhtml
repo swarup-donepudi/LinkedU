@@ -16,29 +16,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <ui:composition template="templates\AppThemeTemplate.xhtml">
+        <ui:composition template="templates\AppThemeRecruiter.xhtml">
             <ui:define name="content">
                 Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
-                <br />
-                <br />
-                <div id="NavBar">
-                <ul>
-                    <li>
-                        <h:form>
-                            <h:commandLink value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandLink>
-                        </h:form>
-                    </li>
-                    
-                    <li><h:form>
-                        <h:commandLink value="My Watch List" action="#{profileController.showWatchList()}"></h:commandLink>
-                    </h:form></li>
-
-                    <li><h:form>
-                            <h:commandLink value="Search Students" action="#{searchController2.showStudentSearchFormToRecruiter()}"></h:commandLink>
-                        </h:form>
-                    </li>
-                </ul>
-                </div>
             </ui:define>
         </ui:composition>
     </body>
