@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.enterprise.context.SessionScoped;
+import java.util.Map;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.StudentProfile;
@@ -33,6 +35,10 @@ public class SearchController implements Serializable {
     private ArrayList<StudentProfile>  studentSearchResults;
     private StudentProfile selectedProfile;
     private String watchListUpdateMsg;
+    private String selectedStudentUsername;
+    
+    @ManagedProperty(value="#{loginController}")
+    private LoginController loginController;
     
     /**
      * Creates a new instance of SearchController
@@ -43,7 +49,21 @@ public class SearchController implements Serializable {
         studentSearchResults = new ArrayList<StudentProfile>();
     }
 
+    public LoginController getLoginController() {
+        return loginController;
+    }
 
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
+    }
+    
+    public String getSelectedStudentUsername() {
+        return selectedStudentUsername;
+    }
+
+    public void setSelectedStudentUsername(String selectedStudentUsername) {
+        this.selectedStudentUsername = selectedStudentUsername;
+    }
 
     public String getWatchListUpdateMsg() {
         return watchListUpdateMsg;
@@ -104,20 +124,21 @@ public class SearchController implements Serializable {
         return("StudentsSearchResults.xhtml");        
     }
 
-    public void fetchStudentProfile(String studentUsername) throws IOException {
+    public void fetchSelectedStudentProfile()  throws IOException {
+        FacesContext fc =FacesContext.getCurrentInstance();
+        Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+	this.selectedStudentUsername  = params.get("selectedUsername");
         for (StudentProfile studentProfile : studentSearchResults){
-            if ((studentProfile.getUsername().equals(studentUsername))){
+            if ((studentProfile.getUsername().equals(this.selectedStudentUsername))){
                 this.setSelectedProfile(studentProfile);
             }
-        }
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("StudentProfileForRecruiter.xhtml");
+        } 
     }    
     
     public void addStudentToWatchList(String studentUsername) throws SQLException{
         SearchDAO db = new SearchDAO();
-        
-        int rowCount = db.addStudentToRecruiterWatchList(studentUsername,studentUsername);
+        String recruiterUsername = this.loginController.getLoginBean().getUserName();
+        int rowCount = db.addStudentToRecruiterWatchList(recruiterUsername,studentUsername);
         if(rowCount==1)
             this.setWatchListUpdateMsg("Student added to your Watch List");
         else

@@ -109,7 +109,7 @@ public class ProfileController implements Serializable {
         this.profileUpdateMessage="Profile updated successfully.";
     }
     
-    public void showWatchList() throws SQLException, IOException{
+    public void showRecruiterWatchList() throws SQLException, IOException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         ProfileDAO profileDao = new ProfileDAO();
         this.recruiterProfile.setWatchList(profileDao.retrieveRecruiterWatchList(loginController.getLoginBean().getUserName()));

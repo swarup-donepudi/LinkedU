@@ -57,7 +57,7 @@ public class SearchDAO extends AppDBInfoDAO {
         stmt.close();
     }
     
-    public int addStudentToRecruiterWatchList(String studentUsername,String recruiterUsername) throws SQLException{
+    public int addStudentToRecruiterWatchList(String recruiterUsername,String studentUsername) throws SQLException{
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
         String insertStatement = "INSERT INTO LINKEDU.RECRUITERWATCHLIST VALUES('" + recruiterUsername + "','"+studentUsername+"')";

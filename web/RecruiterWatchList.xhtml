@@ -18,7 +18,25 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates\AppThemeRecruiter.xhtml">
             <ui:define name="content">
-                You have not added any students to your watchlist
+                <h:dataTable value="#{profileController.recruiterProfile.watchList}" var="rwl"
+                                 styleClass="order-table"
+                                 headerClass="order-table-header"
+                                 rowClasses="order-table-odd-row,order-table-even-row"
+                                 >
+                        <h:column>
+                            <!-- column header -->
+                            <f:facet name="header">Click</f:facet>
+                            <!-- row record -->
+                            #{rwl}
+                        </h:column>            
+
+                        <h:column>
+                            <!-- column header -->
+                            <f:facet name="header">Username</f:facet>
+                            <!-- row record -->
+                            hello2
+                        </h:column>
+                    </h:dataTable>
             </ui:define>
         </ui:composition>
     </body>
