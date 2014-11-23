@@ -15,6 +15,7 @@ and open the template in the editor.
 
 html{
     background-image:url("#{resource['images:IndexBackground.jpg']}");
+    background-repeat:no-repeat;
     background-size: 100%;
     color:black;
 }
@@ -30,15 +31,15 @@ html{
     float:left;
     width:200px;
     height:60px;
-    margin-top:8px;
+    margin-top:5px;
     padding:0px;
     margin-left:2%;
-    background: url("#{resource['images:linkedULogo2.png']}");
+    background: url("#{resource['images:linkedULogo.png']}");
     background-repeat: no-repeat;
     background-size: 100%;
     background-color:#fff;
     border-radius: 20px;
-    //border:1px solid #333;
+    border:6px solid #333;
 }
 
 #loginFrame{
@@ -49,13 +50,34 @@ html{
     height:30px;    
    //border:5px solid #333;   
     font-weight: bold;
-    font-size: 17px;
+    font-size: 18px;
     color:white;
 }
 
-#signupFrame{
+#WelcomeBanner{
+    float:left;
     margin-top:75px;
-    margin-left:60%;
+    margin-left:6%;
+    padding:20px;
+    //padding-top: 10px;
+    background-color:white;
+    background: url("#{resource['images:WelcomeBannerBackground.gif']}");    
+    background-size: 100%;
+    //background-color:red;
+    border-radius: 10px;
+    width:45%;
+    height:450px;
+    border:1px solid red;
+    opacity:0.8;
+    font-size: 20px;
+    //font-weight: bold;
+    color:blue;        
+}
+
+#signupFrame{
+    float:right;
+    margin-top:75px;
+    margin-right:3%;
     padding:20px;
     padding-top: 10px;
     background-color:red;
@@ -89,9 +111,13 @@ html{
 }
 
 .button{
-    height:30px;
-    width: 70px;
+    height:35px;
+    width: 90px;
     border-radius: 10px;
+    background-color: white;
+    font-size:20px;
+    font-weight: bold;
+    color:red;
     
 }
 

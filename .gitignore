@@ -42,13 +42,8 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-/build/
-/dist/
-*.log
-*.log
-*.properties
-nbproject/private/private.properties
-*.log
-nbproject/private/private.properties
-nbproject/private/private.properties
-nbproject/private/private.properties
+/build/*
+/dist/*
+/nbproject/*
+
+

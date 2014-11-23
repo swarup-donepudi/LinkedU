@@ -16,7 +16,9 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="AppTheme.css"  />
     </h:head>
     <body>
-        <ui:composition template="templates\AppThemeTemplate.xhtml">
+        <ui:composition template="templates\AppTheme.xhtml">
+            <ui:define name="logoutFrame">
+            </ui:define>
             <ui:define name="content">
                 <div>
 

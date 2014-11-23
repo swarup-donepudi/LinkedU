@@ -16,22 +16,10 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <ui:composition template="templates\AppThemeTemplate.xhtml">
+        <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
                 Welcome <h:outputText value="#{loginController.loginBean.userName}"></h:outputText>!!!
-                <br />
-                <br />
-                <h:form>
-                    <h:commandButton value="Edit Profile" action="#{profileController.showStudentHisProfile()}"></h:commandButton>
-                </h:form>
-                <br /><br />
-                <h:form>
-                    <h:commandLink value="Search Universities" action="#{searchController.showUniversitiesSearchFormToStudent()}"></h:commandLink>        
-                </h:form>
-
-
             </ui:define>
         </ui:composition>
-
     </body>
 </html>

@@ -15,7 +15,7 @@ and open the template in the editor.
 }
 
 #header{
-    margin-bottom: 20px;
+    margin:0px;
     padding-top:5px;
     height:85px;
     //border:5px solid #333;
@@ -25,15 +25,57 @@ and open the template in the editor.
 #logo{
     width:200px;
     height:60px;
-    margin-top:8px;
+    margin-top:5px;
     padding:0px;
     margin-left:2%;
-    background: url("#{resource['images:linkedULogo2.png']}");
+    background: url("#{resource['images:linkedULogo.png']}");
     background-repeat: no-repeat;
     background-size: 100%;
     background-color:#fff;
     border-radius: 20px;
-    //border:1px solid #333;
+    border:6px solid #333;
+}
+
+#logoutFrame{
+    float:right;
+    margin:0px;
+    margin-right: 10px;
+    padding:0px;
+    padding-top:5px;
+    padding-left:20px;
+    height:30px;
+    width:80px;
+    background-color: red;    
+    //border:2px solid black;
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;    
+}
+
+#logoutFrame a{
+    float:right;
+    margin:0px;
+    margin-left:10px;
+    padding:0px;
+    height:30px;
+    width:80px;    
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    text-decoration: none;
+    color:white;
+    font-weight: bold;
+    //border:2px solid black;
+}
+
+#sideBar{
+    float:left;
+    margin:0px;
+    padding:0px;
+    width:160px;
+    height:530px;
+    border-right:6px solid red;
+    border-bottom:6px solid red;
 }
 
 #content{
@@ -74,9 +116,9 @@ input[type="text"],input[type="password"]{
 
 input[type="submit"]{
     padding:5px;
-    height:30px;
-    background-color: #2c44f1;
-    color:#fff;
+    height:40px;
+    background-color: red;
+    color:white;
     font-weight: bold;
     border:none;
     border-radius:5px;  
@@ -86,35 +128,35 @@ input[type="submit"]{
     color:#da1c5b;
 }
 
-#NavBar{
-    //background-color:#2c44f1;   
+#sideBar ul{
+    width:160px;
+    //list-style-type:none;
+    //float: left;
+    //border:6px solid red;
 }
 
-#NavBar ul{
-    list-style-type:none;
+
+
+#sideBar ul li a{
     float: left;
-}
-
-
-
-#NavBar ul li a{
-    margin:10px;
-    float: left;
-    padding:6px;
+    padding-top:15px;
+    padding-left:20px;
+    width:140px;
+    height:40px;
     text-decoration: none;
     color:black;
-    //border:2px solid #333;
-    border-radius:10px;
-    background-color: #2c44f1;
-    color:#fff;
+    border-bottom:6px solid red;
+    color:#1a33b5;
     font-weight: bold;
 }
 
-#NavBar ul li a:hover {
+#sideBar ul li a:hover {
     background-color: red;
+    color:white;
+    border-top:6px solid white;
 }
 
-#NavBar ul li{
+#sideBar ul li{
     display:inline;
     
 }
