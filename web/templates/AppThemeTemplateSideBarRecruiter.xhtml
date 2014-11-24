@@ -6,26 +6,22 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     <h:head>
-	<h:outputStylesheet name="AppTheme.css" library="css" />
+        <h:outputStylesheet name="AppTheme.css" library="css" />
     </h:head>
     <body>
         <ui:composition>
-                <ul>
-                    <li>
-                        <h:form>
-                            <h:commandLink value="Edit Profile" action="#{profileController.showRecruiterHisProfile()}"></h:commandLink>
-                        </h:form>
-                    </li>
-
-                    <li><h:form>
-                            <h:commandLink value="My Watch List" action="#{profileController.showRecruiterWatchList()}"></h:commandLink>
-                        </h:form></li>
-
-                    <li><h:form>
-                            <h:commandLink value="Search Students" action="#{searchController.showStudentSearchFormToRecruiter()}"></h:commandLink>
-                        </h:form>
-                    </li>
-                </ul>
+            <ul>
+                <li>                        
+                    <h:link value="Edit Profile" outcome="RecruiterProfile"></h:link>
+                </li>
+                <li><h:form>
+                        <h:commandLink value="My Watch List" action="#{recruiterController.showRecruiterWatchList()}"></h:commandLink>
+                    </h:form>
+                </li>
+                <li>
+                    <h:link value="Search Students" outcome="SearchStudents"></h:link>
+                </li>
+            </ul>
         </ui:composition>
     </body>
 </html>

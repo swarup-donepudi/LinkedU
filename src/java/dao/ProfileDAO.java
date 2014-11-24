@@ -128,9 +128,10 @@ public class ProfileDAO extends AppDBInfoDAO {
                 recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
                 recruiterProfile.setUnivName(rs.getString("UNIVERSITY"));
                 recruiterProfile.setUnivURL(rs.getString("UNIV_URL"));
+                recruiterProfile.setEmail(rs.getString("EMAIL"));
                 recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
-                recruiterProfile.setCity(rs.getString("COUNTRY"));
+                recruiterProfile.setCountry(rs.getString("COUNTRY"));
                 recruiterProfile.setState(rs.getString("STATE"));
                 recruiterProfile.setCity(rs.getString("CITY"));
                 recruiterProfile.setUsername(rs.getString("USERNAME"));
@@ -173,7 +174,10 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + studentProfile.getState() + "', "
                 + "CITY = '"
-                + studentProfile.getCity() + ");";
+                + studentProfile.getCity() + ");"
+                + "EMAIL = '"
+                + studentProfile.getEmail() + "', "                
+                + "' WHERE USERNAME='"+username+"'";        
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -206,13 +210,16 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + recruiterProfile.getState() + "', "
                 + "CITY = '"
-                + recruiterProfile.getCity() + "'";
+                + recruiterProfile.getCity() + "', "
+                + "EMAIL = '"
+                + recruiterProfile.getEmail()               
+                + "' WHERE USERNAME='"+username+"'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
-            Statement stmt = this.DBConn.createStatement();
-            stmt.execute(updateQuery);
-            this.DBConn.close();
-            stmt.close();
+            try (Statement stmt = this.DBConn.createStatement()) {
+                stmt.executeUpdate(updateQuery);
+                this.DBConn.close();
+            }
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
@@ -220,6 +227,7 @@ public class ProfileDAO extends AppDBInfoDAO {
     }
 
     public void createStudentProfile(StudentProfile studentProfile, String username) {
+        String emailFromUserInfo = this.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -233,7 +241,8 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-                + "USERNAME) "
+                + "USERNAME,"
+                + "EMAIL)"
                 + "VALUES('"
                 + studentProfile.getfName() + "','"
                 + studentProfile.getlName() + "','"
@@ -248,7 +257,8 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + username + "')";
+                + username + "','"
+                + emailFromUserInfo + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -261,7 +271,7 @@ public class ProfileDAO extends AppDBInfoDAO {
     }
 
     public void createRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
-
+        String emailFromUserInfo = this.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.RECRUITER_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -272,7 +282,8 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-                + "USERNAME) "
+                + "USERNAME,"
+                + "EMAIL)"
                 + "VALUES('"
                 + recruiterProfile.getfName() + "','"
                 + recruiterProfile.getlName() + "','"
@@ -284,7 +295,8 @@ public class ProfileDAO extends AppDBInfoDAO {
                 + recruiterProfile.getCountry() + "','"
                 + recruiterProfile.getState() + "','"
                 + recruiterProfile.getCity() + "','"
-                + username + "')";
+                + username + "','"
+                + emailFromUserInfo + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -296,9 +308,26 @@ public class ProfileDAO extends AppDBInfoDAO {
         }
     }
 
+    public String getEmailFromUserInfoTable(String username) {
+        String emailFromUserInfo = "";
+        String getEmailQuery = "SELECT EMAIL FROM LINKEDU.USERINFO WHERE USERNAME='" + username + "'";
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(getEmailQuery);
+            if (rs.next()) {
+                emailFromUserInfo = rs.getString("EMAIL");
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        return emailFromUserInfo;
+    }
+
     public ArrayList<String> retrieveRecruiterWatchList(String username) {
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITERWATCHLIST WHERE RECRUITERUSERNAME = '" + username + "'";
-        ArrayList<String> watchList = new  ArrayList<String>();
+        ArrayList<String> watchList = new ArrayList<String>();
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();

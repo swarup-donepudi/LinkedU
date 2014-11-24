@@ -18,8 +18,8 @@ and open the template in the editor.
         <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
                 <h:form id="UniversitySearchForm">
-                    University Name <h:inputText id="preferredUniv" value="#{searchController.universitySearchCriteria.univName}"></h:inputText>
-                    <h:commandButton action="#{searchController.searchUniversities()}" value="Search"></h:commandButton>
+                    University Name <h:inputText id="preferredUniv" value="#{studentController.universitySearchCriteria.univName}"></h:inputText>
+                    <h:commandButton action="#{studentController.searchUniversities()}" value="Search"></h:commandButton>
                 </h:form>                         
             </ui:define>
         </ui:composition>        

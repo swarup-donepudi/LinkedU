@@ -6,14 +6,19 @@
 package controller;
 
 import dao.LoginDAO;
+import dao.ProfileDAO;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.LoginBean;
+import model.RecruiterProfile;
+import model.StudentProfile;
 
 /**
  *
@@ -23,9 +28,14 @@ import model.LoginBean;
  */
 @ManagedBean(name = "loginController")
 @SessionScoped
+public class LoginController implements Serializable{
 
-public class LoginController {
-
+    @ManagedProperty(value = "#{recruiterController}")
+    private RecruiterController recruiterController;
+    
+    @ManagedProperty(value = "#{studentController}")
+    private StudentController studentController;
+    
     private String errorMessage;
     private boolean loggedIn;
     private LoginBean loginBean;
@@ -35,7 +45,22 @@ public class LoginController {
      */
     public LoginController() {
         loginBean = new LoginBean();
-        
+    }
+
+    public RecruiterController getRecruiterController() {
+        return recruiterController;
+    }
+
+    public void setRecruiterController(RecruiterController recruiterController) {
+        this.recruiterController = recruiterController;
+    }
+
+    public StudentController getStudentController() {
+        return studentController;
+    }
+
+    public void setStudentController(StudentController studentController) {
+        this.studentController = studentController;
     }
 
     public LoginBean getLoginBean() {
@@ -64,35 +89,41 @@ public class LoginController {
 
     public void validateCredentials() throws IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        LoginDAO login = new LoginDAO();
-        if (login.validCredentials(loginBean.getUserName(), loginBean.getPassword())) {
-            if (login.getAccountType(loginBean.getUserName()) == 'S') {
-                loginBean.setAccountType('S');
-                externalContext.redirect("StudentHome.xhtml");
-            } else {
-                loginBean.setAccountType('R');
-                externalContext.redirect("RecruiterHome.xhtml");
-            }
+        LoginDAO loginDB = new LoginDAO();
+        if (loginDB.validCredentials(loginBean.getUserName(), loginBean.getPassword())) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
             session.setAttribute("loggedIn", "true");
             this.setLoggedIn(true);
+            if (loginDB.getAccountType(loginBean.getUserName()) == 'S') {
+                loginBean.setAccountType('S');
+                StudentProfile studentProfile;
+                ProfileDAO profileDB = new ProfileDAO();
+                String studentUsername = this.loginBean.getUserName();
+                if (profileDB.studentHasProfile(studentUsername)) {
+                    studentProfile = profileDB.fetchStudentProfile(studentUsername);
+                } else {
+                    studentProfile = new StudentProfile();
+                }
+                this.studentController.setStudentProfile(studentProfile);                
+                externalContext.redirect("StudentHome.xhtml");
+            } else {
+                loginBean.setAccountType('R');
+                RecruiterProfile recruiterProfile;
+                ProfileDAO profileDB = new ProfileDAO();
+                String recruiterUsername = this.loginBean.getUserName();
+                if (profileDB.recruiterHasProfile(recruiterUsername)) {
+                    recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
+                } else {
+                    recruiterProfile = new RecruiterProfile();
+                }
+                this.recruiterController.setRecruiterProfile(recruiterProfile);
+                externalContext.redirect("RecruiterHome.xhtml");
+            }
+
         } else {
             this.errorMessage = "Invalid Username/Password";
             externalContext.redirect("LoginFailed.xhtml");
         }
-
     }
-
-    public void signUpValidation() throws IOException {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SignedUp.xhtml");
-
-    }
-
-    public void createStudentProfile() throws IOException {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("CreateProfileStudent.xhtml");
-    }
-
 }

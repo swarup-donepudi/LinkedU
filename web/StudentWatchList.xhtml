@@ -10,39 +10,32 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+
     <h:head>
         <title>LinkEDU</title>
         <h:outputStylesheet library="css" name="AppTheme.css"  />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
-    <h:body>
-        <ui:composition template="templates\AppThemeRecruiter.xhtml">
+    <body>
+        <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <p:dataTable id="studentSearchResults" value="#{recruiterController.studentSearchResults}" var="sr"
-                                 paginator="true" rows="10">
+                <p:dataTable id="watchList" value="#{recruiterController.recruiterProfile.watchList}" var="rwl">
                         <p:column>
                             <!-- column header -->
                             <f:facet name="header">Click</f:facet>
                             <!-- row record -->
                             <h:link id="selectedUsername" outcome="StudentProfileForRecruiter" value="View" includeViewParams="true">
-                                <f:param  name="selectedUsername" value="#{sr.username}" /> 
+                                <f:param  name="selectedUsername" value="#{rwl}" /> 
                             </h:link>
-                        </p:column>            
-
+                        </p:column>
                         <p:column>
                             <!-- column header -->
-                            <f:facet name="header">First Name</f:facet>
+                            <f:facet name="header">Username</f:facet>
                             <!-- row record -->
-                            #{sr.getfName()}
+                            #{rwl}
                         </p:column>
-
-                        <p:column>
-                            <f:facet name="header">GPA</f:facet>
-                                #{sr.GPA}
-                        </p:column> 
-                    </p:dataTable>                
-                </h:form>    
+                    </p:dataTable>
             </ui:define>
         </ui:composition>
-    </h:body>
+    </body>
 </html>

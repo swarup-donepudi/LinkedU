@@ -5,15 +5,19 @@
  */
 package controller;
 
+import dao.ProfileDAO;
 import dao.SignupDAO;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import model.RecruiterProfile;
 import model.SignupBean;
+import model.StudentProfile;
 
 /**
  *
@@ -21,18 +25,38 @@ import model.SignupBean;
  */
 @ManagedBean(name = "signupController")
 @SessionScoped
-public class SignupController {
+public class SignupController implements Serializable{
+    
+    @ManagedProperty(value = "#{recruiterController}")
+    private RecruiterController recruiterController;
+    
+    @ManagedProperty(value = "#{studentController}")
+    private StudentController studentController;    
 
     SignupBean signupBean;
     String usernameMsg;
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;
 
     /**
      * Creates a new instance of SignupController
      */
     public SignupController() {
         signupBean = new SignupBean();
+    }
+
+    public RecruiterController getRecruiterController() {
+        return recruiterController;
+    }
+
+    public void setRecruiterController(RecruiterController recruiterController) {
+        this.recruiterController = recruiterController;
+    }
+
+    public StudentController getStudentController() {
+        return studentController;
+    }
+
+    public void setStudentController(StudentController studentController) {
+        this.studentController = studentController;
     }
 
     public SignupBean getSignupBean() {
@@ -51,14 +75,6 @@ public class SignupController {
         this.usernameMsg = usernameMsg;
     }
 
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-
     public String checkDuplicateUsername() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
@@ -75,11 +91,27 @@ public class SignupController {
         int count = create.createAccount(signupBean);
         this.triggerSignupMail();        
         if (count == 1) {
-            loginController.getLoginBean().setUserName(signupBean.getUserName());
-            loginController.getLoginBean().setAccountType(signupBean.getAccountType());
             if (signupBean.getAccountType() == 'S') {
+                StudentProfile studentProfile;
+                ProfileDAO profileDB = new ProfileDAO();
+                String studentUsername = this.signupBean.getUserName();
+                if (profileDB.studentHasProfile(studentUsername)) {
+                    studentProfile = profileDB.fetchStudentProfile(studentUsername);
+                } else {
+                    studentProfile = new StudentProfile();
+                }
+                this.studentController.setStudentProfile(studentProfile);                
                 externalContext.redirect("StudentHome.xhtml");
             } else {
+                RecruiterProfile recruiterProfile;
+                ProfileDAO profileDB = new ProfileDAO();
+                String recruiterUsername = this.signupBean.getUserName();
+                if (profileDB.recruiterHasProfile(recruiterUsername)) {
+                    recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
+                } else {
+                    recruiterProfile = new RecruiterProfile();
+                }
+                this.recruiterController.setRecruiterProfile(recruiterProfile);                
                 externalContext.redirect("RecruiterHome.xhtml");
             }
         } else {

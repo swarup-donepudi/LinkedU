@@ -12,15 +12,17 @@
         <ui:composition>
             <ul>
                 <li>
-                    <h:form>
-                        <h:commandLink value="Edit Profile" action="#{profileController.showStudentHisProfile()}"></h:commandLink>
-                    </h:form>
+                    <h:link value="Edit Profile" outcome="StudentProfile"></h:link>
                 </li>
                 <li>
-                    <h:form>
-                        <h:commandLink value="Find Universities" action="#{searchController.showUniversitiesSearchFormToStudent()}"></h:commandLink>        
-                    </h:form>
+                    <h:link value="My Watch List" outcome="StudentWatchList"></h:link>
+                </li>                
+                <li>
+                    <h:link value="Find Universities" outcome="SearchUniversities"></h:link>
                 </li>
+                <li>
+                    <h:link value="Compare Universities" outcome="CompareUniversities"></h:link>
+                </li>                
             </ul>
         </ui:composition>
     </body>

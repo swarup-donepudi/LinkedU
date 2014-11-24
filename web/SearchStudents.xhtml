@@ -20,17 +20,17 @@ and open the template in the editor.
                 <h:form id="StudentSearchForm">
                     <table cellspacing="20">
                         <tr>
-                            <td>Preferred University</td><td><h:inputText id="preferredUniv" value="#{searchController.studentSearchCriteria.preferredUniv}"></h:inputText></td>
+                            <td>Preferred University</td><td><h:inputText id="preferredUniv" value="#{recruiterController.studentSearchCriteria.preferredUniv}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>GPA</td><td><h:inputText id="GPA" value="#{searchController.studentSearchCriteria.GPA}"></h:inputText></td>
+                            <td>GPA</td><td><h:inputText id="GPA" value="#{recruiterController.studentSearchCriteria.GPA}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>Preferred Program</td><td><h:inputText id="preferredProg" value="#{searchController.studentSearchCriteria.preferredProgram}"></h:inputText></td>
+                            <td>Preferred Program</td><td><h:inputText id="preferredProg" value="#{recruiterController.studentSearchCriteria.preferredProgram}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>                        
-                                <h:commandButton id="searchButton" action="#{searchController.searchStudents()}" value="Search"></h:commandButton></td>
+                                <h:commandButton id="searchButton" action="#{recruiterController.searchStudents()}" value="Search"></h:commandButton></td>
                         </tr>
                     </table>
                 </h:form>

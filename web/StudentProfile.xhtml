@@ -24,42 +24,42 @@ and open the template in the editor.
                             <td>  
                                 Username </td>
                             <td>
-                                <h:inputText disabled="true" id="studentUsername" value="#{profileController.studentProfile.username}"></h:inputText>
+                                <h:inputText disabled="true" id="studentUsername" value="#{studentProfile.studentProfile.username}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 Password </td>
                             <td>
-                                <h:inputSecret id="pwd" value="#{profileController.studentProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd" value="#{studentProfile.studentProfile.password}"></h:inputSecret>
                             </td>
                         </tr>                        
                         <tr>
                             <td>  
                                 Re-Enter Password </td>
                             <td>
-                                <h:inputSecret id="pwd2" value="#{profileController.studentProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd2" value="#{studentProfile.studentProfile.password}"></h:inputSecret>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 First Name </td>
                             <td>
-                                <h:inputText id="studentFName" value="#{profileController.studentProfile.fName}"></h:inputText>
+                                <h:inputText id="studentFName" value="#{studentProfile.studentProfile.fName}"></h:inputText>
                             </td>
                         </tr>                        
                         <tr>
                             <td>                
                                 Last Name  </td>
                             <td>
-                                <h:inputText id="studentLName" value="#{profileController.studentProfile.lName}"></h:inputText>
+                                <h:inputText id="studentLName" value="#{studentProfile.studentProfile.lName}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 E-Mail </td>
                             <td>
-                                <h:inputText id="email" value="#{profileController.studentProfile.email}"></h:inputText>
+                                <h:inputText id="email" value="#{studentProfile.studentProfile.email}"></h:inputText>
                             </td>
                         </tr>                        
                         <tr>
@@ -67,7 +67,7 @@ and open the template in the editor.
                                 Gender 
                             </td>
                             <td> 
-                                <h:selectOneRadio id="gender" value="#{profileController.studentProfile.gender}">
+                                <h:selectOneRadio id="gender" value="#{studentProfile.studentProfile.gender}">
                                     <f:selectItem itemValue="M" itemLabel="Male" />
                                     <f:selectItem itemValue="F" itemLabel="Female" />
                                 </h:selectOneRadio>
@@ -78,7 +78,7 @@ and open the template in the editor.
                                 DOB 
                             </td>
                             <td>                 
-                                <h:inputText id="dob" value="#{profileController.studentProfile.dob}"></h:inputText>
+                                <h:inputText id="dob" value="#{studentProfile.studentProfile.dob}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                 Highest Degree  
                             </td>
                             <td> 
-                                <h:inputText id="univURL" value="#{profileController.studentProfile.highestDegree}"></h:inputText>
+                                <h:inputText id="univURL" value="#{studentProfile.studentProfile.highestDegree}"></h:inputText>
                             </td>
                         </tr>  
                         <tr>
@@ -94,7 +94,7 @@ and open the template in the editor.
                                 GPA 
                             </td>
                             <td> 
-                                <h:inputText id="gpa" value="#{profileController.studentProfile.GPA}"/>
+                                <h:inputText id="gpa" value="#{studentProfile.studentProfile.GPA}"/>
                             </td>
                         </tr>
                         <tr>
@@ -102,7 +102,7 @@ and open the template in the editor.
                                 Preferred Program 
                             </td>
                             <td> 
-                                <h:inputText id="preferredProgram" value="#{profileController.studentProfile.preferredProgram}"/>
+                                <h:inputText id="preferredProgram" value="#{studentProfile.studentProfile.preferredProgram}"/>
                             </td>
                         </tr>
                         <tr>
@@ -110,7 +110,7 @@ and open the template in the editor.
                                 Preferred Universities 
                             </td>
                             <td> 
-                                <h:inputText id="preferredUnivs" value="#{profileController.studentProfile.preferredUnivs}"/>
+                                <h:inputText id="preferredUnivs" value="#{studentProfile.studentProfile.preferredUnivs}"/>
                             </td>
                         </tr>                
                         <tr>
@@ -118,8 +118,8 @@ and open the template in the editor.
                                 Primary Phone 
                             </td>
                             <td> 
-                                <h:inputText id="primaryCode" value="#{profileController.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="primaryNum" value="#{profileController.studentProfile.primaryPhNum}"/>
+                                <h:inputText id="primaryCode" value="#{studentProfile.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="primaryNum" value="#{studentProfile.studentProfile.primaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>
@@ -127,8 +127,8 @@ and open the template in the editor.
                                 Secondary Phone 
                             </td>
                             <td>
-                                <h:inputText id="secCode" value="#{profileController.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="secNum" value="#{profileController.studentProfile.secondaryPhNum}"/>
+                                <h:inputText id="secCode" value="#{studentProfile.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="secNum" value="#{studentProfile.studentProfile.secondaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -136,7 +136,7 @@ and open the template in the editor.
                                 Country 
                             </td>
                             <td>
-                                <h:inputText id="country" value="#{profileController.studentProfile.country}"/>
+                                <h:inputText id="country" value="#{studentProfile.studentProfile.country}"/>
                             </td>
                         </tr>
                         <tr>
@@ -144,7 +144,7 @@ and open the template in the editor.
                                 State 
                             </td>
                             <td>
-                                <h:inputText id="state" value="#{profileController.studentProfile.state}"/>
+                                <h:inputText id="state" value="#{studentProfile.studentProfile.state}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -152,14 +152,14 @@ and open the template in the editor.
                                 City 
                             </td>
                             <td>
-                                <h:inputText id="city" value="#{profileController.studentProfile.city}"/>
+                                <h:inputText id="city" value="#{studentProfile.studentProfile.city}"/>
                             </td>
                         </tr>
                     </table>
                     <h:commandButton value="Update Profile" 
-                                     action="#{profileController.updateStudentProfile()}"/>
+                                     action="#{studentProfile.updateStudentProfile()}"/>
                 </h:form><br /><br />
-                <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>                    
+                <h:outputText value="#{studentProfile.profileUpdateMessage}"></h:outputText>                    
             </ui:define>
         </ui:composition>                
     </body>

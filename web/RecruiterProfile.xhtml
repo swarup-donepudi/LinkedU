@@ -24,42 +24,42 @@ and open the template in the editor.
                             <td>  
                                 Username </td>
                             <td>
-                                <h:inputText disabled="true" id="recruiterUsername" value="#{profileController.recruiterProfile.username}"></h:inputText>
+                                <h:inputText disabled="true" id="recruiterUsername" value="#{recruiterController.recruiterProfile.username}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 Password </td>
                             <td>
-                                <h:inputSecret id="pwd" value="#{profileController.recruiterProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd" value="#{recruiterController.recruiterProfile.password}"></h:inputSecret>
                             </td>
                         </tr>                        
                         <tr>
                             <td>  
                                 Re-Enter Password </td>
                             <td>
-                                <h:inputSecret id="pwd2" value="#{profileController.recruiterProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd2" value="#{recruiterController.recruiterProfile.password}"></h:inputSecret>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 First Name </td>
                             <td>
-                                <h:inputText id="recruiterFName" value="#{profileController.recruiterProfile.fName}"></h:inputText>
+                                <h:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fName}"></h:inputText>
                             </td>
                         </tr>                        
                         <tr>
                             <td>                
                                 Last Name  </td>
                             <td>
-                                <h:inputText id="recruiterLName" value="#{profileController.recruiterProfile.lName}"></h:inputText>
+                                <h:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lName}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 E-Mail </td>
                             <td>
-                                <h:inputText id="email" value="#{profileController.recruiterProfile.email}"></h:inputText>
+                                <h:inputText id="email" value="#{recruiterController.recruiterProfile.email}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
@@ -67,7 +67,7 @@ and open the template in the editor.
                                 Gender 
                             </td>
                             <td> 
-                                <h:selectOneRadio id="gender" value="#{profileController.recruiterProfile.gender}">
+                                <h:selectOneRadio id="gender" value="#{recruiterController.recruiterProfile.gender}">
                                     <f:selectItem itemValue="M" itemLabel="Male" />
                                     <f:selectItem itemValue="F" itemLabel="Female" />
                                 </h:selectOneRadio>
@@ -78,7 +78,7 @@ and open the template in the editor.
                                 University Name 
                             </td>
                             <td>                 
-                                <h:inputText id="univName" value="#{profileController.recruiterProfile.univName}"></h:inputText>
+                                <h:inputText id="univName" value="#{recruiterController.recruiterProfile.univName}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                 University URL  
                             </td>
                             <td> 
-                                <h:inputText id="univURL" value="#{profileController.recruiterProfile.univURL}"></h:inputText>
+                                <h:inputText id="univURL" value="#{recruiterController.recruiterProfile.univURL}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
@@ -94,8 +94,8 @@ and open the template in the editor.
                                 Primary Phone 
                             </td>
                             <td> 
-                                <h:inputText id="primaryCode" value="#{profileController.recruiterProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="primaryNum" value="#{profileController.recruiterProfile.primaryPhNum}"/>
+                                <h:inputText id="primaryCode" value="#{recruiterController.recruiterProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>
@@ -103,8 +103,8 @@ and open the template in the editor.
                                 Secondary Phone 
                             </td>
                             <td>
-                                <h:inputText id="secCode" value="#{profileController.recruiterProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="secNum" value="#{profileController.recruiterProfile.secondaryPhNum}"/>
+                                <h:inputText id="secCode" value="#{recruiterController.recruiterProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -112,7 +112,7 @@ and open the template in the editor.
                                 Country 
                             </td>
                             <td>
-                                <h:inputText id="country" value="#{profileController.recruiterProfile.country}"/>
+                                <h:inputText id="country" value="#{recruiterController.recruiterProfile.country}"/>
                             </td>
                         </tr>
                         <tr>
@@ -120,7 +120,7 @@ and open the template in the editor.
                                 State 
                             </td>
                             <td>
-                                <h:inputText id="state" value="#{profileController.recruiterProfile.state}"/>
+                                <h:inputText id="state" value="#{recruiterController.recruiterProfile.state}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -128,18 +128,18 @@ and open the template in the editor.
                                 City 
                             </td>
                             <td>
-                                <h:inputText id="city" value="#{profileController.recruiterProfile.city}"/>
+                                <h:inputText id="city" value="#{recruiterController.recruiterProfile.city}"/>
                             </td>
                         </tr>
                         <tr>                    
                             <td>
                                 <h:commandButton value="Update Profile" 
-                                                 action="#{profileController.updateRecruiterProfile()}"/>
+                                                 action="#{recruiterController.updateRecruiterProfile()}"/>
                             </td>
                         </tr>                
                     </table>
                 </h:form> <br/>
-                <h:outputText value="#{profileController.profileUpdateMessage}"></h:outputText>
+                <h:outputText value="#{recruiterController.profileUpdateMessage}"></h:outputText>
             </ui:define>
         </ui:composition>           
     </body>

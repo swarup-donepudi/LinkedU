@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       >
     <h:head>
         <script language="javascript">
@@ -75,7 +76,7 @@
 
                 return true;
             }
-        </script>        
+        </script>
         <title>LinkedU Login</title>
     </h:head>
     <h:outputStylesheet library="css" name="IndexPage.css"  />
@@ -86,9 +87,9 @@
                 <h:form id="loginForm"  onsubmit="return validateLoginForm()">
                     Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
                     Password <h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
-                    <h:commandButton class="button" id="loginUser" value="Login" action="#{loginController.validateCredentials()}"></h:commandButton>
+                    <p:commandButton id="loginUser" value="Login" action="#{loginController.validateCredentials()}" ajax="false"></p:commandButton>
                 </h:form>
-            </div>            
+            </div>
         </div>
         <div id="WelcomeBanner">
             <p><h2>Students find their dream University</h2><br/>
@@ -102,10 +103,10 @@
                     </tr>
                     <tr>
                         <td>Username </td><td><h:inputText id="newUsername" class="inputTextBox"  value="#{signupController.signupBean.userName}" >
-                                <f:ajax event="keyup" render="userIDResult"/> 
+                                <f:ajax event="keyup" render="userIDResult"/>
                             </h:inputText>
                         </td>
-                        <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>                                                    
+                        <td><h:outputText value="#{signupController.checkDuplicateUsername()}" id="userIDResult"/></td>
                     </tr>
                     <tr>
                         <td>Password </td><td><h:inputSecret id="newPwd1" redisplay="false" class="inputTextBox"  value="#{signupController.signupBean.password}" ></h:inputSecret><h4 class="UserWarning" id="noPwd1"></h4></td>
@@ -123,11 +124,11 @@
                             </h:selectOneRadio></td>
                     </tr>
                     <tr>
-                        <td><h:commandButton id="signupUser" class="button" value="Signup" action="#{signupController.signUpValidation()}"></h:commandButton></td>
+                        <td><p:commandButton id="signupUser" ajax="false" value="Signup" action="#{signupController.signUpValidation()}"></p:commandButton></td>
                     </tr>
                 </table>
             </h:form>
-        </div><!-- Closing signupFrame DIV -->        
+        </div><!-- Closing signupFrame DIV -->
     </h:body>
 </html>
 

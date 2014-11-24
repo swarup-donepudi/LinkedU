@@ -3,10 +3,11 @@
 xmlns="http://www.w3.org/1999/xhtml"
 xmlns:ui="http://java.sun.com/jsf/facelets"
 xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core">
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
 
 <f:metadata>
-    <f:event type="preRenderView" listener="#{searchController.fetchSelectedStudentProfile}"/>
+    <f:event type="preRenderView" listener="#{recruiterController.shoWStudentProfileToRecruiter()}"/>
 </f:metadata>
 <ui:decorate template="templates\AppThemeRecruiter.xhtml">
    <ui:define name="content">
@@ -16,14 +17,14 @@ xmlns:f="http://java.sun.com/jsf/core">
                             <td>  
                                 First Name </td>
                            <td>
-                                <h:outputLabel id="studentFName" value="#{searchController.selectedProfile.fName}"></h:outputLabel>
+                               <h:outputLabel id="studentFName" value="#{recruiterController.selectedStudent.fName}"></h:outputLabel>
                             </td>
                         </tr>
                         <tr>
                             <td>                
                                 Last Name  </td>
                            <td>
-                                <h:outputLabel id="studentLName" value="#{searchController.selectedProfile.lName}"></h:outputLabel>
+                                <h:outputLabel id="studentLName" value="#{recruiterController.selectedStudent.lName}"></h:outputLabel>
                             </td>
                         </tr>
                         <tr>
@@ -31,7 +32,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Gender 
                             </td>
                             <td> 
-                                <h:outputLabel id="gender" value="#{searchController.selectedProfile.gender}"></h:outputLabel>
+                                <h:outputLabel id="gender" value="#{recruiterController.selectedStudent.gender}"></h:outputLabel>
                             </td>
                         </tr>
                         <tr>
@@ -39,7 +40,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 DOB 
                             </td>
                             <td>                 
-                                <h:outputLabel id="dob" value="#{searchController.selectedProfile.dob}"></h:outputLabel>
+                                <h:outputLabel id="dob" value="#{recruiterController.selectedStudent.dob}"></h:outputLabel>
                             </td>
                         </tr>
                         <tr>
@@ -47,7 +48,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Highest Degree  
                             </td>
                             <td> 
-                                <h:outputLabel id="highestDegree" value="#{searchController.selectedProfile.highestDegree}"></h:outputLabel>
+                                <h:outputLabel id="highestDegree" value="#{recruiterController.selectedStudent.highestDegree}"></h:outputLabel>
                             </td>
                         </tr>  
                         <tr>
@@ -55,7 +56,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 GPA 
                             </td>
                             <td> 
-                                <h:outputLabel id="gpa" value="#{searchController.selectedProfile.GPA}"/>
+                                <h:outputLabel id="gpa" value="#{recruiterController.selectedStudent.GPA}"/>
                             </td>
                         </tr>
                         <tr>
@@ -63,7 +64,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Preferred Program 
                             </td>
                             <td> 
-                                <h:outputLabel id="preferredProgram" value="#{searchController.selectedProfile.preferredProgram}"/>
+                                <h:outputLabel id="preferredProgram" value="#{recruiterController.selectedStudent.preferredProgram}"/>
                             </td>
                         </tr>
                         <tr>
@@ -71,7 +72,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Preferred Universities 
                             </td>
                             <td> 
-                                <h:outputLabel id="preferredUnivs" value="#{searchController.selectedProfile.preferredUnivs}"/>
+                                <h:outputLabel id="preferredUnivs" value="#{recruiterController.selectedStudent.preferredUnivs}"/>
                             </td>
                         </tr>                
                         <tr>
@@ -79,8 +80,8 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Primary Phone 
                             </td>
                             <td> 
-                                <h:outputLabel id="primaryCode" value="#{searchController.selectedProfile.primaryPhCountryCode}"/>
-                                <h:outputLabel id="primaryNum" value="#{searchController.selectedProfile.primaryPhNum}"/>
+                                <h:outputLabel id="primaryCode" value="#{recruiterController.selectedStudent.primaryPhCountryCode}"/>
+                                <h:outputLabel id="primaryNum" value="#{recruiterController.selectedStudent.primaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>
@@ -88,8 +89,8 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Secondary Phone 
                             </td>
                             <td>
-                                <h:outputLabel id="secCode" value="#{searchController.selectedProfile.secondaryPhCountryCode}"/>
-                                <h:outputLabel id="secNum" value="#{searchController.selectedProfile.secondaryPhNum}"/>
+                                <h:outputLabel id="secCode" value="#{recruiterController.selectedStudent.secondaryPhCountryCode}"/>
+                                <h:outputLabel id="secNum" value="#{recruiterController.selectedStudent.secondaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -97,7 +98,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 Country 
                             </td>
                             <td>
-                                <h:outputLabel id="country" value="#{searchController.selectedProfile.country}"/>
+                                <h:outputLabel id="country" value="#{recruiterController.selectedStudent.country}"/>
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +106,7 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 State 
                             </td>
                             <td>
-                                <h:outputLabel id="state" value="#{searchController.selectedProfile.state}"/>
+                                <h:outputLabel id="state" value="#{recruiterController.selectedStudent.state}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -113,22 +114,21 @@ xmlns:f="http://java.sun.com/jsf/core">
                                 City 
                             </td>
                             <td>
-                                <h:outputLabel id="city" value="#{searchController.selectedProfile.city}"/>
+                                <h:outputLabel id="city" value="#{recruiterController.selectedStudent.city}"/>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><h:commandButton value="Add to Watch List" 
-                                                 action="#{searchController.addStudentToWatchList(searchController.selectedProfile.username)}"/></td>
-                        </tr>
-                        <tr>                            
-                        </tr>
-                        <tr>
-                            <h:outputText value="#{searchController.watchListUpdateMsg}"></h:outputText>
                         </tr>                        
                     </table>
+                    <table cellspacing="20">
+                        <tr>
+                            <td><p:commandButton rendered="#{recruiterController.selectedStudentNotInWatchList}"
+                                             action="#{recruiterController.addStudentToWatchList(studentUsername)}"
+                                             value="Add to Watch List"
+                                             ajax="false"></p:commandButton></td>
+                            <td><p:commandButton action="#" value="Request More Info" ajax="false"></p:commandButton></td>
+                            <td><p:commandButton action="#" value="Schedule Appointment" ajax="false"></p:commandButton></td>                            
+                        </tr>
+                    </table>
                 </h:form>
-       
-       
    </ui:define>
 </ui:decorate>
 </ui:composition>
