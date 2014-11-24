@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>LinkEDU</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <ui:composition template="#{templateController.pageTemplate}">
+            <ui:define name="content">
+                <h:form id="RequestMoreInfoForm">
+                    <table cellspacing="20">
+                        <tr>
+                            <td>Subject</td><td><h:inputText id="subject" size="50" value="#{recruiterController.studentSearchCriteria.preferredUniv}"></h:inputText></td>
+                        </tr>
+                        <tr>
+                            <td>Message</td><td><p:inputTextarea  id="message" value="#{recruiterController.studentSearchCriteria.GPA}"
+                                                                  counter="display" scrollHeight="60"
+                                                                    maxlength="200" counterTemplate="{0} characters remaining">
+                                </p:inputTextarea>
+                                <h:outputText id="display" /></td>
+                            <p:autoComplete Q
+                        </tr>
+                        <tr>
+                            <td>                        
+                                <h:commandButton id="sendButton" action="#{recruiterController.searchStudents()}" value="Send"></h:commandButton></td>
+                        </tr>
+                    </table>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
