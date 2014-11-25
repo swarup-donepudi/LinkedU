@@ -120,6 +120,7 @@ input[type="text"],input[type="password"]{
 input[type="submit"]{
     padding:5px;
     height:40px;
+    min-width: 120px;
     background-color: red;
     color:white;
     font-weight: bold;
@@ -147,7 +148,6 @@ input[type="submit"]{
     width:140px;
     height:40px;
     text-decoration: none;
-    color:black;
     border-bottom:3px solid red;
     color:#1a33b5;
     font-weight: bold;
@@ -164,3 +164,17 @@ input[type="submit"]{
     
 }
 
+#unreadCount{
+    background-color:green;
+    border-radius:30px;
+    color:white;
+    font-size: 16px;
+}
+
+#sideBarSplitter{
+    height:80px;
+    width:140px;
+    background-color: #1a33b5;
+    color:white;
+    border:3px solid yellow;
+}

@@ -5,9 +5,9 @@
  */
 package controller;
 
-import dao.ProfileDAO;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
+import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -102,7 +102,7 @@ public class RecruiterController implements Serializable {
     }
     
     public String showRecruiterHisProfile() throws IOException, SQLException {
-        ProfileDAO profileDao = new ProfileDAO();
+        RecruiterDAO profileDao = new RecruiterDAO();
         if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
             this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
         }
@@ -110,7 +110,7 @@ public class RecruiterController implements Serializable {
     }    
 
     public String showRecruiterWatchList() throws SQLException, IOException {
-        ProfileDAO profileDao = new ProfileDAO();
+        RecruiterDAO profileDao = new RecruiterDAO();
         this.recruiterProfile.setWatchList(profileDao.retrieveRecruiterWatchList(this.recruiterProfile.username));
         return ("RecruiterWatchList.xhtml");
     }
@@ -122,16 +122,16 @@ public class RecruiterController implements Serializable {
         RecruiterDAO db = new RecruiterDAO();
         String recruiterUsername = this.recruiterProfile.username;
         this.selectedStudentNotInWatchList = db.studentNotInWatchList(recruiterUsername, selectedStudentUsername);
-        ProfileDAO profileDB = new ProfileDAO();
+        StudentDAO profileDB = new StudentDAO();
         this.selectedStudent = profileDB.fetchStudentProfile(selectedStudentUsername);
     }
 
     public String updateRecruiterProfile() throws SQLException {
-        ProfileDAO profileDao = new ProfileDAO();
-        if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
-            profileDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+        RecruiterDAO recruiterDao = new RecruiterDAO();
+        if (recruiterDao.recruiterHasProfile(this.recruiterProfile.username)) {
+            recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
         } else {
-            profileDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+            recruiterDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
         }
         this.recruiterProfile.setUsername(this.recruiterProfile.username);
         this.profileUpdateMessage = "Profile updated successfully.";

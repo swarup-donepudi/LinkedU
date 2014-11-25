@@ -4,9 +4,11 @@
  */
 package controller;
 
-import dao.ProfileDAO;
+import dao.StudentDAO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
@@ -14,6 +16,7 @@ import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.UniversitySearchCriteria;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -67,16 +70,23 @@ public class StudentController {
     }
 
     public void updateStudentProfile() throws SQLException {
-        ProfileDAO profileDao = new ProfileDAO();
+        StudentDAO profileDao = new StudentDAO();
         if (profileDao.studentHasProfile(this.studentProfile.username)) {
             profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.username);
         } else {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.username);
         }
         this.profileUpdateMessage="Profile updated successfully.";
-    }   
+    }
+    
     public void showUniversitiesSearchForm() throws IOException{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();       
         externalContext.redirect("SearchUniversities.xhtml");  
-    }     
+    }
+    
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
 }

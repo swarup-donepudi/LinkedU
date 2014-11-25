@@ -5,8 +5,9 @@
  */
 package controller;
 
-import dao.ProfileDAO;
+import dao.RecruiterDAO;
 import dao.SignupDAO;
+import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -93,7 +94,7 @@ public class SignupController implements Serializable{
         if (count == 1) {
             if (signupBean.getAccountType() == 'S') {
                 StudentProfile studentProfile;
-                ProfileDAO profileDB = new ProfileDAO();
+                StudentDAO profileDB = new StudentDAO();
                 String studentUsername = this.signupBean.getUserName();
                 if (profileDB.studentHasProfile(studentUsername)) {
                     studentProfile = profileDB.fetchStudentProfile(studentUsername);
@@ -104,10 +105,10 @@ public class SignupController implements Serializable{
                 externalContext.redirect("StudentHome.xhtml");
             } else {
                 RecruiterProfile recruiterProfile;
-                ProfileDAO profileDB = new ProfileDAO();
+                RecruiterDAO recruiterDB = new RecruiterDAO();
                 String recruiterUsername = this.signupBean.getUserName();
-                if (profileDB.recruiterHasProfile(recruiterUsername)) {
-                    recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
+                if (recruiterDB.recruiterHasProfile(recruiterUsername)) {
+                    recruiterProfile = recruiterDB.fetchRecruiterProfile(recruiterUsername);
                 } else {
                     recruiterProfile = new RecruiterProfile();
                 }

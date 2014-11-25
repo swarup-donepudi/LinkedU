@@ -14,7 +14,7 @@ and open the template in the editor.
 }
 
 html{
-    background-image:url("#{resource['images:IndexBackground.jpg']}");
+    //background-image:url("#{resource['images:IndexBackground.jpg']}");
     background-repeat:no-repeat;
     background-size: 100%;
     color:black;

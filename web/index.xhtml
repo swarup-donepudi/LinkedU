@@ -86,6 +86,7 @@
             <div id="loginFrame">
                 <h:form id="loginForm"  onsubmit="return validateLoginForm()">
                     Username <h:inputText id="username" class="inputTextBox" value="#{loginController.loginBean.userName}"></h:inputText>&nbsp;
+                    <p:tooltip id="toolTipUsername" for="username" value="Enter username/email" />
                     Password <h:inputSecret id="pwd" class="inputTextBox" redisplay="false" value="#{loginController.loginBean.password}"></h:inputSecret>&nbsp;
                     <p:commandButton id="loginUser" value="Login" action="#{loginController.validateCredentials()}" ajax="false"></p:commandButton>
                 </h:form>

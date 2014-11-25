@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       >
     <h:head>
 	<h:outputStylesheet name="AppTheme.css" library="css" />
@@ -12,8 +13,14 @@
         <ui:composition>
             <ul>
                 <li>
-                    <h:link value="Edit Profile" outcome="StudentProfile"></h:link>
+                    <h:link value="My Profile" outcome="StudentProfile"></h:link>
                 </li>
+                <li>
+                    <h:link value="Inbox" id="inbox" outcome="Inbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
+                    <p:tooltip id="toolTipGrow" for="inbox" value="You have 1 Unread message" showEffect="clip" hideEffect="explode" />
+                </li>
+            </ul>
+            <ul>            
                 <li>
                     <h:link value="My Watch List" outcome="StudentWatchList"></h:link>
                 </li>                

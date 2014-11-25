@@ -6,11 +6,12 @@
 package controller;
 
 import dao.LoginDAO;
-import dao.ProfileDAO;
+import dao.RecruiterDAO;
+import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
@@ -27,7 +28,7 @@ import model.StudentProfile;
  * @author hgindra
  */
 @ManagedBean(name = "loginController")
-@SessionScoped
+@ApplicationScoped
 public class LoginController implements Serializable{
 
     @ManagedProperty(value = "#{recruiterController}")
@@ -98,7 +99,7 @@ public class LoginController implements Serializable{
             if (loginDB.getAccountType(loginBean.getUserName()) == 'S') {
                 loginBean.setAccountType('S');
                 StudentProfile studentProfile;
-                ProfileDAO profileDB = new ProfileDAO();
+                StudentDAO profileDB = new StudentDAO();
                 String studentUsername = this.loginBean.getUserName();
                 if (profileDB.studentHasProfile(studentUsername)) {
                     studentProfile = profileDB.fetchStudentProfile(studentUsername);
@@ -110,7 +111,7 @@ public class LoginController implements Serializable{
             } else {
                 loginBean.setAccountType('R');
                 RecruiterProfile recruiterProfile;
-                ProfileDAO profileDB = new ProfileDAO();
+                RecruiterDAO profileDB = new RecruiterDAO();
                 String recruiterUsername = this.loginBean.getUserName();
                 if (profileDB.recruiterHasProfile(recruiterUsername)) {
                     recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
