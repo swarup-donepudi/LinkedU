@@ -17,7 +17,7 @@
                 </li>
                 <li>
                     <h:link value="Inbox" id="inbox" outcome="Inbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
-                    <p:tooltip id="toolTipGrow" for="inbox" value="You have 1 Unread message" showEffect="clip" hideEffect="explode" />
+                    <p:tooltip id="toolTipGrow" for="inbox" value="#{messageController.toolTipInbox}" showEffect="clip" hideEffect="explode" />
                 </li>
             </ul>
             <ul>            

@@ -4,7 +4,9 @@
  */
 package controller;
 
+import dao.CommonDAO;
 import dao.MessagesDAO;
+import java.util.ArrayList;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -33,11 +35,16 @@ public class MessageController {
     
     private int unreadMsgsCount;
     
+    private ArrayList<MessageBean> userInbox;
+    
+    private String toolTipInbox;
+    
     /**
      * Creates a new instance of MessageController
      */
     public MessageController() {
         messageBean = new MessageBean();
+        this.userInbox= new ArrayList<MessageBean>();
     }
 
     public LoginController getLoginController() {
@@ -83,11 +90,29 @@ public class MessageController {
     public int getUnreadMsgsCount() {
         String username = loginController.getLoginBean().getUserName();
         this.unreadMsgsCount = this.fetchUnreadMsgsCount(username);
+        this.toolTipInbox="You have "+this.unreadMsgsCount+" unread messages";
+        this.fetchInboxItems();
         return unreadMsgsCount;
     }
 
     public void setUnreadMsgsCount(int unreadMsgsCount) {
         this.unreadMsgsCount = unreadMsgsCount;
+    }
+
+    public ArrayList<MessageBean> getUserInbox() {
+        return userInbox;
+    }
+
+    public void setUserInbox(ArrayList<MessageBean> userInbox) {
+        this.userInbox = userInbox;
+    }
+
+    public String getToolTipInbox() {
+        return toolTipInbox;
+    }
+
+    public void setToolTipInbox(String toolTipInbox) {
+        this.toolTipInbox = toolTipInbox;
     }
     
     public void insertMessage(){        
@@ -124,5 +149,11 @@ public class MessageController {
         MessagesDAO messagesDB= new MessagesDAO();
         unreadCount = messagesDB.fetchUnreadMsgsCountFromDB(username);
         return unreadCount;
+    }
+    
+    public void fetchInboxItems(){
+        String username = loginController.getLoginBean().getUserName();
+        MessagesDAO messagesDB = new MessagesDAO();
+        this.userInbox=messagesDB.fetchInoxItemsFromDB(username);
     }
 }

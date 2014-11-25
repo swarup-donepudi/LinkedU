@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import model.MessageBean;
 
 /**
@@ -64,4 +65,27 @@ public class MessagesDAO extends AppDBInfoDAO{
         }
         return unreadCount;
     }
+    
+public ArrayList<MessageBean> fetchInoxItemsFromDB(String username){
+        ArrayList<MessageBean> inboxItems=new ArrayList<MessageBean>();
+        String getInboxQuery = "SELECT * FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "'";
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(getInboxQuery);
+            while (rs.next()) {
+                MessageBean messageBean = new MessageBean();
+                messageBean.setToAddress(username);
+                messageBean.setFromAddress(rs.getString("FROMADDRESS"));
+                messageBean.setSubject(rs.getString("SUBJECT"));
+                messageBean.setMessageBody(rs.getString("MESSAGEBODY"));
+                messageBean.setStatus(rs.getString("STATUS").charAt(0));
+                inboxItems.add(messageBean);
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        return inboxItems;
+    }    
 }

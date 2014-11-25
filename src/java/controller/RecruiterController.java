@@ -138,12 +138,12 @@ public class RecruiterController implements Serializable {
         return ("RecruiterProfile.xhtml");
     }
 
-    public String searchStudents() throws SQLException, IOException {
+    public void searchStudents() throws SQLException, IOException {
         this.studentSearchResults.clear();
         SearchDAO db = new SearchDAO();
         db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);
         //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        return ("StudentsSearchResults.xhtml");
+        //return ("StudentsSearchResults.xhtml");
     }
 
     public void fetchSelectedStudentProfile() throws IOException {

@@ -165,8 +165,12 @@ input[type="submit"]{
 }
 
 #unreadCount{
+    margin:4px;
+    padding:2px;
+    padding-left:4px;
+    padding-right: 4px;
     background-color:green;
-    border-radius:30px;
+    border-radius:15px;
     color:white;
     font-size: 16px;
 }

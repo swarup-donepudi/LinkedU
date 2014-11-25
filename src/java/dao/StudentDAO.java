@@ -129,7 +129,8 @@ public class StudentDAO extends AppDBInfoDAO {
     }
 
     public void createStudentProfile(StudentProfile studentProfile, String username) {
-        String emailFromUserInfo = this.getEmailFromUserInfoTable(username);
+        CommonDAO coomonDB= new CommonDAO();
+        String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -170,22 +171,5 @@ public class StudentDAO extends AppDBInfoDAO {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
         }
-    }
-
-    public String getEmailFromUserInfoTable(String username) {
-        String emailFromUserInfo = "";
-        String getEmailQuery = "SELECT EMAIL FROM LINKEDU.USERINFO WHERE USERNAME='" + username + "'";
-        try {
-            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
-            Statement stmt = this.DBConn.createStatement();
-            ResultSet rs = stmt.executeQuery(getEmailQuery);
-            if (rs.next()) {
-                emailFromUserInfo = rs.getString("EMAIL");
-            }
-        } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
-        }
-        return emailFromUserInfo;
     }
 }

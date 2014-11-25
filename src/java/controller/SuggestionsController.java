@@ -4,6 +4,8 @@
  */
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -20,4 +22,12 @@ public class SuggestionsController {
      */
     public SuggestionsController() {
     }
-}
+    
+    public List<String> suggestCountries(String query) {
+            List<String> results = new ArrayList<>();
+            for(int i = 0; i < 10; i++) {
+                results.add(query);
+            }         
+            return results;
+        }    
+    }

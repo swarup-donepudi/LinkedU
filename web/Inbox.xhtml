@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-To change this template, choose Tools | Templates
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
@@ -12,13 +13,36 @@ and open the template in the editor.
     <h:head>
         <title>LinkEDU</title>
         <h:outputStylesheet library="css" name="AppTheme.css"  />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
-    <body>
+    <h:body>
         <ui:composition template="#{templateController.pageTemplate}">
             <ui:define name="content">
-                Inbox
+                <h:form>
+                    <p:dataTable id="inboxItems" value="#{messageController.userInbox}" var="message"
+                                 paginator="true" rows="10">
+                        <p:column>
+                            <!-- column header -->
+                            <f:facet name="header">From</f:facet>
+                            <!-- row record -->
+                            <h:link id="selectedUsername" outcome="RecruiterProfileForStudent" value="#{message.fromAddress}" includeViewParams="true">
+                                <f:param  name="selectedUsername" value="#{message.fromAddress}" /> 
+                            </h:link>
+                        </p:column>            
+
+                        <p:column>
+                            <!-- column header -->
+                            <f:facet name="header">Subject</f:facet>
+                            <!-- row record -->
+                            #{message.subject}
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">Message</f:facet>
+                                #{message.messageBody}
+                        </p:column> 
+                    </p:dataTable>                
+                </h:form>    
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>

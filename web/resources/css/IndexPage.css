@@ -59,19 +59,17 @@ html{
     margin-top:75px;
     margin-left:6%;
     padding:20px;
-    //padding-top: 10px;
+    width:45%;
+    height:450px;    
     background-color:white;
     background: url("#{resource['images:WelcomeBannerBackground.gif']}");    
     background-size: 100%;
-    //background-color:red;
-    border-radius: 10px;
-    width:45%;
-    height:450px;
-    border:1px solid red;
+    //border-radius: 10px;
+    //border:1px solid red;
     opacity:0.8;
     font-size: 20px;
     //font-weight: bold;
-    color:blue;        
+    color:#1a33b5;        
 }
 
 #signupFrame{
@@ -85,7 +83,7 @@ html{
     width:35%;
     height:450px;
     //border:1px solid #333;
-    opacity:0.8;
+    //opacity:0.8;
     font-size: 20px;
     //font-weight: bold;
     color:white;

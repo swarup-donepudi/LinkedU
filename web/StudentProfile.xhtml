@@ -139,7 +139,7 @@ and open the template in the editor.
                                 Country 
                             </td>
                             <td>
-                                <h:inputText id="country" value="#{studentProfile.studentProfile.country}"/>
+                                <p:autoComplete id="country" forceSelection="true" value="#{studentProfile.studentProfile.country}" completeMethod="#{suggestionsController.suggestCountries}" />
                             </td>
                         </tr>
                         <tr>
