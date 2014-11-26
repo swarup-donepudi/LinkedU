@@ -16,7 +16,7 @@ public class StudentProfile extends UserProfile{
     private String dob;
     private String highestDegree;
     private String GPA;
-    private String preferredProgram;
+    private List<String> preferredPrograms;
     private List<String> preferredUnivs;
 
     public String getDob() {
@@ -43,12 +43,12 @@ public class StudentProfile extends UserProfile{
         this.GPA = GPA;
     }
 
-    public String getPreferredProgram() {
-        return preferredProgram;
+    public List<String> getPreferredPrograms() {
+        return preferredPrograms;
     }
 
-    public void setPreferredProgram(String preferredProgram) {
-        this.preferredProgram = preferredProgram;
+    public void setPreferredPrograms(List<String> preferredProgram) {
+        this.preferredPrograms = preferredPrograms;
     }
 
     public List<String> getPreferredUnivs() {

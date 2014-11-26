@@ -65,7 +65,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setDob(rs.getString("DOB"));
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getString("GPA"));
-                studentProfile.setPreferredProgram(rs.getString("PREFERRED_PROGRAM"));
+                //studentProfile.setPreferredPrograms(rs.getString("PREFERRED_PROGRAM"));
                 //studentProfile.setPreferredUnivs(rs.getString("PREFERRED_UNIVS"));
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
@@ -100,7 +100,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "GPA = '"
                 + studentProfile.getGPA() + "', "
                 + "PREFERRED_PROGRAM = '"
-                + studentProfile.getPreferredProgram() + "', "
+                + studentProfile.getPreferredPrograms() + "', "
                 + "PREFERRED_UNIVS = '"
                 + studentProfile.getPreferredUnivs() + "', "
                 + "PRIMARY_PHONE = '"
@@ -153,7 +153,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
-                + studentProfile.getPreferredProgram() + "','"
+                + studentProfile.getPreferredPrograms() + "','"
                 + studentProfile.getPreferredUnivs() + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
