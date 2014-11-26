@@ -29,12 +29,11 @@ import model.StudentSearchCriteria;
 public class RecruiterController implements Serializable {
     
     private StudentSearchCriteria studentSearchCriteria;
-    private ArrayList<StudentProfile> studentSearchResults;
-    private String watchListUpdateMsg;
+    private ArrayList<StudentProfile> studentSearchResults;    
     private RecruiterProfile recruiterProfile;
     private StudentProfile selectedStudent;
     private String profileUpdateMessage;
-    private boolean selectedStudentNotInWatchList;
+
 
     /**
      * Creates a new instance of RecruiterController
@@ -59,22 +58,6 @@ public class RecruiterController implements Serializable {
 
     public void setStudentSearchResults(ArrayList<StudentProfile> studentSearchResults) {
         this.studentSearchResults = studentSearchResults;
-    }
-
-    public String getWatchListUpdateMsg() {
-        return watchListUpdateMsg;
-    }
-
-    public void setWatchListUpdateMsg(String watchListUpdateMsg) {
-        this.watchListUpdateMsg = watchListUpdateMsg;
-    }
-
-    public boolean isSelectedStudentNotInWatchList() {
-        return selectedStudentNotInWatchList;
-    }
-
-    public void setSelectedStudentNotInWatchList(boolean selectedStudentNotInWatchList) {
-        this.selectedStudentNotInWatchList = selectedStudentNotInWatchList;
     }
 
     public RecruiterProfile getRecruiterProfile() {
@@ -109,19 +92,10 @@ public class RecruiterController implements Serializable {
         return ("RecruiterProfile.xhtml");
     }    
 
-    public String showRecruiterWatchList() throws SQLException, IOException {
-        RecruiterDAO profileDao = new RecruiterDAO();
-        this.recruiterProfile.setWatchList(profileDao.retrieveRecruiterWatchList(this.recruiterProfile.username));
-        return ("RecruiterWatchList.xhtml");
-    }
-
-    public void shoWStudentProfileToRecruiter() throws SQLException {
+    public void showStudentProfileToRecruiter() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
         String selectedStudentUsername = params.get("selectedUsername");
-        RecruiterDAO db = new RecruiterDAO();
-        String recruiterUsername = this.recruiterProfile.username;
-        this.selectedStudentNotInWatchList = db.studentNotInWatchList(recruiterUsername, selectedStudentUsername);
         StudentDAO profileDB = new StudentDAO();
         this.selectedStudent = profileDB.fetchStudentProfile(selectedStudentUsername);
     }
@@ -141,31 +115,6 @@ public class RecruiterController implements Serializable {
     public void searchStudents() throws SQLException, IOException {
         this.studentSearchResults.clear();
         SearchDAO db = new SearchDAO();
-        db.retrieveSearchResults(studentSearchCriteria, studentSearchResults);
-        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        //return ("StudentsSearchResults.xhtml");
-    }
-
-    public void fetchSelectedStudentProfile() throws IOException {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        String selectedStudentUsername = params.get("selectedUsername");
-
-        for (StudentProfile studentProfile : studentSearchResults) {
-            if ((studentProfile.getUsername().equals(selectedStudentUsername))) {
-                this.setSelectedStudent(studentProfile);
-            }
-        }
-    }
-
-    public void addStudentToWatchList(String studentUsername) throws SQLException {
-        SearchDAO db = new SearchDAO();
-        String recruiterUsername = this.recruiterProfile.username;
-        int rowCount = db.addStudentToRecruiterWatchList(recruiterUsername, studentUsername);
-        if (rowCount == 1) {
-            this.setWatchListUpdateMsg("Student added to your Watch List");
-        } else {
-            this.setWatchListUpdateMsg("Error occured while adding student to your Watch List");
-        }
+        db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
     }
 }

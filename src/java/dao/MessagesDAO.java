@@ -15,15 +15,16 @@ import model.MessageBean;
  *
  * @author skdonep
  */
-public class MessagesDAO extends AppDBInfoDAO{
+public class MessagesDAO extends AppDBInfoDAO {
+
     private Connection DBConn;
-    
-    public MessagesDAO(){
+
+    public MessagesDAO() {
         super();
     }
-    
-    public int insertMessageIntoDB(MessageBean messageBean){
-        int rowCount=0;
+
+    public int insertMessageIntoDB(MessageBean messageBean) {
+        int rowCount = 0;
 
         String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROMADDRESS,"
                 + "TOADDRESS,"
@@ -31,10 +32,10 @@ public class MessagesDAO extends AppDBInfoDAO{
                 + "MESSAGEBODY,"
                 + "STATUS) "
                 + "VALUES('"
-                + messageBean.getFromAddress()+ "','"
+                + messageBean.getFromAddress() + "','"
                 + messageBean.getToAddress() + "','"
                 + messageBean.getSubject() + "','"
-                + messageBean.getMessageBody()+ "','"
+                + messageBean.getMessageBody() + "','"
                 + messageBean.getStatus() + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -47,9 +48,9 @@ public class MessagesDAO extends AppDBInfoDAO{
         }
         return rowCount;
     }
-    
-    public int fetchUnreadMsgsCountFromDB(String username){
-        int unreadCount=0;
+
+    public int fetchUnreadMsgsCountFromDB(String username) {
+        int unreadCount = 0;
         String getunreadCountQuery = "SELECT COUNT(*) FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "' AND"
                 + " STATUS='N'";
         try {
@@ -65,9 +66,9 @@ public class MessagesDAO extends AppDBInfoDAO{
         }
         return unreadCount;
     }
-    
-public ArrayList<MessageBean> fetchInoxItemsFromDB(String username){
-        ArrayList<MessageBean> inboxItems=new ArrayList<MessageBean>();
+
+    public ArrayList<MessageBean> fetchInoxItemsFromDB(String username) {
+        ArrayList<MessageBean> inboxItems = new ArrayList<MessageBean>();
         String getInboxQuery = "SELECT * FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -87,5 +88,5 @@ public ArrayList<MessageBean> fetchInoxItemsFromDB(String username){
             e.printStackTrace();
         }
         return inboxItems;
-    }    
+    }
 }

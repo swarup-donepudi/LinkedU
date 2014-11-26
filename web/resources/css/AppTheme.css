@@ -72,15 +72,15 @@ and open the template in the editor.
     float:left;
     margin:0px;
     padding:0px;
-    width:160px;
+    width:200px;
     height:530px;
     border-right:3px solid red;
     border-bottom:3px solid red;
 }
 
 #content{
-    padding:20px;
-    margin-left:160px;
+    padding:30px;
+    margin-left:180px;
     margin-top:5px;
     width:75%;
     min-height: 500px;
@@ -133,7 +133,7 @@ input[type="submit"]{
 }
 
 #sideBar ul{
-    width:160px;
+    width:180px;
     //list-style-type:none;
     //float: left;
     //border:6px solid red;
@@ -145,7 +145,7 @@ input[type="submit"]{
     float: left;
     padding-top:15px;
     padding-left:20px;
-    width:140px;
+    width:180px;
     height:40px;
     text-decoration: none;
     border-bottom:3px solid red;

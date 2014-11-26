@@ -4,19 +4,19 @@
  */
 package controller;
 
+import dao.SearchDAO;
 import dao.StudentDAO;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import javax.faces.application.FacesMessage;
+import java.util.ArrayList;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
+import model.UniversityProfile;
 import model.UniversitySearchCriteria;
-import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -29,12 +29,14 @@ public class StudentController {
     private RecruiterProfile selectedRecruiter;
     private String profileUpdateMessage;    
     private UniversitySearchCriteria universitySearchCriteria;
+    private ArrayList<UniversityProfile> universitySearchResults;
     /**
      * Creates a new instance of StudentController
      */
     public StudentController() {
         this.selectedRecruiter = new RecruiterProfile();
         this.universitySearchCriteria = new UniversitySearchCriteria();
+        this.universitySearchResults = new ArrayList<>();
     }
 
     public StudentProfile getStudentProfile() {
@@ -84,9 +86,9 @@ public class StudentController {
         externalContext.redirect("SearchUniversities.xhtml");  
     }
     
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    public void searchUniversities() throws SQLException, IOException {
+        this.universitySearchResults.clear();
+        SearchDAO db = new SearchDAO();
+        db.retrieveUniversitySearchResults(universitySearchCriteria, universitySearchResults);
     }
 }

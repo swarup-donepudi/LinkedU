@@ -15,18 +15,8 @@ public class RecruiterProfile extends UserProfile {
 
     private String univName;
     private String univURL;
-    private ArrayList<String> watchList;
     
     public RecruiterProfile(){
-        this.watchList=new ArrayList<String>();
-    }
-
-    public ArrayList<String> getWatchList() {
-        return watchList;
-    }
-
-    public void setWatchList(ArrayList<String> watchList) {
-        this.watchList = watchList;
     }
 
     public String getUnivName() {

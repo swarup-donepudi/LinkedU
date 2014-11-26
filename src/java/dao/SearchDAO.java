@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
+import model.UniversityProfile;
+import model.UniversitySearchCriteria;
 
 /**
  *
@@ -29,7 +31,7 @@ public class SearchDAO extends AppDBInfoDAO {
         this.DBConn = DBConn;
     }
 
-    public void retrieveSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException {
+    public void retrieveStudentSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE PREFERRED_UNIVS LIKE '%" + ssc.getPreferredUniv() + "%'";
@@ -57,11 +59,15 @@ public class SearchDAO extends AppDBInfoDAO {
         stmt.close();
     }
     
-    public int addStudentToRecruiterWatchList(String recruiterUsername,String studentUsername) throws SQLException{
+    public void retrieveUniversitySearchResults(UniversitySearchCriteria usc, ArrayList<UniversityProfile> universitySearchResults) throws SQLException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
-        String insertStatement = "INSERT INTO LINKEDU.RECRUITERWATCHLIST VALUES('" + recruiterUsername + "','"+studentUsername+"')";
-        int rowCount = stmt.executeUpdate(insertStatement);
-        return rowCount;
-    }
+        String selectQuery = "SELECT * FROM LINKEDU.UNIVERSITY WHERE UNIV_NAME LIKE '%" + usc.getUnivName() + "%'";
+        ResultSet rs = stmt.executeQuery(selectQuery);
+        while (rs.next()) {
+        }
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
+    }    
 }

@@ -16,13 +16,13 @@
                     <h:link value="Edit Profile" outcome="RecruiterProfile"></h:link>
                 </li>
                 <li>
-                    <h:link id="inbox" value="Inbox" outcome="Inbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
+                    <h:link id="inbox" value="Inbox" outcome="UserInbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
                     <p:tooltip id="toolTipGrow" for="inbox" value="#{messageController.toolTipInbox}" showEffect="clip" hideEffect="explode" />
                 </li>
             </ul>
             <ul>                
                 <li><h:form>
-                        <h:commandLink value="My Watch List" action="#{recruiterController.showRecruiterWatchList()}"></h:commandLink>
+                        <h:commandLink value="My Watch List" action="#{commonController.showUserWatchList}"></h:commandLink>
                     </h:form>
                 </li>
                 <li>

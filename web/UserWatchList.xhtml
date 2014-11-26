@@ -17,22 +17,22 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <ui:composition template="templates\AppThemeStudent.xhtml">
+        <ui:composition template="templates\AppThemeRecruiter.xhtml">
             <ui:define name="content">
-                <p:dataTable id="watchList" value="#{recruiterController.recruiterProfile.watchList}" var="rwl">
+                <p:dataTable id="watchList" value="#{commonController.watchList}" var="wl">
                         <p:column>
                             <!-- column header -->
                             <f:facet name="header">Click</f:facet>
                             <!-- row record -->
-                            <h:link id="selectedUsername" outcome="StudentProfileForRecruiter" value="View" includeViewParams="true">
-                                <f:param  name="selectedUsername" value="#{rwl}" /> 
+                            <h:link id="selectedUsername" outcome="#{commonController.watchListViewProfile}" value="View" includeViewParams="true">
+                                <f:param  name="selectedUsername" value="#{wl}" /> 
                             </h:link>
                         </p:column>
                         <p:column>
                             <!-- column header -->
                             <f:facet name="header">Username</f:facet>
                             <!-- row record -->
-                            #{rwl}
+                            #{wl}
                         </p:column>
                     </p:dataTable>
             </ui:define>

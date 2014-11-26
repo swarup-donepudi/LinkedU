@@ -16,13 +16,13 @@
                     <h:link value="My Profile" outcome="StudentProfile"></h:link>
                 </li>
                 <li>
-                    <h:link value="Inbox" id="inbox" outcome="Inbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
+                    <h:link value="Inbox" id="inbox" outcome="UserInbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
                     <p:tooltip id="toolTipGrow" for="inbox" value="#{messageController.toolTipInbox}" showEffect="clip" hideEffect="explode" />
                 </li>
             </ul>
             <ul>            
                 <li>
-                    <h:link value="My Watch List" outcome="StudentWatchList"></h:link>
+                    <h:link value="My Watch List" outcome="UserWatchList"></h:link>
                 </li>                
                 <li>
                     <h:link value="Find Universities" outcome="SearchUniversities"></h:link>
