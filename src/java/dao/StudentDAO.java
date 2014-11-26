@@ -66,7 +66,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getString("GPA"));
                 studentProfile.setPreferredProgram(rs.getString("PREFERRED_PROGRAM"));
-                studentProfile.setPreferredUnivs(rs.getString("PREFERRED_UNIVS"));
+                //studentProfile.setPreferredUnivs(rs.getString("PREFERRED_UNIVS"));
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
                 studentProfile.setCity(rs.getString("COUNTRY"));

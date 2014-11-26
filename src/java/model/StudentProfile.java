@@ -6,6 +6,8 @@
 
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author skdonep
@@ -15,7 +17,7 @@ public class StudentProfile extends UserProfile{
     private String highestDegree;
     private String GPA;
     private String preferredProgram;
-    private String preferredUnivs;
+    private List<String> preferredUnivs;
 
     public String getDob() {
         return dob;
@@ -49,11 +51,11 @@ public class StudentProfile extends UserProfile{
         this.preferredProgram = preferredProgram;
     }
 
-    public String getPreferredUnivs() {
+    public List<String> getPreferredUnivs() {
         return preferredUnivs;
     }
 
-    public void setPreferredUnivs(String preferredUnivs) {
+    public void setPreferredUnivs(List<String> preferredUnivs) {
         this.preferredUnivs = preferredUnivs;
     }
 }

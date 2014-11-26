@@ -58,7 +58,8 @@ and open the template in the editor.
                             <f:facet name="header">GPA</f:facet>
                                 #{sr.GPA}
                         </p:column> 
-                    </p:dataTable>                    
+                    </p:dataTable>
+                    <h:outputLabel value="#{recruiterController.studentSearchCriteria.GPA}"></h:outputLabel>
                 </h:form>
             </ui:define>
         </ui:composition>

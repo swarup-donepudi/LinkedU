@@ -113,7 +113,11 @@ and open the template in the editor.
                                 Preferred Universities 
                             </td>
                             <td> 
-                                <h:inputText id="preferredUnivs" value="#{studentProfile.studentProfile.preferredUnivs}"/>
+                                <p:autoComplete value="#{studentController.studentProfile.preferredUnivs}" id="univName"
+                                                completeMethod="#{suggestionsController.suggestUnivs}"
+                                                forceSelection="true"
+                                                multiple="true" queryDelay="200"
+                                                maxResults="5" cache="true"/>                                
                             </td>
                         </tr>                
                         <tr>

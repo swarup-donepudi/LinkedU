@@ -8,14 +8,22 @@ package controller;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.json.Json;
+import javax.json.stream.JsonParser;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
@@ -27,18 +35,17 @@ import model.StudentSearchCriteria;
 @ManagedBean(name = "recruiterController")
 @ApplicationScoped
 public class RecruiterController implements Serializable {
-    
+
     private StudentSearchCriteria studentSearchCriteria;
-    private ArrayList<StudentProfile> studentSearchResults;    
+    private ArrayList<StudentProfile> studentSearchResults;
     private RecruiterProfile recruiterProfile;
     private StudentProfile selectedStudent;
     private String profileUpdateMessage;
 
-
     /**
      * Creates a new instance of RecruiterController
      */
-    public RecruiterController() {        
+    public RecruiterController() {
         this.selectedStudent = new StudentProfile();
         this.studentSearchCriteria = new StudentSearchCriteria();
         this.studentSearchResults = new ArrayList<>();
@@ -83,14 +90,14 @@ public class RecruiterController implements Serializable {
     public void setProfileUpdateMessage(String profileUpdateMessage) {
         this.profileUpdateMessage = profileUpdateMessage;
     }
-    
+
     public String showRecruiterHisProfile() throws IOException, SQLException {
         RecruiterDAO profileDao = new RecruiterDAO();
         if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
             this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
         }
         return ("RecruiterProfile.xhtml");
-    }    
+    }
 
     public void showStudentProfileToRecruiter() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
