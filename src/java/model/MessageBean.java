@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author skdonep
@@ -14,6 +16,24 @@ public class MessageBean {
     private String subject;
     private String messageBody;
     private char status;
+    private int msgId;
+    private Date timeStamp;
+
+    public int getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(int msgId) {
+        this.msgId = msgId;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public String getFromAddress() {
         return fromAddress;

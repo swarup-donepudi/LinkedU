@@ -8,22 +8,15 @@ package controller;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.json.Json;
-import javax.json.stream.JsonParser;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
@@ -99,12 +92,12 @@ public class RecruiterController implements Serializable {
         return ("RecruiterProfile.xhtml");
     }
 
-    public void showStudentProfileToRecruiter() throws SQLException {
+    public void showStudentProfileToRecruiter() throws SQLException, ParseException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
         String selectedStudentUsername = params.get("selectedUsername");
-        StudentDAO profileDB = new StudentDAO();
-        this.selectedStudent = profileDB.fetchStudentProfile(selectedStudentUsername);
+        StudentDAO studentDB = new StudentDAO();
+        this.selectedStudent = studentDB.fetchStudentProfile(selectedStudentUsername);
     }
 
     public String updateRecruiterProfile() throws SQLException {
@@ -119,7 +112,7 @@ public class RecruiterController implements Serializable {
         return ("RecruiterProfile.xhtml");
     }
 
-    public void searchStudents() throws SQLException, IOException {
+    public void searchStudents() throws SQLException, IOException, ParseException {
         this.studentSearchResults.clear();
         SearchDAO db = new SearchDAO();
         db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);

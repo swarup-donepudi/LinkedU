@@ -27,13 +27,13 @@ and open the template in the editor.
                             <td>GPA</td><td><h:inputText id="GPA" value="#{recruiterController.studentSearchCriteria.GPA}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>Preferred Program</td><td><h:inputText id="preferredProg" value="#{recruiterController.studentSearchCriteria.preferredProgram}"></h:inputText></td>
+                            <td>Preferred Program</td><td><h:inputText id="preferredProg" value="#{recruiterController.studentSearchCriteria.preferredPrograms}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>                        
-                                <h:commandButton id="searchButton" action="#{recruiterController.searchStudents()}" value="Search">
+                                <p:commandButton ajax="true" id="searchButton" action="#{recruiterController.searchStudents()}" value="Search">
                                     <f:ajax execute="StudentSearchForm" render="studentSearchResults" />
-                                </h:commandButton></td>
+                                </p:commandButton></td>
                         </tr>
                     </table>
                     <p:dataTable id="studentSearchResults" value="#{recruiterController.studentSearchResults}" var="sr"
@@ -59,7 +59,6 @@ and open the template in the editor.
                                 #{sr.GPA}
                         </p:column> 
                     </p:dataTable>
-                    <h:outputLabel value="#{recruiterController.studentSearchCriteria.GPA}"></h:outputLabel>
                 </h:form>
             </ui:define>
         </ui:composition>

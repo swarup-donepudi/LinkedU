@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import model.StudentProfile;
 
 /**
@@ -47,7 +50,7 @@ public class StudentDAO extends AppDBInfoDAO {
         return studentHasProfile;
     }
 
-    public StudentProfile fetchStudentProfile(String username) {
+    public StudentProfile fetchStudentProfile(String username) throws ParseException {
         StudentProfile studentProfile = new StudentProfile();
 
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
@@ -62,11 +65,11 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setfName(rs.getString("FIRST_NAME"));
                 studentProfile.setlName(rs.getString("LAST_NAME"));
                 studentProfile.setGender(rs.getString("GENDER").charAt(0));
-                studentProfile.setDob(rs.getString("DOB"));
+                studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getString("GPA"));
-                //studentProfile.setPreferredPrograms(rs.getString("PREFERRED_PROGRAM"));
-                //studentProfile.setPreferredUnivs(rs.getString("PREFERRED_UNIVS"));
+                studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));
+                studentProfile.setPreferredUnivs(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
                 studentProfile.setCity(rs.getString("COUNTRY"));
@@ -99,10 +102,10 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getHighestDegree() + "', "
                 + "GPA = '"
                 + studentProfile.getGPA() + "', "
-                + "PREFERRED_PROGRAM = '"
-                + studentProfile.getPreferredPrograms() + "', "
+                + "PREFERRED_PROGRAMS = '"
+                + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
                 + "PREFERRED_UNIVS = '"
-                + studentProfile.getPreferredUnivs() + "', "
+                + this.convertListtoString(studentProfile.getPreferredUnivs()) + "', "
                 + "PRIMARY_PHONE = '"
                 + studentProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
@@ -137,7 +140,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "DOB,"
                 + "HIGHEST_DEGREE,"
                 + "GPA,"
-                + "PREFERRED_PROGRAM,"
+                + "PREFERRED_PROGRAMS,"
                 + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
                 + "SECONDARY_PHONE,"
@@ -153,8 +156,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
-                + studentProfile.getPreferredPrograms() + "','"
-                + studentProfile.getPreferredUnivs() + "','"
+                + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
+                + this.convertListtoString(studentProfile.getPreferredUnivs()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
@@ -172,4 +175,21 @@ public class StudentDAO extends AppDBInfoDAO {
             e.printStackTrace();
         }
     }
+    
+    public String convertListtoString(List<String> list){
+        String convertedString=null;
+        Iterator<String> iterator = list.iterator();
+        if(iterator.hasNext())
+            convertedString = iterator.next();
+	while (iterator.hasNext()) {
+		convertedString += ";"+iterator.next();
+	}
+        return convertedString; 
+    }
+    
+    public List<String> convertStringToList(String delimitedString){
+        List<String> convertedList=new ArrayList<>();;
+        convertedList.addAll(Arrays.asList(delimitedString.split(";")));
+        return convertedList; 
+    }    
 }

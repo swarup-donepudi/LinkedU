@@ -99,7 +99,7 @@ and open the template in the editor.
                             </td>
                             <td> 
                                 <h:inputText id="primaryCode" value="#{recruiterController.recruiterProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}"/>
+                                <p:inputMask id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}" mask="(999) 999-9999"/>
                             </td>
                         </tr>
                         <tr>
@@ -108,23 +108,7 @@ and open the template in the editor.
                             </td>
                             <td>
                                 <h:inputText id="secCode" value="#{recruiterController.recruiterProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}"/>
-                            </td>
-                        </tr>
-                        <tr>                    
-                            <td>
-                                Country 
-                            </td>
-                            <td>
-                                <h:inputText id="country" value="#{recruiterController.recruiterProfile.country}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                State 
-                            </td>
-                            <td>
-                                <h:inputText id="state" value="#{recruiterController.recruiterProfile.state}"/>
+                                <p:inputMask id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}" mask="(999) 999-9999"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -132,7 +116,29 @@ and open the template in the editor.
                                 City 
                             </td>
                             <td>
-                                <h:inputText id="city" value="#{recruiterController.recruiterProfile.city}"/>
+                                <p:autoComplete value="#{recruiterController.recruiterProfile.city}" id="city"
+                                                completeMethod="#{suggestionsController.suggestCities}"
+                                                forceSelection="true"
+                                                queryDelay="200"
+                                                maxResults="5" cache="true">
+                                    <p:ajax event="itemSelect" listener="#{suggestionsController.fillStateCountry()}"  update="city state country" />
+                                </p:autoComplete>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                State 
+                            </td>
+                            <td>
+                                <p:inputText id="state" value="#{recruiterController.recruiterProfile.state}" readonly="true"/>
+                            </td>
+                        </tr>                        
+                        <tr>                    
+                            <td>
+                                Country 
+                            </td>
+                            <td>
+                                <p:inputText id="country" value="#{recruiterController.recruiterProfile.country}" readonly="true"/>
                             </td>
                         </tr>
                         <tr>                    

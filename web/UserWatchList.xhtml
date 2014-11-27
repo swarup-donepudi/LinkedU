@@ -17,7 +17,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <body>
-        <ui:composition template="templates\AppThemeRecruiter.xhtml">
+        <ui:composition template="#{templateController.pageTemplate}">
             <ui:define name="content">
                 <p:dataTable id="watchList" value="#{commonController.watchList}" var="wl">
                         <p:column>

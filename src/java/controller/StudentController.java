@@ -6,9 +6,11 @@ package controller;
 
 import dao.SearchDAO;
 import dao.StudentDAO;
+import dao.UniversityDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
@@ -27,6 +29,7 @@ import model.UniversitySearchCriteria;
 public class StudentController {
     private StudentProfile studentProfile;
     private RecruiterProfile selectedRecruiter;
+    private UniversityProfile selectedUniversity;
     private String profileUpdateMessage;    
     private UniversitySearchCriteria universitySearchCriteria;
     private ArrayList<UniversityProfile> universitySearchResults;
@@ -39,6 +42,14 @@ public class StudentController {
         this.universitySearchResults = new ArrayList<>();
     }
 
+    public ArrayList<UniversityProfile> getUniversitySearchResults() {
+        return universitySearchResults;
+    }
+
+    public void setUniversitySearchResults(ArrayList<UniversityProfile> universitySearchResults) {
+        this.universitySearchResults = universitySearchResults;
+    }
+    
     public StudentProfile getStudentProfile() {
         return studentProfile;
     }
@@ -53,6 +64,14 @@ public class StudentController {
 
     public void setSelectedRecruiter(RecruiterProfile selectedRecruiter) {
         this.selectedRecruiter = selectedRecruiter;
+    }
+
+    public UniversityProfile getSelectedUniversity() {
+        return selectedUniversity;
+    }
+
+    public void setSelectedUniversity(UniversityProfile selectedUniversity) {
+        this.selectedUniversity = selectedUniversity;
     }
 
     public String getProfileUpdateMessage() {
@@ -90,5 +109,13 @@ public class StudentController {
         this.universitySearchResults.clear();
         SearchDAO db = new SearchDAO();
         db.retrieveUniversitySearchResults(universitySearchCriteria, universitySearchResults);
+    }
+    
+    public void showUniversityProfileToStudent(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String selectedUniversityUsername = params.get("selectedUniversity");
+        UniversityDAO universityDB = new UniversityDAO();
+        this.selectedUniversity = universityDB.fetchUniversityProfile(selectedUniversityUsername);
     }
 }

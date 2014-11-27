@@ -11,6 +11,7 @@ package model;
 public class UniversityProfile {
     //Declare class variables for each field in UNIVERSITY table.
     private String univRecruiter;
+    private String universityName;
 
     public String getUnivRecruiter() {
         return univRecruiter;
@@ -18,6 +19,14 @@ public class UniversityProfile {
 
     public void setUnivRecruiter(String univRecruiter) {
         this.univRecruiter = univRecruiter;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
     }
     
 }

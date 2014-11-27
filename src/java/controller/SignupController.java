@@ -11,6 +11,7 @@ import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -86,7 +87,7 @@ public class SignupController implements Serializable{
         return usernameMsg;
     }
 
-    public void signUpValidation() throws IOException, SQLException {
+    public void signUpValidation() throws IOException, SQLException, ParseException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
         int count = create.createAccount(signupBean);

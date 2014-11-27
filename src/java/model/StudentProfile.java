@@ -6,6 +6,8 @@
 
 package model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,17 +15,22 @@ import java.util.List;
  * @author skdonep
  */
 public class StudentProfile extends UserProfile{
-    private String dob;
+    private Date dob;
     private String highestDegree;
     private String GPA;
     private List<String> preferredPrograms;
     private List<String> preferredUnivs;
 
-    public String getDob() {
+    public StudentProfile(){
+        this.preferredPrograms = new ArrayList<>();
+        this.preferredUnivs = new ArrayList<>();
+    }
+    
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 

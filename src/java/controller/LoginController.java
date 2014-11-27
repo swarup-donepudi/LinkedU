@@ -11,6 +11,7 @@ import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -88,7 +89,7 @@ public class LoginController implements Serializable{
         this.loggedIn = loggedIn;
     }
 
-    public void validateCredentials() throws IOException, SQLException {
+    public void validateCredentials() throws IOException, SQLException, ParseException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         if (loginDB.validCredentials(loginBean.getUserName(), loginBean.getPassword())) {

@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dao.CommonDAO;
 import dao.MessagesDAO;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -87,7 +87,7 @@ public class MessageController {
         this.msgSendStatus = msgSendStatus;
     }
 
-    public int getUnreadMsgsCount() {
+    public int getUnreadMsgsCount() throws ParseException {
         String username = loginController.getLoginBean().getUserName();
         this.unreadMsgsCount = this.fetchUnreadMsgsCount(username);
         this.toolTipInbox="You have "+this.unreadMsgsCount+" unread messages";
@@ -151,7 +151,7 @@ public class MessageController {
         return unreadCount;
     }
     
-    public void fetchInboxItems(){
+    public void fetchInboxItems() throws ParseException{
         String username = loginController.getLoginBean().getUserName();
         MessagesDAO messagesDB = new MessagesDAO();
         this.userInbox=messagesDB.fetchInoxItemsFromDB(username);

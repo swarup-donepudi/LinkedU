@@ -8,7 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import model.MessageBean;
 
 /**
@@ -25,18 +29,20 @@ public class MessagesDAO extends AppDBInfoDAO {
 
     public int insertMessageIntoDB(MessageBean messageBean) {
         int rowCount = 0;
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String currentTS = sdf.format(new Date()); 
         String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROMADDRESS,"
                 + "TOADDRESS,"
                 + "SUBJECT,"
                 + "MESSAGEBODY,"
-                + "STATUS) "
+                + "STATUS,TIME_STAMP) "
                 + "VALUES('"
                 + messageBean.getFromAddress() + "','"
                 + messageBean.getToAddress() + "','"
                 + messageBean.getSubject() + "','"
                 + messageBean.getMessageBody() + "','"
-                + messageBean.getStatus() + "')";
+                + messageBean.getStatus() + "','"
+                + currentTS + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -67,7 +73,7 @@ public class MessagesDAO extends AppDBInfoDAO {
         return unreadCount;
     }
 
-    public ArrayList<MessageBean> fetchInoxItemsFromDB(String username) {
+    public ArrayList<MessageBean> fetchInoxItemsFromDB(String username) throws ParseException {
         ArrayList<MessageBean> inboxItems = new ArrayList<MessageBean>();
         String getInboxQuery = "SELECT * FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "'";
         try {
@@ -81,6 +87,8 @@ public class MessagesDAO extends AppDBInfoDAO {
                 messageBean.setSubject(rs.getString("SUBJECT"));
                 messageBean.setMessageBody(rs.getString("MESSAGEBODY"));
                 messageBean.setStatus(rs.getString("STATUS").charAt(0));
+                messageBean.setMsgId(rs.getInt("MSG_ID"));
+                messageBean.setTimeStamp(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("TIME_STAMP")));
                 inboxItems.add(messageBean);
             }
         } catch (SQLException e) {
