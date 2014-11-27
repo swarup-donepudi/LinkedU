@@ -18,9 +18,70 @@ and open the template in the editor.
         <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
                 <h:form id="UniversitySearchForm">
-                    University Name <h:inputText id="preferredUniv" value="#{studentController.universitySearchCriteria.univName}"></h:inputText>
+                    University Name <h:inputText id="preferredUniv" value="#{studentController.universitySearchCriteria.searchKeyword}"></h:inputText>
+
+                    <h:selectOneMenu value="#{studentController.universitySearchCriteria.gpaCriteria}">
+                        <f:selectItem itemValue="D" itemLabel="Select GPA criteria" />
+                        <f:selectItem itemValue="A" itemLabel="3.2-4.0" />
+                        <f:selectItem itemValue="B" itemLabel="2.5-3.2" />
+                        <f:selectItem itemValue="C" itemLabel="less than 2.5" />
+                    </h:selectOneMenu><br/>
+                    <h:selectOneRadio value="#{studentController.universitySearchCriteria.searchCriteria}">
+                        <f:selectItem itemValue="uniname" itemLabel="University Name" />
+                        <f:selectItem itemValue="location" itemLabel="Location" />
+                        <f:selectItem itemValue="program" itemLabel="Program" />
+                    </h:selectOneRadio>
                     <h:commandButton action="#{studentController.searchUniversities()}" value="Search"></h:commandButton>
-                </h:form>                         
+                </h:form><br/>
+
+                <h:dataTable id="profileTableID" value="#{studentController.search}" var="aRow"
+                             border="2" cellpadding="4" cellspacing="1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="University Name"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.univName}"/>
+
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="GPA"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.gpa}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TOEFL"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.toeflScore}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PROGRAMS"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.program}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="LOCATION"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.location}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="WEBSITE"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.website}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="More Details"/>
+                        </f:facet>
+                        <h:form><h:commandLink value="Click here for more details" action="#{studentController.moreInfo(aRow.univName)}"/></h:form>
+
+                    </h:column>
+                </h:dataTable>
             </ui:define>
         </ui:composition>        
     </body>

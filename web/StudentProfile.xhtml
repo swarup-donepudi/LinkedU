@@ -19,48 +19,48 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
-                <h:form id="editStudentProfileForm">
+                <h:form id="editStudentProfileForm" enctype="multipart/form-data">
                     <table id="studentProfileTable" cellspacing="20">
                         <tr>
                             <td>  
                                 Username </td>
                             <td>
-                                <h:inputText disabled="true" id="studentUsername" value="#{studentProfile.studentProfile.username}"></h:inputText>
+                                <h:inputText disabled="true" id="studentUsername" value="#{studentController.studentProfile.username}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 Password </td>
                             <td>
-                                <h:inputSecret id="pwd" value="#{studentProfile.studentProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd" value="#{studentController.studentProfile.password}"></h:inputSecret>
                             </td>
                         </tr>                        
                         <tr>
                             <td>  
                                 Re-Enter Password </td>
                             <td>
-                                <h:inputSecret id="pwd2" value="#{studentProfile.studentProfile.password}"></h:inputSecret>
+                                <h:inputSecret id="pwd2" value="#{studentController.studentProfile.password}"></h:inputSecret>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 First Name </td>
                             <td>
-                                <h:inputText id="studentFName" value="#{studentProfile.studentProfile.fName}"></h:inputText>
+                                <h:inputText id="studentFName" value="#{studentController.studentProfile.fname}"></h:inputText>
                             </td>
                         </tr>                        
                         <tr>
                             <td>                
                                 Last Name  </td>
                             <td>
-                                <h:inputText id="studentLName" value="#{studentProfile.studentProfile.lName}"></h:inputText>
+                                <h:inputText id="studentLName" value="#{studentController.studentProfile.lname}"></h:inputText>
                             </td>
                         </tr>
                         <tr>
                             <td>  
                                 E-Mail </td>
                             <td>
-                                <h:inputText id="email" value="#{studentProfile.studentProfile.email}"></h:inputText>
+                                <h:inputText id="email" value="#{studentController.studentProfile.email}"></h:inputText>
                             </td>
                         </tr>                        
                         <tr>
@@ -68,7 +68,7 @@ and open the template in the editor.
                                 Gender 
                             </td>
                             <td> 
-                                <h:selectOneRadio id="gender" value="#{studentProfile.studentProfile.gender}">
+                                <h:selectOneRadio id="gender" value="#{studentController.studentProfile.gender}">
                                     <f:selectItem itemValue="M" itemLabel="Male" />
                                     <f:selectItem itemValue="F" itemLabel="Female" />
                                 </h:selectOneRadio>
@@ -79,7 +79,7 @@ and open the template in the editor.
                                 DOB 
                             </td>
                             <td>
-                                <p:calendar id="event" value="#{studentProfile.studentProfile.dob}">
+                                <p:calendar id="event" value="#{studentController.studentProfile.dob}">
                                     <p:ajax event="dateSelect" listener="#{studentController.onDateSelect}" update="dobMsg"/>
                                 </p:calendar>
                             </td>
@@ -89,7 +89,7 @@ and open the template in the editor.
                                 Highest Degree  
                             </td>
                             <td> 
-                                <h:inputText id="univURL" value="#{studentProfile.studentProfile.highestDegree}"></h:inputText>
+                                <h:inputText id="univURL" value="#{studentController.studentProfile.highestDegree}"></h:inputText>
                             </td>
                         </tr>  
                         <tr>
@@ -97,7 +97,7 @@ and open the template in the editor.
                                 GPA 
                             </td>
                             <td> 
-                                <h:inputText id="gpa" value="#{studentProfile.studentProfile.GPA}"/>
+                                <h:inputText id="gpa" value="#{studentController.studentProfile.GPA}"/>
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +105,7 @@ and open the template in the editor.
                                 Preferred Program 
                             </td>
                             <td> 
-                                <p:autoComplete value="#{studentController.studentProfile.preferredPrograms}" id="preferredProgs"
+                                <p:autoComplete value="#{studentController.studentProfile.preferredProgram}" id="preferredProgs"
                                                 completeMethod="#{suggestionsController.suggestPrograms}"
                                                 forceSelection="true"
                                                 multiple="true" queryDelay="200"
@@ -129,8 +129,8 @@ and open the template in the editor.
                                 Primary Phone 
                             </td>
                             <td> 
-                                <h:inputText id="primaryCode" value="#{studentProfile.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="primaryNum" value="#{studentProfile.studentProfile.primaryPhNum}"/>
+                                <h:inputText id="primaryCode" value="#{studentController.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="primaryNum" value="#{studentController.studentProfile.primaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>
@@ -138,8 +138,8 @@ and open the template in the editor.
                                 Secondary Phone 
                             </td>
                             <td>
-                                <h:inputText id="secCode" value="#{studentProfile.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
-                                <h:inputText id="secNum" value="#{studentProfile.studentProfile.secondaryPhNum}"/>
+                                <h:inputText id="secCode" value="#{studentController.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="secNum" value="#{studentController.studentProfile.secondaryPhNum}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -147,7 +147,7 @@ and open the template in the editor.
                                 Country 
                             </td>
                             <td>
-                                <p:autoComplete id="country" forceSelection="true" value="#{studentProfile.studentProfile.country}" completeMethod="#{suggestionsController.suggestCountries}" />
+                                <p:autoComplete id="country" forceSelection="true" value="#{studentController.studentProfile.country}" completeMethod="#{suggestionsController.suggestCountries}" />
                             </td>
                         </tr>
                         <tr>
@@ -155,7 +155,7 @@ and open the template in the editor.
                                 State 
                             </td>
                             <td>
-                                <h:inputText id="state" value="#{studentProfile.studentProfile.state}"/>
+                                <h:inputText id="state" value="#{studentController.studentProfile.state}"/>
                             </td>
                         </tr>
                         <tr>                    
@@ -163,10 +163,17 @@ and open the template in the editor.
                                 City 
                             </td>
                             <td>
-                                <h:inputText id="city" value="#{studentProfile.studentProfile.city}"/>
+                                <h:inputText id="city" value="#{studentController.studentProfile.city}"/>
                             </td>
                         </tr>
                     </table>
+<!--                    <h:form id="inputForms" enctype="multipart/form-data">
+                        Upload File: 
+                        <h:inputFile id="file" label="file" value="#{studentController.document}"/>                
+                        <h:commandButton id="submit" action="#{studentController.uploadFile()}" value="upload file" /><br/>
+                        <h:commandButton id="deleteFile" value="Delete File" action ="#{studentController.deleteFile()}"/>
+                        <h:outputText id = "fileuploadstatus" value="#{studentController.studentProfile.uploadStatusMsg}"/>
+                    </h:form><br /><br />-->
                     <p:growl id="dobMsg" showDetail="true" />
                     <h:commandButton value="Update Profile" 
                                      action="#{studentProfile.updateStudentProfile()}"/>

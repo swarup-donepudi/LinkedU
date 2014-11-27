@@ -11,122 +11,201 @@ package model;
  * @author skdonep
  */
 public class UserProfile {
-    public String fName;
-    public String lName;
-    public char gender;
-    public String primaryPhCountryCode;
-    public String primaryPhNum;
-    public String secondaryPhCountryCode;
-    public String secondaryPhNum;
-    public String Country;
-    public String City;
-    public String State;
-    public String email;
-    public String username;
-    public String password;
+    private String fname;
+    private String lname;
+    private char gender;
+    private String primaryPhCountryCode;
+    private String primaryPhNum;
+    private String secondaryPhCountryCode;
+    private String secondaryPhNum;
+    private String country;
+    private String city;
+    private String state;
+    private String email;
+    private String username;
+    private String password;
 
-    public String getPassword() {
-        return password;
+    /**
+     * @return the fname
+     */
+    public String getFname() {
+        return fname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * @param fname the fname to set
+     */
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
-    public String getfName() {
-        return fName;
+    /**
+     * @return the lname
+     */
+    public String getLname() {
+        return lname;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
+    /**
+     * @param lname the lname to set
+     */
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
-    public String getlName() {
-        return lName;
-    }
-
-    public void setlName(String lName) {
-        this.lName = lName;
-    }
-
+    /**
+     * @return the gender
+     */
     public char getGender() {
         return gender;
     }
 
+    /**
+     * @param gender the gender to set
+     */
     public void setGender(char gender) {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    /**
+     * @return the primaryPhCountryCode
+     */
     public String getPrimaryPhCountryCode() {
         return primaryPhCountryCode;
     }
 
+    /**
+     * @param primaryPhCountryCode the primaryPhCountryCode to set
+     */
     public void setPrimaryPhCountryCode(String primaryPhCountryCode) {
         this.primaryPhCountryCode = primaryPhCountryCode;
     }
 
+    /**
+     * @return the primaryPhNum
+     */
     public String getPrimaryPhNum() {
         return primaryPhNum;
     }
 
+    /**
+     * @param primaryPhNum the primaryPhNum to set
+     */
     public void setPrimaryPhNum(String primaryPhNum) {
         this.primaryPhNum = primaryPhNum;
     }
 
+    /**
+     * @return the secondaryPhCountryCode
+     */
     public String getSecondaryPhCountryCode() {
         return secondaryPhCountryCode;
     }
 
+    /**
+     * @param secondaryPhCountryCode the secondaryPhCountryCode to set
+     */
     public void setSecondaryPhCountryCode(String secondaryPhCountryCode) {
         this.secondaryPhCountryCode = secondaryPhCountryCode;
     }
 
+    /**
+     * @return the secondaryPhNum
+     */
     public String getSecondaryPhNum() {
         return secondaryPhNum;
     }
 
+    /**
+     * @param secondaryPhNum the secondaryPhNum to set
+     */
     public void setSecondaryPhNum(String secondaryPhNum) {
         this.secondaryPhNum = secondaryPhNum;
     }
 
+    /**
+     * @return the country
+     */
     public String getCountry() {
-        return Country;
+        return country;
     }
 
-    public void setCountry(String Country) {
-        this.Country = Country;
+    /**
+     * @param country the country to set
+     */
+    public void setCountry(String country) {
+        this.country = country;
     }
 
+    /**
+     * @return the city
+     */
     public String getCity() {
-        return City;
+        return city;
     }
 
-    public void setCity(String City) {
-        this.City = City;
+    /**
+     * @param city the city to set
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 
+    /**
+     * @return the state
+     */
     public String getState() {
-        return State;
+        return state;
     }
 
-    public void setState(String State) {
-        this.State = State;
+    /**
+     * @param state the state to set
+     */
+    public void setState(String state) {
+        this.state = state;
     }
 
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * @param username the username to set
+     */
     public void setUsername(String username) {
         this.username = username;
     }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     
 }

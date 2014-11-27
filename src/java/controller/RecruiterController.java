@@ -93,8 +93,8 @@ public class RecruiterController implements Serializable {
 
     public String showRecruiterHisProfile() throws IOException, SQLException {
         RecruiterDAO profileDao = new RecruiterDAO();
-        if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
-            this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
+        if (profileDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
+            this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.getUsername());
         }
         return ("RecruiterProfile.xhtml");
     }
@@ -109,12 +109,12 @@ public class RecruiterController implements Serializable {
 
     public String updateRecruiterProfile() throws SQLException {
         RecruiterDAO recruiterDao = new RecruiterDAO();
-        if (recruiterDao.recruiterHasProfile(this.recruiterProfile.username)) {
-            recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+        if (recruiterDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
+            recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.getUsername());
         } else {
-            recruiterDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+            recruiterDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.getUsername());
         }
-        this.recruiterProfile.setUsername(this.recruiterProfile.username);
+        this.recruiterProfile.setUsername(this.recruiterProfile.getUsername());
         this.profileUpdateMessage = "Profile updated successfully.";
         return ("RecruiterProfile.xhtml");
     }

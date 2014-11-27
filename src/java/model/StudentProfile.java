@@ -6,8 +6,6 @@
 
 package model;
 
-import java.util.List;
-
 /**
  *
  * @author skdonep
@@ -16,8 +14,9 @@ public class StudentProfile extends UserProfile{
     private String dob;
     private String highestDegree;
     private String GPA;
-    private List<String> preferredPrograms;
-    private List<String> preferredUnivs;
+    private String preferredProgram;
+    private String preferredUnivs;
+    private String uploadStatusMsg;
 
     public String getDob() {
         return dob;
@@ -43,19 +42,33 @@ public class StudentProfile extends UserProfile{
         this.GPA = GPA;
     }
 
-    public List<String> getPreferredPrograms() {
-        return preferredPrograms;
+    public String getPreferredProgram() {
+        return preferredProgram;
     }
 
-    public void setPreferredPrograms(List<String> preferredProgram) {
-        this.preferredPrograms = preferredPrograms;
+    public void setPreferredProgram(String preferredProgram) {
+        this.preferredProgram = preferredProgram;
     }
 
-    public List<String> getPreferredUnivs() {
+    public String getPreferredUnivs() {
         return preferredUnivs;
     }
 
-    public void setPreferredUnivs(List<String> preferredUnivs) {
+    public void setPreferredUnivs(String preferredUnivs) {
         this.preferredUnivs = preferredUnivs;
+    }
+
+    /**
+     * @return the uploadStatusMsg
+     */
+    public String getUploadStatusMsg() {
+        return uploadStatusMsg;
+    }
+
+    /**
+     * @param uploadStatusMsg the uploadStatusMsg to set
+     */
+    public void setUploadStatusMsg(String uploadStatusMsg) {
+        this.uploadStatusMsg = uploadStatusMsg;
     }
 }
