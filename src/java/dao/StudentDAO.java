@@ -62,8 +62,8 @@ public class StudentDAO extends AppDBInfoDAO {
             ResultSet rs = stmt.executeQuery(selectQuery);
 
             while (rs.next()) {
-                studentProfile.setfName(rs.getString("FIRST_NAME"));
-                studentProfile.setlName(rs.getString("LAST_NAME"));
+                studentProfile.setFname(rs.getString("FIRST_NAME"));
+                studentProfile.setLname(rs.getString("LAST_NAME"));
                 studentProfile.setGender(rs.getString("GENDER").charAt(0));
                 studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
@@ -91,9 +91,9 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public void updateStudentProfile(StudentProfile studentProfile, String username) {
         String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
-                + studentProfile.getfName() + "', "
+                + studentProfile.getFname() + "', "
                 + "LAST_NAME = '"
-                + studentProfile.getlName() + "', "
+                + studentProfile.getLname() + "', "
                 + "GENDER = '"
                 + studentProfile.getGender() + "', "
                 + "DOB = '"
@@ -102,8 +102,13 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getHighestDegree() + "', "
                 + "GPA = '"
                 + studentProfile.getGPA() + "', "
+<<<<<<< HEAD
                 + "PREFERRED_PROGRAMS = '"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
+=======
+                + "PREFERRED_PROGRAM = '"
+               // + studentProfile.getPreferredPrograms() + "', "
+>>>>>>> origin/master
                 + "PREFERRED_UNIVS = '"
                 + this.convertListtoString(studentProfile.getPreferredUnivs()) + "', "
                 + "PRIMARY_PHONE = '"
@@ -150,14 +155,19 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "USERNAME,"
                 + "EMAIL)"
                 + "VALUES('"
-                + studentProfile.getfName() + "','"
-                + studentProfile.getlName() + "','"
+                + studentProfile.getFname() + "','"
+                + studentProfile.getLname() + "','"
                 + studentProfile.getGender() + "','"
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
+<<<<<<< HEAD
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
                 + this.convertListtoString(studentProfile.getPreferredUnivs()) + "','"
+=======
+                //+ studentProfile.getPreferredPrograms() + "','"
+                + studentProfile.getPreferredUnivs() + "','"
+>>>>>>> origin/master
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
@@ -176,6 +186,7 @@ public class StudentDAO extends AppDBInfoDAO {
         }
     }
     
+<<<<<<< HEAD
     public String convertListtoString(List<String> list){
         String convertedString=null;
         Iterator<String> iterator = list.iterator();
@@ -192,4 +203,40 @@ public class StudentDAO extends AppDBInfoDAO {
         convertedList.addAll(Arrays.asList(delimitedString.split(";")));
         return convertedList; 
     }    
+=======
+    public boolean updatePath(String username , String path){
+        String query = "update linkedu.student_profile ";
+        query += " set filepath = '"+path +"' where username = '" +username + "'";
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            stmt.execute(query);
+            this.DBConn.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        return true;
+    }
+    
+    public String getFileLocation(String username){
+        String selectQuery = "select * from linkedu.student_profile where username = '" + username + "'";
+        String path="";
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+            while(rs.next())
+            path = rs.getString("FILEPATH");
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        
+        return path;
+        
+    }
+    
+>>>>>>> origin/master
 }

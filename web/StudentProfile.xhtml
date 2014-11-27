@@ -19,7 +19,7 @@ and open the template in the editor.
     <body>
         <ui:composition template="templates\AppThemeStudent.xhtml">
             <ui:define name="content">
-                <h:form id="editStudentProfileForm">
+                <h:form id="editStudentProfileForm" enctype="multipart/form-data">
                     <table id="studentProfileTable" cellspacing="20">
                         <tr>
                             <td>  
@@ -46,14 +46,22 @@ and open the template in the editor.
                             <td>  
                                 First Name </td>
                             <td>
+<<<<<<< HEAD
                                 <h:inputText id="studentFName" value="#{studentController.studentProfile.fName}"></h:inputText>
+=======
+                                <h:inputText id="studentFName" value="#{studentController.studentProfile.fname}"></h:inputText>
+>>>>>>> origin/master
                             </td>
                         </tr>                        
                         <tr>
                             <td>                
                                 Last Name  </td>
                             <td>
+<<<<<<< HEAD
                                 <h:inputText id="studentLName" value="#{studentController.studentProfile.lName}"></h:inputText>
+=======
+                                <h:inputText id="studentLName" value="#{studentController.studentProfile.lname}"></h:inputText>
+>>>>>>> origin/master
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +113,7 @@ and open the template in the editor.
                                 Preferred Program 
                             </td>
                             <td> 
-                                <p:autoComplete value="#{studentController.studentProfile.preferredPrograms}" id="preferredProgs"
+                                <p:autoComplete value="#{studentController.studentProfile.preferredProgram}" id="preferredProgs"
                                                 completeMethod="#{suggestionsController.suggestPrograms}"
                                                 forceSelection="true"
                                                 multiple="true" queryDelay="200"
@@ -129,9 +137,14 @@ and open the template in the editor.
                                 Primary Phone 
                             </td>
                             <td> 
+<<<<<<< HEAD
                                 
                                 <h:inputText id="primaryCode" size="4" value="#{studentController.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
                                 <p:inputMask id="phone" value="#{studentController.studentProfile.primaryPhNum}" mask="(999) 999-9999"/>                                
+=======
+                                <h:inputText id="primaryCode" value="#{studentController.studentProfile.primaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="primaryNum" value="#{studentController.studentProfile.primaryPhNum}"/>
+>>>>>>> origin/master
                             </td>
                         </tr>
                         <tr>
@@ -139,8 +152,13 @@ and open the template in the editor.
                                 Secondary Phone 
                             </td>
                             <td>
+<<<<<<< HEAD
                                 <h:inputText id="secCode" size="4" value="#{studentController.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
                                 <p:inputMask id="secNum" value="#{studentController.studentProfile.secondaryPhNum}" mask="(999) 999-9999"/>
+=======
+                                <h:inputText id="secCode" value="#{studentController.studentProfile.secondaryPhCountryCode}"/>&#xA0;&#xA0;
+                                <h:inputText id="secNum" value="#{studentController.studentProfile.secondaryPhNum}"/>
+>>>>>>> origin/master
                             </td>
                         </tr>
                         <tr>                    
@@ -148,6 +166,7 @@ and open the template in the editor.
                                 City 
                             </td>
                             <td>
+<<<<<<< HEAD
                                 <p:autoComplete value="#{studentController.studentProfile.city}" id="city"
                                                 completeMethod="#{suggestionsController.suggestCities}"
                                                 forceSelection="true"
@@ -155,6 +174,9 @@ and open the template in the editor.
                                                 maxResults="5" cache="true">
                                     <p:ajax event="itemSelect" listener="#{suggestionsController.fillStateCountry()}"  update="city state country" />
                                 </p:autoComplete>
+=======
+                                <p:autoComplete id="country" forceSelection="true" value="#{studentController.studentProfile.country}" completeMethod="#{suggestionsController.suggestCountries}" />
+>>>>>>> origin/master
                             </td>
                         </tr>
                        <tr>
@@ -162,7 +184,11 @@ and open the template in the editor.
                                 State 
                             </td>
                             <td>
+<<<<<<< HEAD
                                 <p:inputText id="state" value="#{studentController.studentProfile.state}" readonly="true"/>
+=======
+                                <h:inputText id="state" value="#{studentController.studentProfile.state}"/>
+>>>>>>> origin/master
                             </td>
                         </tr>                        
                         <tr>                    
@@ -170,11 +196,22 @@ and open the template in the editor.
                                 Country 
                             </td>
                             <td>
+<<<<<<< HEAD
                                 <p:inputText id="country" value="#{studentController.studentProfile.country}" readonly="true"/>
+=======
+                                <h:inputText id="city" value="#{studentController.studentProfile.city}"/>
+>>>>>>> origin/master
                             </td>
                         </tr>
 
                     </table>
+<!--                    <h:form id="inputForms" enctype="multipart/form-data">
+                        Upload File: 
+                        <h:inputFile id="file" label="file" value="#{studentController.document}"/>                
+                        <h:commandButton id="submit" action="#{studentController.uploadFile()}" value="upload file" /><br/>
+                        <h:commandButton id="deleteFile" value="Delete File" action ="#{studentController.deleteFile()}"/>
+                        <h:outputText id = "fileuploadstatus" value="#{studentController.studentProfile.uploadStatusMsg}"/>
+                    </h:form><br /><br />-->
                     <p:growl id="dobMsg" showDetail="true" />
                     <h:commandButton value="Update Profile" 
                                      action="#{studentController.updateStudentProfile()}"/>
