@@ -102,13 +102,13 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getHighestDegree() + "', "
                 + "GPA = '"
                 + studentProfile.getGPA() + "', "
-<<<<<<< HEAD
+
                 + "PREFERRED_PROGRAMS = '"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
-=======
+
                 + "PREFERRED_PROGRAM = '"
                // + studentProfile.getPreferredPrograms() + "', "
->>>>>>> origin/master
+
                 + "PREFERRED_UNIVS = '"
                 + this.convertListtoString(studentProfile.getPreferredUnivs()) + "', "
                 + "PRIMARY_PHONE = '"
@@ -161,13 +161,13 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
-<<<<<<< HEAD
+
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
                 + this.convertListtoString(studentProfile.getPreferredUnivs()) + "','"
-=======
+
                 //+ studentProfile.getPreferredPrograms() + "','"
                 + studentProfile.getPreferredUnivs() + "','"
->>>>>>> origin/master
+
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
@@ -186,7 +186,7 @@ public class StudentDAO extends AppDBInfoDAO {
         }
     }
     
-<<<<<<< HEAD
+
     public String convertListtoString(List<String> list){
         String convertedString=null;
         Iterator<String> iterator = list.iterator();
@@ -203,7 +203,7 @@ public class StudentDAO extends AppDBInfoDAO {
         convertedList.addAll(Arrays.asList(delimitedString.split(";")));
         return convertedList; 
     }    
-=======
+
     public boolean updatePath(String username , String path){
         String query = "update linkedu.student_profile ";
         query += " set filepath = '"+path +"' where username = '" +username + "'";
@@ -238,5 +238,5 @@ public class StudentDAO extends AppDBInfoDAO {
         
     }
     
->>>>>>> origin/master
+
 }

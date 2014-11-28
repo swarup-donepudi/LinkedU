@@ -6,13 +6,12 @@
 
 package model;
 
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-=======
->>>>>>> origin/master
+
 /**
  *
  * @author skdonep
@@ -24,6 +23,8 @@ public class StudentProfile extends UserProfile{
     private String preferredProgram;
     private String preferredUnivs;
     private String uploadStatusMsg;
+    private ArrayList preferredPrograms;
+    private ArrayList preferredUnivs;
 
     public StudentProfile(){
         this.preferredPrograms = new ArrayList<>();

@@ -6,24 +6,23 @@ package controller;
 
 import dao.SearchDAO;
 import dao.StudentDAO;
-<<<<<<< HEAD
 import dao.UniversityDAO;
-=======
+
 import java.io.File;
 import java.io.FileOutputStream;
->>>>>>> origin/master
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-<<<<<<< HEAD
+
 import java.util.Map;
-=======
+
 import java.util.List;
 import javax.faces.application.FacesMessage;
->>>>>>> origin/master
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
@@ -45,12 +44,9 @@ public class StudentController {
 
     private StudentProfile studentProfile;
     private RecruiterProfile selectedRecruiter;
-<<<<<<< HEAD
+
     private UniversityProfile selectedUniversity;
     private String profileUpdateMessage;    
-=======
-    private String profileUpdateMessage;
->>>>>>> origin/master
     private UniversitySearchCriteria universitySearchCriteria;
     private ArrayList<UniversityProfile> universitySearchResults;
     private LoginController loginController;
@@ -145,7 +141,7 @@ public class StudentController {
     public void setSearch(List<UniversitySearchCriteria> search) {
         this.search = search;
     }
-<<<<<<< HEAD
+
     
     public void showUniversityProfileToStudent(){
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -154,7 +150,7 @@ public class StudentController {
         UniversityDAO universityDB = new UniversityDAO();
         this.selectedUniversity = universityDB.fetchUniversityProfile(selectedUniversityUsername);
     }
-=======
+
 
     public List<UniversitySearchCriteria> getSearch() {
         return search;
@@ -275,25 +271,11 @@ public class StudentController {
     }
 
     /**
-     * @return the universitySearchResults
-     */
-    public ArrayList<UniversityProfile> getUniversitySearchResults() {
-        return universitySearchResults;
-    }
-
-    /**
-     * @param universitySearchResults the universitySearchResults to set
-     */
-    public void setUniversitySearchResults(ArrayList<UniversityProfile> universitySearchResults) {
-        this.universitySearchResults = universitySearchResults;
-    }
-
-    /**
      * @param document the document to set
      */
     public void setDocument(Part document) {
         this.document = document;
     }
 
->>>>>>> origin/master
+
 }
