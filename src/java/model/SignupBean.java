@@ -22,6 +22,8 @@ public class SignupBean implements Serializable {
     String password;
     String eMail;
     char accountType;
+    private char acc_status;
+    private String verifyString;
 
     public String getUserName() {
         return userName;
@@ -53,8 +55,33 @@ public class SignupBean implements Serializable {
 
     public void setAccountType(char accountType) {
         this.accountType = accountType;
+    }   
+
+    /**
+     * @return the acc_status
+     */
+    public char getAcc_status() {
+        return acc_status;
     }
-    
-    
-    
+
+    /**
+     * @param acc_status the acc_status to set
+     */
+    public void setAcc_status(char acc_status) {
+        this.acc_status = acc_status;
+    }
+
+    /**
+     * @return the verifyString
+     */
+    public String getVerifyString() {
+        return verifyString;
+    }
+
+    /**
+     * @param verifyString the verifyString to set
+     */
+    public void setVerifyString(String verifyString) {
+        this.verifyString = verifyString;
+    }
 }

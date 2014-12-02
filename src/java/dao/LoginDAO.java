@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import model.LoginBean;
 
 /**
  *
@@ -86,5 +87,82 @@ public class LoginDAO extends AppDBInfoDAO{
             e.printStackTrace();
         }
         return 'E';
+    }
+    
+    public String verifyEmailID(String email) throws SQLException{
+        email = email.toLowerCase();
+        String username="";
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String selectStatement = "SELECT * FROM LINKEDU.USERINFO WHERE LOWER(EMAILID)='" + email + "'";
+        Statement stmt = DBConn.createStatement();
+        ResultSet rs = stmt.executeQuery(selectStatement);
+        if (rs.next()) {
+            username = rs.getString("USERNAME");
+        }
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
+        return username;
+    }
+    
+    public int addVerificationDetails(String username, String verifyLink) {
+        int rowCount = 0;
+        try {
+            this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+            String insertString;
+            Statement stmt = DBConn.createStatement();
+                    insertString = "INSERT INTO LINKEDU.VERIFICATION_STRINGS VALUES ('"
+                    + username
+                    + "','" + verifyLink
+                    + "')";
+            rowCount = stmt.executeUpdate(insertString);
+            System.out.println("insert string =" + insertString);
+            this.DBConn.close();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        // if insert is successful, rowCount will be set to 1 (1 row inserted successfully).
+        // Else, insert failed.
+        return rowCount;
+    }
+    
+    public String verifyForgotPasswordLink(String verifyLink) throws SQLException{
+        String username="";
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String selectStatement = "SELECT * FROM LINKEDU.VERIFICATION_STRINGS WHERE LINK_STRING='" + verifyLink + "'";
+        Statement stmt = DBConn.createStatement();
+        ResultSet rs = stmt.executeQuery(selectStatement);
+        if (rs.next()) {
+            username = rs.getString("USERNAME");
+        }
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
+        return username;        
+    }
+    
+    public boolean deleteVerificationData(String username) throws SQLException{
+        String user="";
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String selectStatement = "DELETE FROM LINKEDU.VERIFICATION_STRINGS WHERE USERNAME = '"+username+"'" ; 
+        Statement stmt = DBConn.createStatement();
+        int row = stmt.executeUpdate(selectStatement);
+        this.DBConn.close();
+        stmt.close();
+        return false;         
+    }
+    
+    public int changePasswordLogin(String username, String password) throws SQLException{
+        String user="";
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String selectStatement = "UPDATE LINKEDU.LOGIN " 
+                + " SET PASSWORD = '" + password
+                +"' WHERE USERNAME = '" + username + "'"; 
+        Statement stmt = DBConn.createStatement();
+        int row = stmt.executeUpdate(selectStatement);        
+        this.DBConn.close();
+        stmt.close();
+        return row;  
     }
 }

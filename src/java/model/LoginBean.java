@@ -14,6 +14,7 @@ public class LoginBean {
     private String userName;
     private String password;
     private char accountType;
+    private String verifyLink;
     
     public LoginBean(){
         
@@ -46,6 +47,20 @@ public class LoginBean {
 
     public void setAccountType(char accountType) {
         this.accountType = accountType;
+    }
+
+    /**
+     * @return the verifyLink
+     */
+    public String getVerifyLink() {
+        return verifyLink;
+    }
+
+    /**
+     * @param verifyLink the verifyLink to set
+     */
+    public void setVerifyLink(String verifyLink) {
+        this.verifyLink = verifyLink;
     }
     
 }

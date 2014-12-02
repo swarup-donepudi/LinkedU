@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Random;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -95,6 +96,43 @@ public class LoginController implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
+    
+    public void sendForgotPasswordEmail() throws SQLException, IOException{
+        setErrorMessage("");
+        LoginDAO loginDB = new LoginDAO();
+        String username = loginDB.verifyEmailID(loginBean.getUserName());
+        if(!username.equals("")){
+            String verifyString = this.generateRandonString();
+            int count = loginDB.addVerificationDetails(username, verifyString);
+            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink="+verifyString;
+            EmailController sendemail = new EmailController();
+            sendemail.mail(loginBean.getUserName(), "Change password", this.mailBody(link));
+            setErrorMessage("Email Sent");
+        }
+        else{
+            setErrorMessage("Something went wrong. Please retry");
+        }
+        
+    }
+    //http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink=twtwdatdexdkphf
+    public String mailBody(String link){
+        String msg = "This is the link to reset the password. Pls click on the following link to reset your password<br/>."
+                + "<a href ="+link+">Click Here to activate.</a><br/> This Link will expire once you change your password"
+                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
+        return msg;
+    }
+    
+    public String generateRandonString() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 15;
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+            buffer.append((char) randomLimitedInt);
+        }
+        return buffer.toString();
+    }
 
     public void validateCredentials() throws IOException, SQLException, ParseException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -143,5 +181,30 @@ public class LoginController implements Serializable {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             externalContext.redirect("index.xhtml");
         }
+    }
+    
+    public void verifyLink() throws SQLException, IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        LoginDAO loginDB = new LoginDAO();
+        String username = loginDB.verifyForgotPasswordLink(loginBean.getVerifyLink());
+        if(!username.equals("")){
+            loginBean.setUserName(username);
+            loginDB.deleteVerificationData(username);
+        }
+        else{
+            externalContext.redirect("InvalidVerificationLink.xhtml");
+        }
+    }
+    
+    public void changePassword() throws SQLException{
+        LoginDAO loginDB = new LoginDAO();
+        int count = loginDB.changePasswordLogin(loginBean.getUserName(), loginBean.getPassword());
+        if(count==1){
+            setErrorMessage("password changed successfully");
+        }
+        else{
+            setErrorMessage("Something went wrong. Pls retry");
+        }
+        
     }
 }

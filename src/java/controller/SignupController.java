@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -35,6 +36,7 @@ public class SignupController implements Serializable {
     private StudentController studentController;
     private SignupBean signupBean;
     private String usernameMsg;
+    private String emailMsg;
 
     /**
      * Creates a new instance of SignupController
@@ -66,6 +68,17 @@ public class SignupController implements Serializable {
     public void setSignupBean(SignupBean signupBean) {
         this.signupBean = signupBean;
     }
+    
+    public String getEmailMsg() {
+        return emailMsg;
+    }
+
+    /**
+     * @param emailMsg the emailMsg to set
+     */
+    public void setEmailMsg(String emailMsg) {
+        this.emailMsg = emailMsg;
+    }
 
     public String getUsernameMsg() throws SQLException {
         this.checkDuplicateUsername();
@@ -84,48 +97,88 @@ public class SignupController implements Serializable {
     public void checkDuplicateUsername() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
-            usernameMsg = "Username Already Exists";
+            this.usernameMsg = "Username Already Exists";
         } else {
-            usernameMsg = "";
+            this.usernameMsg = "";
+        }
+    }
+    
+    public void checkDuplicateEmail() throws SQLException {
+        SignupDAO signupDB = new SignupDAO();
+        if (signupDB.emailAlreadyExits(this.signupBean.geteMail())) {
+            this.setEmailMsg("Email Already Exists");
+        } else {
+            this.setEmailMsg("");
         }
     }
 
-    public void signUpValidation() throws IOException, SQLException, ParseException {
+    public void signupUser() throws IOException, SQLException, ParseException {
+        this.createUserInfo(this.signupBean);
+        this.createLogin(this.signupBean);
+        this.createVerificationString(this.signupBean);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("abc.xhtml");
+    }
+    
+    public void createLogin(SignupBean user) throws SQLException{
         SignupDAO create = new SignupDAO();
-        int count = create.createAccount(signupBean);
-        this.triggerSignupMail();
-        if (count == 1) {
-            if (signupBean.getAccountType() == 'S') {
-                StudentProfile studentProfile;
-                StudentDAO profileDB = new StudentDAO();
-                String studentUsername = this.signupBean.getUserName();
-                if (profileDB.studentHasProfile(studentUsername)) {
-                    studentProfile = profileDB.fetchStudentProfile(studentUsername);
-                } else {
-                    studentProfile = new StudentProfile();
-                }
-                this.studentController.setStudentProfile(studentProfile);
-                externalContext.redirect("StudentHome.xhtml");
-            } else {
-                RecruiterProfile recruiterProfile;
-                RecruiterDAO recruiterDB = new RecruiterDAO();
-                String recruiterUsername = this.signupBean.getUserName();
-                if (recruiterDB.recruiterHasProfile(recruiterUsername)) {
-                    recruiterProfile = recruiterDB.fetchRecruiterProfile(recruiterUsername);
-                } else {
-                    recruiterProfile = new RecruiterProfile();
-                }
-                this.recruiterController.setRecruiterProfile(recruiterProfile);
-                externalContext.redirect("RecruiterHome.xhtml");
-            }
-        } else {
-            externalContext.redirect("Error.xhtml");
+        int count = create.createLoginAccount(user);
+    }
+    
+    public void createUserInfo(SignupBean user) throws SQLException{
+        SignupDAO create = new SignupDAO();
+        int count = create.createUserAccount(user);
+    }
+    
+    public void createVerificationString(SignupBean user) throws SQLException, IOException{
+        SignupDAO verify = new SignupDAO();
+        String randomString = generateRandonString();
+        String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink="+randomString;
+        if(verify.userAccStatus(user.geteMail())){        
+        EmailController mailing = new EmailController();
+        mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
+        verify.insertVerificationDetails(user.geteMail(), randomString);
+    }
+        else{
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("abc.xhtml");
         }
     }
-
-    public void triggerSignupMail() {
-        EmailController ec = new EmailController();
-        ec.triggerMail(signupBean.getUserName(), signupBean.geteMail());
+    
+    public void resendVerificationLink() throws SQLException, IOException{
+        this.createVerificationString(signupBean);
+    }
+    
+    public String generateRandonString() {
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 15;
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int) (new Random().nextFloat() * (rightLimit - leftLimit));
+            buffer.append((char) randomLimitedInt);
+        }
+        return buffer.toString();
+    }
+    
+    public String mailBody(String link){
+        String msg = "This is the verification link. Pls click on the following link to reset your password<br/>."
+                + "<a href ="+link+">Click Here to activate.</a><br/> This Link will expire once you change your password"
+                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
+        return msg;
+    }
+    
+    public void verifyLink() throws ClassNotFoundException, IOException, SQLException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        SignupDAO check = new SignupDAO();
+        String username = check.checkLink(signupBean.getVerifyString());
+        if(!username.equals("")){
+            check.updateAccStatus(username);
+            check.deleteVerificationData(username);
+        }
+        else{
+            externalContext.redirect("InvalidVerificationLink.xhtml");
+        }
     }
 }
+
