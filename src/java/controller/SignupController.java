@@ -27,16 +27,14 @@ import model.StudentProfile;
  */
 @ManagedBean(name = "signupController")
 @SessionScoped
-public class SignupController implements Serializable{
-    
+public class SignupController implements Serializable {
+
     @ManagedProperty(value = "#{recruiterController}")
     private RecruiterController recruiterController;
-    
     @ManagedProperty(value = "#{studentController}")
-    private StudentController studentController;    
-
-    SignupBean signupBean;
-    String usernameMsg;
+    private StudentController studentController;
+    private SignupBean signupBean;
+    private String usernameMsg;
 
     /**
      * Creates a new instance of SignupController
@@ -69,7 +67,13 @@ public class SignupController implements Serializable{
         this.signupBean = signupBean;
     }
 
-    public String getUsernameMsg() {
+    public String getUsernameMsg() throws SQLException {
+        this.checkDuplicateUsername();
+        if (this.signupBean.getUserName() != null) {
+            if (this.signupBean.getUserName().equals("")) {
+                this.usernameMsg = "";
+            }
+        }
         return usernameMsg;
     }
 
@@ -77,21 +81,20 @@ public class SignupController implements Serializable{
         this.usernameMsg = usernameMsg;
     }
 
-    public String checkDuplicateUsername() throws SQLException {
+    public void checkDuplicateUsername() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
             usernameMsg = "Username Already Exists";
         } else {
             usernameMsg = "";
         }
-        return usernameMsg;
     }
 
     public void signUpValidation() throws IOException, SQLException, ParseException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO create = new SignupDAO();
         int count = create.createAccount(signupBean);
-        this.triggerSignupMail();        
+        this.triggerSignupMail();
         if (count == 1) {
             if (signupBean.getAccountType() == 'S') {
                 StudentProfile studentProfile;
@@ -102,7 +105,7 @@ public class SignupController implements Serializable{
                 } else {
                     studentProfile = new StudentProfile();
                 }
-                this.studentController.setStudentProfile(studentProfile);                
+                this.studentController.setStudentProfile(studentProfile);
                 externalContext.redirect("StudentHome.xhtml");
             } else {
                 RecruiterProfile recruiterProfile;
@@ -113,15 +116,15 @@ public class SignupController implements Serializable{
                 } else {
                     recruiterProfile = new RecruiterProfile();
                 }
-                this.recruiterController.setRecruiterProfile(recruiterProfile);                
+                this.recruiterController.setRecruiterProfile(recruiterProfile);
                 externalContext.redirect("RecruiterHome.xhtml");
             }
         } else {
             externalContext.redirect("Error.xhtml");
         }
     }
-    
-    public void triggerSignupMail(){
+
+    public void triggerSignupMail() {
         EmailController ec = new EmailController();
         ec.triggerMail(signupBean.getUserName(), signupBean.geteMail());
     }

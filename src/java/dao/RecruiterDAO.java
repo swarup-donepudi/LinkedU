@@ -60,8 +60,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 recruiterProfile.setfName(rs.getString("FIRST_NAME"));
                 recruiterProfile.setlName(rs.getString("LAST_NAME"));
                 recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
-                recruiterProfile.setUnivName(rs.getString("UNIVERSITY"));
-                recruiterProfile.setUnivURL(rs.getString("UNIV_URL"));
+                recruiterProfile.setInstName(rs.getString("UNIVERSITY"));
+                recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
                 recruiterProfile.setEmail(rs.getString("EMAIL"));
                 recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
@@ -90,9 +90,9 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + "GENDER = '"
                 + recruiterProfile.getGender() + "', "
                 + "UNIVERSITY = '"
-                + recruiterProfile.getUnivName() + "', "
+                + recruiterProfile.getInstName() + "', "
                 + "UNIV_URL = '"
-                + recruiterProfile.getUnivURL() + "', "
+                + recruiterProfile.getInstURL() + "', "
                 + "PRIMARY_PHONE = '"
                 + recruiterProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
@@ -138,8 +138,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getfName() + "','"
                 + recruiterProfile.getlName() + "','"
                 + recruiterProfile.getGender() + "','"
-                + recruiterProfile.getUnivName() + "','"
-                + recruiterProfile.getUnivURL() + "','"
+                + recruiterProfile.getInstName() + "','"
+                + recruiterProfile.getInstURL() + "','"
                 + recruiterProfile.getPrimaryPhNum() + "','"
                 + recruiterProfile.getSecondaryPhNum() + "','"
                 + recruiterProfile.getCountry() + "','"

@@ -29,20 +29,17 @@ public class MessagesDAO extends AppDBInfoDAO {
 
     public int insertMessageIntoDB(MessageBean messageBean) {
         int rowCount = 0;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String currentTS = sdf.format(new Date()); 
         String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROMADDRESS,"
                 + "TOADDRESS,"
                 + "SUBJECT,"
                 + "MESSAGEBODY,"
-                + "STATUS,TIME_STAMP) "
+                + "STATUS) "
                 + "VALUES('"
                 + messageBean.getFromAddress() + "','"
                 + messageBean.getToAddress() + "','"
                 + messageBean.getSubject() + "','"
                 + messageBean.getMessageBody() + "','"
-                + messageBean.getStatus() + "','"
-                + currentTS + "')";
+                + messageBean.getStatus() + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();

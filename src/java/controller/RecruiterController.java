@@ -114,7 +114,9 @@ public class RecruiterController implements Serializable {
 
     public void searchStudents() throws SQLException, IOException, ParseException {
         this.studentSearchResults.clear();
-        SearchDAO db = new SearchDAO();
-        db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
+        if(this.studentSearchCriteria.getPreferredInst()!=null){
+            SearchDAO db = new SearchDAO();
+            db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
+        }
     }
 }

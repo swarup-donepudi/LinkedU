@@ -4,10 +4,12 @@
  */
 package controller;
 
+import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
-import dao.UniversityDAO;
+import dao.InstitutionDAO;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,8 +19,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.RecruiterProfile;
 import model.StudentProfile;
-import model.UniversityProfile;
-import model.UniversitySearchCriteria;
+import model.InstitutionProfile;
+import model.InstitutionSearchCriteria;
 
 /**
  *
@@ -27,29 +29,31 @@ import model.UniversitySearchCriteria;
 @ManagedBean(name = "studentController")
 @ApplicationScoped
 public class StudentController {
+
     private StudentProfile studentProfile;
     private RecruiterProfile selectedRecruiter;
-    private UniversityProfile selectedUniversity;
-    private String profileUpdateMessage;    
-    private UniversitySearchCriteria universitySearchCriteria;
-    private ArrayList<UniversityProfile> universitySearchResults;
+    private InstitutionProfile selectedInstitution;
+    private String profileUpdateMessage;
+    private InstitutionSearchCriteria institutionSearchCriteria;
+    private ArrayList<InstitutionProfile> institutionSearchResults;
+
     /**
      * Creates a new instance of StudentController
      */
     public StudentController() {
         this.selectedRecruiter = new RecruiterProfile();
-        this.universitySearchCriteria = new UniversitySearchCriteria();
-        this.universitySearchResults = new ArrayList<>();
+        this.institutionSearchCriteria = new InstitutionSearchCriteria();
+        this.institutionSearchResults = new ArrayList<>();
     }
 
-    public ArrayList<UniversityProfile> getUniversitySearchResults() {
-        return universitySearchResults;
+    public ArrayList<InstitutionProfile> getInstitutionSearchResults() {
+        return institutionSearchResults;
     }
 
-    public void setUniversitySearchResults(ArrayList<UniversityProfile> universitySearchResults) {
-        this.universitySearchResults = universitySearchResults;
+    public void setInstitutionSearchResults(ArrayList<InstitutionProfile> institutionSearchResults) {
+        this.institutionSearchResults = institutionSearchResults;
     }
-    
+
     public StudentProfile getStudentProfile() {
         return studentProfile;
     }
@@ -66,12 +70,12 @@ public class StudentController {
         this.selectedRecruiter = selectedRecruiter;
     }
 
-    public UniversityProfile getSelectedUniversity() {
-        return selectedUniversity;
+    public InstitutionProfile getSelectedInstitution() {
+        return selectedInstitution;
     }
 
-    public void setSelectedUniversity(UniversityProfile selectedUniversity) {
-        this.selectedUniversity = selectedUniversity;
+    public void setSelectedInstitution(InstitutionProfile selectedInstitution) {
+        this.selectedInstitution = selectedInstitution;
     }
 
     public String getProfileUpdateMessage() {
@@ -82,12 +86,12 @@ public class StudentController {
         this.profileUpdateMessage = profileUpdateMessage;
     }
 
-    public UniversitySearchCriteria getUniversitySearchCriteria() {
-        return universitySearchCriteria;
+    public InstitutionSearchCriteria getInstitutionSearchCriteria() {
+        return institutionSearchCriteria;
     }
 
-    public void setUniversitySearchCriteria(UniversitySearchCriteria universitySearchCriteria) {
-        this.universitySearchCriteria = universitySearchCriteria;
+    public void setInstitutionSearchCriteria(InstitutionSearchCriteria institutionSearchCriteria) {
+        this.institutionSearchCriteria = institutionSearchCriteria;
     }
 
     public void updateStudentProfile() throws SQLException {
@@ -97,25 +101,38 @@ public class StudentController {
         } else {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.username);
         }
-        this.profileUpdateMessage="Profile updated successfully.";
+        this.profileUpdateMessage = "Profile updated successfully.";
     }
-    
-    public void showUniversitiesSearchForm() throws IOException{
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();       
-        externalContext.redirect("SearchUniversities.xhtml");  
+
+    public void showInstitutionsSearchForm() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SearchInstitutions.xhtml");
     }
-    
-    public void searchUniversities() throws SQLException, IOException {
-        this.universitySearchResults.clear();
-        SearchDAO db = new SearchDAO();
-        db.retrieveUniversitySearchResults(universitySearchCriteria, universitySearchResults);
+
+    public void searchInstitutions() throws SQLException, IOException {
+        this.institutionSearchResults = new ArrayList<>();
+        if ((this.institutionSearchCriteria.getInstName() != null)) {
+            if (!this.institutionSearchCriteria.getInstName().equals("")) {
+                SearchDAO db = new SearchDAO();
+                db.retrieveInstitutionSearchResults(institutionSearchCriteria, institutionSearchResults);
+                this.institutionSearchCriteria = new InstitutionSearchCriteria();
+            }
+        }
     }
-    
-    public void showUniversityProfileToStudent(){
+
+    public void showInstitutionProfileToStudent() throws UnsupportedEncodingException, IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        String selectedUniversityUsername = params.get("selectedUniversity");
-        UniversityDAO universityDB = new UniversityDAO();
-        this.selectedUniversity = universityDB.fetchUniversityProfile(selectedUniversityUsername);
+        int selectedInstID = Integer.parseInt(params.get("selectedInstitution"));
+        InstitutionDAO institutionDB = new InstitutionDAO();
+        this.selectedInstitution = institutionDB.fetchInstitutionProfileFromDB(selectedInstID);
+    }
+
+    public void showRecruiterProfileToStudent() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String selectedRecruiterUsername = params.get("selectedUsername");
+        RecruiterDAO recruiterDB = new RecruiterDAO();
+        this.selectedRecruiter = recruiterDB.fetchRecruiterProfile(selectedRecruiterUsername);
     }
 }

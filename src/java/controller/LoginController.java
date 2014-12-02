@@ -30,17 +30,16 @@ import model.StudentProfile;
  */
 @ManagedBean(name = "loginController")
 @ApplicationScoped
-public class LoginController implements Serializable{
+public class LoginController implements Serializable {
 
     @ManagedProperty(value = "#{recruiterController}")
     private RecruiterController recruiterController;
-    
     @ManagedProperty(value = "#{studentController}")
     private StudentController studentController;
-    
     private String errorMessage;
     private boolean loggedIn;
     private LoginBean loginBean;
+    private boolean rememberMe;
 
     /**
      * Creates a new instance of LoginController
@@ -71,6 +70,14 @@ public class LoginController implements Serializable{
 
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     public String getErrorMessage() {
@@ -107,7 +114,7 @@ public class LoginController implements Serializable{
                 } else {
                     studentProfile = new StudentProfile();
                 }
-                this.studentController.setStudentProfile(studentProfile);                
+                this.studentController.setStudentProfile(studentProfile);
                 externalContext.redirect("StudentHome.xhtml");
             } else {
                 loginBean.setAccountType('R');
@@ -126,6 +133,15 @@ public class LoginController implements Serializable{
         } else {
             this.errorMessage = "Invalid Username/Password";
             externalContext.redirect("LoginFailed.xhtml");
+        }
+    }
+
+    public void checkSessionStatus() throws IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        if (!session.getAttribute("loggedIn").toString().equals("true")) {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("index.xhtml");
         }
     }
 }

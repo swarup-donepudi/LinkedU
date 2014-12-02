@@ -1,0 +1,50 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata> 
+    <ui:decorate template="templates\AppThemeStudent.xhtml">
+        <ui:define name="content">
+            <h:panelGroup id="institutionSearchPanel">
+                <h:form id="institutionSearchForm">
+                    <table cellspacing="30">
+                        <tr>
+                            <td>Institution Name</td>
+                            <td><p:inputText id="preferredInst" value="#{studentController.institutionSearchCriteria.instName}"></p:inputText></td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton action="#{studentController.searchInstitutions()}" value="Search" style="width:80px;height:30px;background-color: eeeeee;color:665f5f;font-size:20px;">
+                                    <f:ajax execute="@form" render="@form :institutionSearchResultsPanel :institutionSearchResultsForm" />
+                                </h:commandButton></td>
+                        </tr>
+                    </table>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup id="institutionSearchResultsPanel">
+                <h:form id="institutionSearchResultsForm">
+                    <p:dataTable id="institutionSearchResults" value="#{studentController.institutionSearchResults}" var="sr"
+                                 paginator="true" rows="10">
+                        <p:column style="width: 10%;background-color:#dcdcdc;">
+                            <!-- column header -->
+                            <f:facet name="header">Click</f:facet>
+                            <!-- row record -->
+                            <h:link id="selectedInstitution" outcome="InstitutionProfileForStudent" value="View" includeViewParams="true">
+                                <f:param  name="selectedInstitution" value="#{sr.doeUID}" /> 
+                            </h:link>
+                        </p:column> 
+                        <p:column style="bgcolor: #dcdcdc;">
+                            <!-- column header -->
+                            <f:facet name="header">Institution Name</f:facet>
+                            <!-- row record -->
+                            #{sr.instName}
+                        </p:column>                         
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>        

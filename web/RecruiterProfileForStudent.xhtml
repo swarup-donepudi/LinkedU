@@ -1,24 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>LinkEDU</title>
-        <h:outputStylesheet library="css" name="AppTheme.css"  />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <body>
-        <ui:composition template="templates\AppTheme.xhtml">
-            <ui:define name="content">
-                RecruiterProfileForSutdent
-            </ui:define>
-        </ui:composition>
-    </body>
-</html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{studentController.showRecruiterProfileToStudent()}"/>
+    </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata> 
+    <ui:decorate template="templates\AppThemeStudent.xhtml">
+        <ui:define name="content">
+            <h:form id="recruiterProfileForm">
+                <table id="recruiterProfileTable" cellspacing="20">
+                    <tr>
+                        <td>  
+                            First Name </td>
+                        <td>
+                            <h:outputLabel id="recruiterFName" value="#{studentController.selectedRecruiter.fName}"></h:outputLabel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                
+                            Last Name  </td>
+                        <td>
+                            <h:outputLabel id="recruiterLName" value="#{studentController.selectedRecruiter.lName}"></h:outputLabel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>  
+                            Gender 
+                        </td>
+                        <td> 
+                            <h:outputLabel id="gender" value="#{studentController.selectedRecruiter.gender}"></h:outputLabel>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> 
+                            Institution 
+                        </td>
+                        <td> 
+                            <h:outputLabel id="institution" value="#{studentController.selectedRecruiter.instName}"/>
+                        </td>
+                    </tr>               
+                    <tr>
+                        <td> 
+                            Primary Phone 
+                        </td>
+                        <td> 
+                            <h:outputLabel id="primaryCode" value="#{studentController.selectedRecruiter.countryDialingCode}"/>
+                            <h:outputLabel id="primaryNum" value="#{studentController.selectedRecruiter.primaryPhNum}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>                                 
+                            Secondary Phone 
+                        </td>
+                        <td>
+                            <h:outputLabel id="secCode" value="#{studentController.selectedRecruiter.countryDialingCode}"/>
+                            <h:outputLabel id="secNum" value="#{studentController.selectedRecruiter.secondaryPhNum}"/>
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <td>
+                            City 
+                        </td>
+                        <td>
+                            <h:outputLabel id="city" value="#{studentController.selectedRecruiter.city}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            State 
+                        </td>
+                        <td>
+                            <h:outputLabel id="state" value="#{studentController.selectedRecruiter.state}"/>
+                        </td>
+                    </tr>
+                    <tr>                    
+                        <td>
+                            Country 
+                        </td>
+                        <td>
+                            <h:outputLabel id="country" value="#{studentController.selectedRecruiter.country}"/>
+                        </td>
+                    </tr>                    
+                </table>
+                <table id="userOptions" cellspacing="20">
+                    <tr>
+                        <td><p:commandButton id ="wlButton" rendered="#{commonController.selectedUserNotInWatchList}"
+                                             action="#{commonController.addToWatchList()}"
+                                             value="Add to Watch List">
+                                <p:ajax event="click" update="@this wlLbl"/>
+                            </p:commandButton></td>
+                        <td><p:commandButton action="RequestMoreInfo?faces-redirect=true" value="Send Message" ajax="false"></p:commandButton></td>
+                        <td><p:commandButton action="ScheduleAppointment?faces-redirect=true" value="Forward Profile" ajax="false"></p:commandButton></td>                            
+                    </tr>
+                </table>
+                <p:outputLabel id="wlLbl" value="#{commonController.watchListUpdateMsg}"/>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

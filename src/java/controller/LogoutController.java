@@ -35,9 +35,6 @@ public class LogoutController implements Serializable {
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
             if(session.getAttribute("loggedIn").equals("true")){
                 session.setAttribute("loggedIn", "false");                
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
-                
-                FacesContext.getCurrentInstance().getExternalContext().invalidateSession();                
                 externalContext.redirect("index.xhtml");
             }
     }

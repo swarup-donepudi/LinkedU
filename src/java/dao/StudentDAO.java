@@ -69,7 +69,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getString("GPA"));
                 studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));
-                studentProfile.setPreferredUnivs(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
+                studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
                 studentProfile.setCity(rs.getString("COUNTRY"));
@@ -105,7 +105,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "PREFERRED_PROGRAMS = '"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
                 + "PREFERRED_UNIVS = '"
-                + this.convertListtoString(studentProfile.getPreferredUnivs()) + "', "
+                + this.convertListtoString(studentProfile.getPreferredInsts()) + "', "
                 + "PRIMARY_PHONE = '"
                 + studentProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
@@ -157,7 +157,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
-                + this.convertListtoString(studentProfile.getPreferredUnivs()) + "','"
+                + this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"

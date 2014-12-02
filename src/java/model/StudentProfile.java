@@ -19,11 +19,11 @@ public class StudentProfile extends UserProfile{
     private String highestDegree;
     private String GPA;
     private List<String> preferredPrograms;
-    private List<String> preferredUnivs;
+    private List<String> preferredInsts;
 
     public StudentProfile(){
         this.preferredPrograms = new ArrayList<>();
-        this.preferredUnivs = new ArrayList<>();
+        this.preferredInsts = new ArrayList<>();
     }
     
     public Date getDob() {
@@ -54,15 +54,15 @@ public class StudentProfile extends UserProfile{
         return preferredPrograms;
     }
 
-    public void setPreferredPrograms(List<String> preferredProgram) {
+    public void setPreferredPrograms(List<String> preferredPrograms) {
         this.preferredPrograms = preferredPrograms;
     }
 
-    public List<String> getPreferredUnivs() {
-        return preferredUnivs;
+    public List<String> getPreferredInsts() {
+        return preferredInsts;
     }
 
-    public void setPreferredUnivs(List<String> preferredUnivs) {
-        this.preferredUnivs = preferredUnivs;
+    public void setPreferredInsts(List<String> preferredInsts) {
+        this.preferredInsts = preferredInsts;
     }
 }

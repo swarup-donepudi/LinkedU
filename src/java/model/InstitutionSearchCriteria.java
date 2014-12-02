@@ -9,9 +9,9 @@ package model;
  *
  * @author skdonep
  */
-public class UniversitySearchCriteria {
+public class InstitutionSearchCriteria {
     
-    private String univName;
+    private String instName;
     private String state;
 
     public String getState() {
@@ -22,11 +22,11 @@ public class UniversitySearchCriteria {
         this.state = state;
     }
 
-    public String getUnivName() {
-        return univName;
+    public String getInstName() {
+        return instName;
     }
 
-    public void setUnivName(String univName) {
-        this.univName = univName;
+    public void setInstName(String instName) {
+        this.instName = instName;
     }
 }

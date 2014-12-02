@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.SuggestionsDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -67,7 +69,7 @@ public class SuggestionsController {
         this.studentController = studentController;
     }
 
-    public List<String> suggestUnivs(String query) throws IOException {
+    public List<String> suggestInsts(String query) throws IOException {
         List<String> results = new ArrayList<>();
         query = query.toLowerCase();
         if (!query.equals("")) {
@@ -77,7 +79,7 @@ public class SuggestionsController {
             try {
                 String serviceURI = "https://inventory.data.gov/api/action/datastore_search_sql?sql=";
                 String serviceQuery = "SELECT \"INSTNM\" from \"38625c3d-5388-4c16-a30f-d105432553a4\" "
-                        + "WHERE LOWER(\"INSTNM\") LIKE '" + query + "%' LIMIT 5";
+                        + "WHERE LOWER(\"INSTNM\") LIKE '" + query +"%' OR LOWER(\"IALIAS\") LIKE '%"+ query + "%'";
                 serviceURI += URLEncoder.encode(serviceQuery, "UTF-8");
                 URL url = new URL(serviceURI);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -227,8 +229,9 @@ public class SuggestionsController {
         return results;
     }
 
-    public void fillStateCountry() throws UnsupportedEncodingException, IOException {
+    public void autofillWithCityName() throws UnsupportedEncodingException, IOException, SQLException {
         char accType;
+        String countryCode=null;
         String selectedItem = null;
         String countryName = null;
         String stateName = null;
@@ -301,14 +304,19 @@ public class SuggestionsController {
                     break;
             }
         }
+        SuggestionsDAO suggestionDB = new SuggestionsDAO();
+        int countryCodeNum = suggestionDB.fetchCountryDialingCodeFromDB(countryName);
+        countryCode = "+"+countryCodeNum;
         if (accType == 'S') {
             this.studentController.getStudentProfile().setCountry(countryName);
             this.studentController.getStudentProfile().setState(stateName);
             this.studentController.getStudentProfile().setCity(cityName);
+            this.studentController.getStudentProfile().setCountryDialingCode(countryCode);
         } else {
             this.recruiterController.getRecruiterProfile().setCountry(countryName);
             this.recruiterController.getRecruiterProfile().setState(stateName);
             this.recruiterController.getRecruiterProfile().setCity(cityName);
+            this.recruiterController.getRecruiterProfile().setCountryDialingCode(countryCode);
         }
     }
 }

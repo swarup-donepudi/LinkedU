@@ -5,33 +5,59 @@
  */
 package model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author skdonep
  */
 public class RecruiterProfile extends UserProfile {
 
-    private String univName;
-    private String univURL;
+    private String instName;
+    private String instURL;
+    private String instFBPage;
+    private String twitterHandle;
+    private String reasonForLinkEDU;
     
     public RecruiterProfile(){
     }
 
-    public String getUnivName() {
-        return univName;
+    public String getInstName() {
+        return instName;
     }
 
-    public void setUnivName(String university) {
-        this.univName = university;
+    public void setInstName(String instName) {
+        this.instName = instName;
     }
 
-    public String getUnivURL() {
-        return univURL;
+    public String getInstURL() {
+        return instURL;
     }
 
-    public void setUnivURL(String universityURL) {
-        this.univURL = universityURL;
+    public void setInstURL(String instURL) {
+        this.instURL = instURL;
     }
+
+    public String getInstFBPage() {
+        return instFBPage;
+    }
+
+    public void setInstFBPage(String instFBPage) {
+        this.instFBPage = instFBPage;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
+    }
+
+    public String getReasonForLinkEDU() {
+        return reasonForLinkEDU;
+    }
+
+    public void setReasonForLinkEDU(String reasonForLinkEDU) {
+        this.reasonForLinkEDU = reasonForLinkEDU;
+    }
+    
 }

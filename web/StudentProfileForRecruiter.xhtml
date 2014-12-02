@@ -1,13 +1,11 @@
-
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
-
     <f:metadata>
-        <f:event type="preRenderView" listener="#{recruiterController.showStudentProfileToRecruiter()}"/>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
@@ -69,10 +67,10 @@
                     </tr>
                     <tr>
                         <td> 
-                            Preferred Universities 
+                            Preferred Institutions 
                         </td>
                         <td> 
-                            <h:outputLabel id="preferredUnivs" value="#{recruiterController.selectedStudent.preferredUnivs}"/>
+                            <h:outputLabel id="preferredInsts" value="#{recruiterController.selectedStudent.preferredInsts}"/>
                         </td>
                     </tr>                
                     <tr>
@@ -80,7 +78,7 @@
                             Primary Phone 
                         </td>
                         <td> 
-                            <h:outputLabel id="primaryCode" value="#{recruiterController.selectedStudent.primaryPhCountryCode}"/>
+                            <h:outputLabel id="primaryCode" value="#{recruiterController.selectedStudent.countryDialingCode}"/>
                             <h:outputLabel id="primaryNum" value="#{recruiterController.selectedStudent.primaryPhNum}"/>
                         </td>
                     </tr>
@@ -89,16 +87,16 @@
                             Secondary Phone 
                         </td>
                         <td>
-                            <h:outputLabel id="secCode" value="#{recruiterController.selectedStudent.secondaryPhCountryCode}"/>
+                            <h:outputLabel id="secCode" value="#{recruiterController.selectedStudent.countryDialingCode}"/>
                             <h:outputLabel id="secNum" value="#{recruiterController.selectedStudent.secondaryPhNum}"/>
                         </td>
                     </tr>
                     <tr>                    
                         <td>
-                            Country 
+                            City 
                         </td>
                         <td>
-                            <h:outputLabel id="country" value="#{recruiterController.selectedStudent.country}"/>
+                            <h:outputLabel id="city" value="#{recruiterController.selectedStudent.city}"/>
                         </td>
                     </tr>
                     <tr>
@@ -108,13 +106,13 @@
                         <td>
                             <h:outputLabel id="state" value="#{recruiterController.selectedStudent.state}"/>
                         </td>
-                    </tr>
+                    </tr>                    
                     <tr>                    
                         <td>
-                            City 
+                            Country 
                         </td>
                         <td>
-                            <h:outputLabel id="city" value="#{recruiterController.selectedStudent.city}"/>
+                            <h:outputLabel id="country" value="#{recruiterController.selectedStudent.country}"/>
                         </td>
                     </tr>                        
                 </table>

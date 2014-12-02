@@ -14,9 +14,8 @@ public class UserProfile {
     public String fName;
     public String lName;
     public char gender;
-    public String primaryPhCountryCode;
+    public String countryDialingCode;
     public String primaryPhNum;
-    public String secondaryPhCountryCode;
     public String secondaryPhNum;
     public String Country;
     public String City;
@@ -65,12 +64,12 @@ public class UserProfile {
         this.email = email;
     }
 
-    public String getPrimaryPhCountryCode() {
-        return primaryPhCountryCode;
+    public String getCountryDialingCode() {
+        return countryDialingCode;
     }
 
-    public void setPrimaryPhCountryCode(String primaryPhCountryCode) {
-        this.primaryPhCountryCode = primaryPhCountryCode;
+    public void setCountryDialingCode(String countryDialingCode) {
+        this.countryDialingCode = countryDialingCode;
     }
 
     public String getPrimaryPhNum() {
@@ -79,14 +78,6 @@ public class UserProfile {
 
     public void setPrimaryPhNum(String primaryPhNum) {
         this.primaryPhNum = primaryPhNum;
-    }
-
-    public String getSecondaryPhCountryCode() {
-        return secondaryPhCountryCode;
-    }
-
-    public void setSecondaryPhCountryCode(String secondaryPhCountryCode) {
-        this.secondaryPhCountryCode = secondaryPhCountryCode;
     }
 
     public String getSecondaryPhNum() {

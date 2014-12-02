@@ -25,9 +25,9 @@ public class LoginDAO extends AppDBInfoDAO{
     }
     
     public boolean validCredentials(String user, String password) {
-
+        user=user.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.LOGIN ";
-        selectQuery += "WHERE USERNAME = '" + user + "' and PASSWORD = '" + password + "'";
+        selectQuery += "WHERE LOWER(USERNAME) = '" + user + "' and PASSWORD = '" + password + "'";
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
@@ -61,7 +61,8 @@ public class LoginDAO extends AppDBInfoDAO{
     }
 
     public char getAccountType(String username) {
-        String selectQuery = " SELECT ACCTYPE FROM LINKEDU.USERINFO WHERE USERNAME='" + username + "'";
+        username = username.toLowerCase();
+        String selectQuery = " SELECT ACCTYPE FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
 

@@ -1,0 +1,155 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript" ></script>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{studentController.showInstitutionProfileToStudent()}"/>
+    </f:metadata>
+    <ui:decorate template="templates\AppThemeStudent.xhtml">
+        <ui:define name="content">
+            <h:form id="institutionProfile">
+                <br /><h3 style="margin-top:0"><h:outputLabel value="#{studentController.selectedInstitution.instName}"/></h3><br />
+                <p:tabView id="institutionTabs">
+                    <p:tab title="Contact">
+                        <table cellspacing="20px">
+                            <tr>
+                                <td><p:outputLabel value="Institution Name"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.instName}"/></td>
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Street"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.instAddr}"/></td>
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="City"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.city}"/></td>
+                            </tr>                    
+                            <tr>
+                                <td><p:outputLabel value="ZIP Code"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.zipCode}"/></td>
+                            </tr>                    
+                            <tr>
+                                <td><p:outputLabel value="State"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.stateCode}"/></td>
+                            </tr>  
+                        </table>
+                    </p:tab>
+                    <p:tab title="Location">
+                        <table cellspacing="10px">
+                            <tr><td>
+                                    <table cellspacing="20px">
+                                        <tr>
+                                            <td><p:outputLabel value="County"/></td>
+                                            <td><p:outputLabel value="#{studentController.selectedInstitution.countyName}"/></td>
+                                        </tr>                    
+                                        <tr>
+                                            <td><p:outputLabel value="Governing System"/></td>
+                                            <td><p:outputLabel value="#{studentController.selectedInstitution.governingSystem}"/></td>
+                                        </tr>                   
+                                        <tr>
+                                            <td><p:outputLabel value="Website"/></td>
+                                            <td><a href="#{studentController.selectedInstitution.instURL}" target="_blank"><p:outputLabel value="#{studentController.selectedInstitution.instURL}"/></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel value="Admissions URL"/></td>
+                                            <td><h:outputLink value="#{studentController.selectedInstitution.adminURL}" target="_blank"><p:outputLabel value="#{studentController.selectedInstitution.adminURL}"/></h:outputLink></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p:outputLabel value="Applications URL"/></td>
+                                            <td><h:outputLink value="#{studentController.selectedInstitution.appURL}" target="_blank"><p:outputLabel value="#{studentController.selectedInstitution.appURL}"/></h:outputLink></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>          
+                                    <f:view contentType="text/html">
+                                        <p:gmap center="#{mapController.instMapCentre}" zoom="13" type="HYBRID"   
+                                                style="width:600px;height:400px"  />  
+                                    </f:view>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Tution">
+                        <table cellspacing="20px">
+                            <tr>
+                                <td><p:outputLabel value="Info Desk Number"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.infoDeskPh}"/></td>
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="FAX"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.faxNum}"/></td>
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Offers Undergraduate Programs"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.offersUG}"/></td>
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Offers Graduate Programs"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.offersGrad}"/></td>    
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Offers Medical Degree"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.offersMedicalDegree}"/></td>    
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Highest Degree Offered"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.highestOffering}"/></td>    
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Institution has Hospital"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.hasHospital}"/></td>    
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Institution open to General Public"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.openToGenPublic}"/></td>    
+                            </tr>
+                            <tr>
+                                <td><p:outputLabel value="Locale"/></td>
+                                <td><p:outputLabel value="#{studentController.selectedInstitution.locale}"/></td>    
+                            </tr>                    
+                        </table>
+                    </p:tab>
+                    <p:tab title="Recruiters">
+                        <p:outputPanel id="noRecruiterBoard" rendered="#{studentController.selectedInstitution.noRecruiters}">
+                            <h:outputLabel value="There are no recruiters representing this institution on LinkEDU"/><br /><br />
+                            <p:selectBooleanCheckbox value="#{notificationsController.notifyStudentOnRecruiterAvaialable}" />&#xA0;
+                            <h:outputLabel value="Notify me when a recuiter is available for this institution on LinkedU"/><br /><br />
+                        </p:outputPanel>
+                        <p:dataTable id="studentSearchResults" rendered ="#{studentController.selectedInstitution.hasRecruiters}" 
+                                     value="#{studentController.selectedInstitution.recruiters}" var="rl"
+                                     paginator="true" rows="10">
+                            <p:column>
+                                <!-- column header -->
+                                <f:facet name="header">Click</f:facet>
+                                <!-- row record -->
+                                <h:link id="selectedUsername" outcome="RecruiterProfileForStudent" value="View" includeViewParams="true">
+                                    <f:param  name="selectedUsername" value="#{rl}" /> 
+                                </h:link>
+                            </p:column>            
+
+                            <p:column>
+                                <!-- column header -->
+                                <f:facet name="header">First Name</f:facet>
+                                <!-- row record -->
+                                #{rl}
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Gallery">
+
+                    </p:tab>
+                    <p:tab title="Apply">
+
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>
+

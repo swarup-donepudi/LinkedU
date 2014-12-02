@@ -1,45 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>LinkEDU</title>
-        <h:outputStylesheet library="css" name="AppTheme.css"  />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <body>
-        <ui:composition template="#{templateController.pageTemplate}">
-            <ui:define name="content">
-                <h:form id="ScheduleAppointment">
-                    <table cellspacing="30">
-                        <tr>
-                            <td>Subject</td><td><p:inputText id="subject" size="80" value="#{messageController.messageBean.subject}"></p:inputText></td>
-                        </tr>
-                        <tr>
-                            <td>Message</td><td><p:inputTextarea  id="message" value="#{messageController.messageBean.messageBody}"
-                                                                  counter="display" scrollHeight="60"
-                                                                    maxlength="200" counterTemplate="{0} characters remaining">
-                                </p:inputTextarea>
-                                <h:outputText id="display" /></td>
-                        </tr>
-                        <tr>
-                            <td>                        
-                                <h:commandButton id="sendButton" action="#{messageController.insertMessage()}" value="Send"></h:commandButton></td>
-                        </tr>
-                        <tr>
-                            <td>                        
-                                <h:outputText id="msgSendStatus" value="#{messageController.msgSendStatus}"></h:outputText></td>
-                        </tr>                        
-                    </table>
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </body>
-</html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata> 
+    <ui:decorate template="#{templateController.pageTemplate}">
+        <ui:define name="content">
+            <h:form id="ScheduleAppointment">
+                <table cellspacing="30">
+                    <tr>
+                        <td>Subject</td><td><p:inputText id="subject" size="80" value="#{messageController.messageBean.subject}"></p:inputText></td>
+                    </tr>
+                    <tr>
+                        <td>Message</td><td><p:inputTextarea  id="message" value="#{messageController.messageBean.messageBody}"
+                                                              counter="display" scrollHeight="60"
+                                                              maxlength="200" counterTemplate="{0} characters remaining">
+                            </p:inputTextarea>
+                            <h:outputText id="display" /></td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                            <p:commandButton id="sendButton" action="#{messageController.insertMessage()}" value="Send"></p:commandButton></td>
+                    </tr>
+                    <tr>
+                        <td>                        
+                            <h:outputText id="msgSendStatus" value="#{messageController.msgSendStatus}"></h:outputText></td>
+                    </tr>                        
+                </table>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

@@ -23,10 +23,11 @@ public class SignupDAO extends AppDBInfoDAO {
         super();
     }
 
-    public boolean usernameAlreadyExists(String Username) throws SQLException {
+    public boolean usernameAlreadyExists(String username) throws SQLException {
+        username = username.toLowerCase();
         boolean usernameExists = false;
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
-        String selectStatement = "SELECT * FROM LINKEDU.LOGIN WHERE USERNAME='" + Username + "'";
+        String selectStatement = "SELECT * FROM LINKEDU.LOGIN WHERE LOWER(USERNAME)='" + username + "'";
 
         Statement stmt = DBConn.createStatement();
         ResultSet rs = stmt.executeQuery(selectStatement);
@@ -41,9 +42,10 @@ public class SignupDAO extends AppDBInfoDAO {
     }
     
     public boolean emailAlreadyExits(String emailID) throws SQLException {
+        emailID = emailID.toLowerCase();
         boolean emailExits=false;
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
-        String selectStatement = "SELECT * FROM LINKEDU.USERINFO WHERE EMAILID='" + emailID + "'";
+        String selectStatement = "SELECT * FROM LINKEDU.USERINFO WHERE LOWER(EMAILID)='" + emailID + "'";
         
         Statement stmt = DBConn.createStatement();
         ResultSet rs = stmt.executeQuery(selectStatement);
@@ -68,7 +70,7 @@ public class SignupDAO extends AppDBInfoDAO {
             Statement stmt = DBConn.createStatement();
             insertString = "INSERT INTO LINKEDU.USERINFO VALUES ('"
                     + bean.getUserName()
-                    + "','" + bean.geteMail()
+                    + "','" + bean.geteMail().toLowerCase()
                     + "','" + bean.getAccountType()
                     + "')";
 

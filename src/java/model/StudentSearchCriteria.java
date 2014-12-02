@@ -13,7 +13,7 @@ package model;
 public class StudentSearchCriteria {
     private String GPA;
     private String preferredPrograms;
-    private String preferredUniv;
+    private String preferredInst;
 
     public String getGPA() {
         return GPA;
@@ -31,12 +31,12 @@ public class StudentSearchCriteria {
         this.preferredPrograms = preferredPrograms;
     }
 
-    public String getPreferredUniv() {
-        return preferredUniv;
+    public String getPreferredInst() {
+        return preferredInst;
     }
 
-    public void setPreferredUniv(String preferredUniv) {
-        this.preferredUniv = preferredUniv;
+    public void setPreferredInst(String preferredInst) {
+        this.preferredInst = preferredInst;
     }
     
     
