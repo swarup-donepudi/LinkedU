@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>LinkEDU</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <ui:composition template="templates\AppThemeStudent.xhtml">
+            <ui:define name="content">
+<<<<<<< HEAD
+                <h:form id="universitySearchForm">
+                    <table cellspacing="30">
+                        <tr>
+                            <td>University Name</td>
+                            <td><p:inputText id="preferredUniv" value="#{studentController.universitySearchCriteria.univName}"></p:inputText></td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton rendered="true" action="#{studentController.searchUniversities()}" value="Search">
+                                    <f:ajax execute="universitySearchForm" render="universitySearchResults preferredUniv" />
+                                </h:commandButton></td>
+                        </tr>
+                    </table>
+                     
+                    
+                    <p:dataTable id="universitySearchResults" value="#{studentController.universitySearchResults}" var="sr"
+                                 paginator="true" rows="10">
+                        <p:column style="width: 10%; bgcolor: #dcdcdc;">
+                            <!-- column header -->
+                            <f:facet name="header">Click</f:facet>
+                            <!-- row record -->
+                            <h:link id="selectedUniversity" outcome="UniversityProfileForStudent" value="View" includeViewParams="true">
+                                <f:param  name="selectedUniversity" value="#{sr.universityName}" /> 
+                            </h:link>
+                        </p:column> 
+                        <p:column style="bgcolor: #dcdcdc;">
+                            <!-- column header -->
+                            <f:facet name="header">University Name</f:facet>
+                            <!-- row record -->
+                            #{sr.universityName}
+                        </p:column>                         
+                    </p:dataTable>
+                </h:form>                         
+=======
+                <h:form id="UniversitySearchForm">
+                    University Name <h:inputText id="preferredUniv" value="#{studentController.universitySearchCriteria.searchKeyword}"></h:inputText>
+
+                    <h:selectOneMenu value="#{studentController.universitySearchCriteria.gpaCriteria}">
+                        <f:selectItem itemValue="D" itemLabel="Select GPA criteria" />
+                        <f:selectItem itemValue="A" itemLabel="3.2-4.0" />
+                        <f:selectItem itemValue="B" itemLabel="2.5-3.2" />
+                        <f:selectItem itemValue="C" itemLabel="less than 2.5" />
+                    </h:selectOneMenu><br/>
+                    <h:selectOneRadio value="#{studentController.universitySearchCriteria.searchCriteria}">
+                        <f:selectItem itemValue="uniname" itemLabel="University Name" />
+                        <f:selectItem itemValue="location" itemLabel="Location" />
+                        <f:selectItem itemValue="program" itemLabel="Program" />
+                    </h:selectOneRadio>
+                    <h:commandButton action="#{studentController.searchUniversities()}" value="Search"></h:commandButton>
+                </h:form><br/>
+
+                <h:dataTable id="profileTableID" value="#{studentController.search}" var="aRow"
+                             border="2" cellpadding="4" cellspacing="1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="University Name"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.univName}"/>
+
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="GPA"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.gpa}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TOEFL"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.toeflScore}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PROGRAMS"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.program}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="LOCATION"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.location}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="WEBSITE"/>
+                        </f:facet>
+                        <h:outputText value="#{aRow.website}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="More Details"/>
+                        </f:facet>
+                        <h:form><h:commandLink value="Click here for more details" action="#{studentController.moreInfo(aRow.univName)}"/></h:form>
+
+                    </h:column>
+                </h:dataTable>
+>>>>>>> origin/master
+            </ui:define>
+        </ui:composition>        
+    </body>
+</html>
