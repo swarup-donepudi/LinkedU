@@ -57,8 +57,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
             ResultSet rs = stmt.executeQuery(selectQuery);
 
             while (rs.next()) {
-                recruiterProfile.setFname(rs.getString("FIRST_NAME"));
-                recruiterProfile.setLname(rs.getString("LAST_NAME"));
+                recruiterProfile.setfName(rs.getString("FIRST_NAME"));
+                recruiterProfile.setlName(rs.getString("LAST_NAME"));
                 recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
                 recruiterProfile.setInstName(rs.getString("UNIVERSITY"));
                 recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
@@ -84,9 +84,9 @@ public class RecruiterDAO extends AppDBInfoDAO {
 
     public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
         String updateQuery = "UPDATE LINKEDU.RECRUITER_PROFILE SET FIRST_NAME = '"
-                + recruiterProfile.getFname() + "', "
+                + recruiterProfile.getfName() + "', "
                 + "LAST_NAME = '"
-                + recruiterProfile.getLname() + "', "
+                + recruiterProfile.getlName() + "', "
                 + "GENDER = '"
                 + recruiterProfile.getGender() + "', "
                 + "UNIVERSITY = '"
@@ -135,8 +135,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + "USERNAME,"
                 + "EMAIL)"
                 + "VALUES('"
-                + recruiterProfile.getFname() + "','"
-                + recruiterProfile.getLname() + "','"
+                + recruiterProfile.getfName() + "','"
+                + recruiterProfile.getlName() + "','"
                 + recruiterProfile.getGender() + "','"
                 + recruiterProfile.getInstName() + "','"
                 + recruiterProfile.getInstURL() + "','"
