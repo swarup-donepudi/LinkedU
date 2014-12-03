@@ -86,10 +86,13 @@ public class SignupController implements Serializable {
     }
 
     public String getUsernameMsg() throws SQLException {
-        this.checkDuplicateUsername();
-        if (this.signupBean.getUserName() != null) {
-            if (this.signupBean.getUserName().equals("")) {
-                this.usernameMsg = "";
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            this.checkDuplicateUsername();
+            if (this.signupBean.getUserName() != null) {
+                if (this.signupBean.getUserName().equals("")) {
+                    this.usernameMsg = "";
+                }
             }
         }
         return usernameMsg;
