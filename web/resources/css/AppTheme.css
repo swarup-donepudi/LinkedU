@@ -188,3 +188,8 @@ institutionProfile:j_idt30{
 .ui-tabs-nav{
    height:43px; 
 }
+
+#noLogout{
+    width:100%;
+    background-color: white;
+}

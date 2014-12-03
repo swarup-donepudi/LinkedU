@@ -115,7 +115,7 @@ public class SignupController implements Serializable {
 
     public void checkDuplicateEmail() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
-        if (signupDB.emailAlreadyExits(this.signupBean.geteMail())) {
+        if (signupDB.emailAlreadyExits(this.signupBean.getEmail())) {
             this.setEmailMsg("Email Already Exists");
         } else {
             this.setEmailMsg("");
@@ -142,16 +142,11 @@ public class SignupController implements Serializable {
 
     public void createVerificationString(SignupBean user) throws SQLException, IOException {
         SignupDAO verify = new SignupDAO();
-        String randomString = generateRandonString();
+        String randomString = this.generateRandonString();
         String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
-        if (verify.userAccStatus(user.geteMail())) {
-            EmailController mailing = new EmailController();
-            mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
-            verify.insertVerificationDetails(user.geteMail(), randomString);
-        } else {
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            externalContext.redirect("abc.xhtml");
-        }
+        EmailController mailing = new EmailController();
+        mailing.mail(user.getEmail(), "Verify your Email Address", this.mailBody(link));
+        verify.insertVerificationDetails(user.getUserName(), randomString);
     }
 
     public void resendVerificationLink() throws SQLException, IOException {
@@ -171,9 +166,9 @@ public class SignupController implements Serializable {
     }
 
     public String mailBody(String link) {
-        String msg = "This is the verification link. Pls click on the following link to reset your password<br/>."
-                + "<a href =" + link + ">Click Here to activate.</a><br/> This Link will expire once you change your password"
-                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
+        String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />This is the verification link. Pls click on the following link to reset your password<br/>."
+                + "click <a href =" + link + ">&nbsphere</a> to activate.<br /><br/> This Link will expire once you change your password"
+                + "<br/> Thank you<br/>LinkEDU Team";
         return msg;
     }
 

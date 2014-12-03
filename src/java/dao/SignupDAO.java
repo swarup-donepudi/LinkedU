@@ -176,7 +176,7 @@ public class SignupDAO extends AppDBInfoDAO {
             String insertString;            
             insertString = "INSERT INTO LINKEDU.USERINFO VALUES ('"
                     + bean.getUserName()
-                    + "','" + bean.geteMail().toLowerCase()
+                    + "','" + bean.getEmail().toLowerCase()
                     + "','" + bean.getAccountType()
                     + "','I')";
             Statement stmt = DBConn.createStatement();

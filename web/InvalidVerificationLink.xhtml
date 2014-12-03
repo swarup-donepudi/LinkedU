@@ -15,15 +15,19 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <ui:composition template="templates\AppTheme.xhtml">
+            <ui:define name="header">
+                <h:form>
+                    <h:link outcome="index">
+                        <div id="logo"></div>
+                    </h:link>
+                </h:form>
+            </ui:define>
             <ui:define name="logoutFrame">
             </ui:define>
             <ui:define name="content">
                 <div>
                     <h:form id ="check">
-                        <h2>Pls check your mail box for the verification email and try again. If you did not receive the verification link, pls 
-                        enter your email id and select resend email. </h2><br/>
-                        <h:inputText id="username" value="#{signupController.signupBean.geteMail()}"/><br/>
-                        <h:commandButton id="resendLink" value="Click here to resend the link" action="#{signupController.resendVerificationLink()}"/>
+                        Link expired.click <h:link outcome="ForgotPassword">here</h:link> to reset your password.
                     </h:form>
                 </div>
             </ui:define>
