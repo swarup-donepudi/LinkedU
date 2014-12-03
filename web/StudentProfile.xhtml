@@ -8,7 +8,7 @@
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
     <f:metadata>
-        <f:event type="preRenderView" listener="#{studentController}"/>
+        <f:event type="preRenderView" listener="#{studentController.loadStudentProfile()}"/>
     </f:metadata>
     <ui:decorate template="templates\AppThemeStudent.xhtml">
         <ui:define name="content">
