@@ -97,32 +97,31 @@ public class LoginController implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-    
-    public void sendForgotPasswordEmail() throws SQLException, IOException{
+
+    public void sendForgotPasswordEmail() throws SQLException, IOException {
         setErrorMessage("");
         LoginDAO loginDB = new LoginDAO();
         String username = loginDB.verifyEmailID(loginBean.getUserName());
-        if(!username.equals("")){
+        if (!username.equals("")) {
             String verifyString = this.generateRandonString();
             int count = loginDB.addVerificationDetails(username, verifyString);
-            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink="+verifyString;
+            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
             EmailController sendemail = new EmailController();
             sendemail.mail(loginBean.getUserName(), "Change password", this.mailBody(link));
             setErrorMessage("Email Sent");
-        }
-        else{
+        } else {
             setErrorMessage("Something went wrong. Please retry");
         }
-        
+
     }
 
-    public String mailBody(String link){
+    public String mailBody(String link) {
         String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />Click the following link to reset your password.<br /><br />"
-                + "Click&nbsp<bold><a href ="+link+">here</a><bold>&nbsp to reset you password.</a><br/> This Link will expire once you change your password"
+                + "Click&nbsp<bold><a href =" + link + ">here</a><bold>&nbsp to reset you password.</a><br/> This Link will expire once you change your password"
                 + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>LinkEDU Team";
         return msg;
     }
-    
+
     public String generateRandonString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -169,6 +168,10 @@ public class LoginController implements Serializable {
                     recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
                 } else {
                     recruiterProfile = new RecruiterProfile();
+                    recruiterProfile.setUsername(recruiterUsername);
+                    CommonDAO commonDB = new CommonDAO();
+                    String recruiterEmail = commonDB.getEmailFromUserInfoTable(recruiterUsername);
+                    recruiterProfile.setEmail(recruiterEmail);
                 }
                 this.recruiterController.setRecruiterProfile(recruiterProfile);
                 externalContext.redirect("RecruiterHome.xhtml");
@@ -188,30 +191,28 @@ public class LoginController implements Serializable {
             externalContext.redirect("index.xhtml");
         }
     }
-    
-    public void verifyLink() throws SQLException, IOException{
+
+    public void verifyLink() throws SQLException, IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         String username = loginDB.verifyForgotPasswordLink(loginBean.getVerifyLink());
-        if(!username.equals("")){
+        if (!username.equals("")) {
             loginBean.setUserName(username);
             loginDB.deleteVerificationData(username);
-        }
-        else{
+        } else {
             externalContext.redirect("InvalidVerificationLink.xhtml");
         }
     }
-    
-    public void changePassword() throws SQLException, IOException{
+
+    public void changePassword() throws SQLException, IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         int count = loginDB.changePasswordLogin(loginBean.getUserName(), loginBean.getPassword());
-        if(count==1){
+        if (count == 1) {
             externalContext.redirect("index.xhtml");
-        }
-        else{
+        } else {
             externalContext.redirect("PlsRetryAgain.xhtml");
         }
-        
+
     }
 }

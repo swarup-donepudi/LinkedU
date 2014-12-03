@@ -115,12 +115,11 @@ public class RecruiterController implements Serializable {
         this.profileUpdateMessage = profileUpdateMessage;
     }
 
-    public String showRecruiterHisProfile() throws IOException, SQLException {
+    public void loadRecruiterProfile() throws IOException, SQLException {
         RecruiterDAO profileDao = new RecruiterDAO();
         if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
             this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
         }
-        return ("RecruiterProfile.xhtml");
     }
 
     public void showStudentProfileToRecruiter() throws SQLException, ParseException {
