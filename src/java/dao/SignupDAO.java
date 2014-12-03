@@ -42,13 +42,13 @@ public class SignupDAO extends AppDBInfoDAO {
     }
     
     
-    public int insertVerificationDetails(String email, String verifyLink){
+    public int insertVerificationDetails(String username, String verifyLink){
         int rowCount = 0;
         try {
             this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
             String insertString;            
             insertString = "INSERT INTO LINKEDU.VERIFICATION_STRINGS VALUES ('"
-                    + email
+                    + username
                     + "','" + verifyLink
                     + "')";
             Statement stmt = DBConn.createStatement();

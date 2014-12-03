@@ -145,7 +145,7 @@ public class SignupController implements Serializable {
         if(verify.userAccStatus(user.geteMail())){        
         EmailController mailing = new EmailController();
         mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
-        verify.insertVerificationDetails(user.geteMail(), randomString);
+        verify.insertVerificationDetails(user.getUserName(), randomString);
     }
         else{
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
