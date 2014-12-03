@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,7 +19,7 @@ import javax.faces.bean.ManagedProperty;
 @ManagedBean(name = "navigationController")
 @SessionScoped
 public class NavigationController implements Serializable {
-    
+
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
 
@@ -35,11 +36,19 @@ public class NavigationController implements Serializable {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
-    
-    public String redirectToUserHomepage(){
-        if(loginController.getLoginBean().getAccountType()=='S')
-            return ("StudentHome.xhtml");
-        else
-            return ("RecruiterHome.xhtml");
+
+    public String redirectToUserHomepage() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String linkEDUUsername = session.getAttribute("username").toString();
+        if ((!linkEDUUsername.equals("")) && (!linkEDUUsername.equals(""))) {
+            if (loginController.getLoginBean().getAccountType() == 'S') {
+                return ("StudentHome.xhtml");
+            } else {
+                return ("RecruiterHome.xhtml");
+            }
+        } else {
+            return ("index.xhtml");
+        }
     }
 }
