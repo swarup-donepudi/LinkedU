@@ -127,7 +127,7 @@ public class SignupController implements Serializable {
         this.createLogin(this.signupBean);
         this.createVerificationString(this.signupBean);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("abc.xhtml");
+        externalContext.redirect("SignupSuccessful.xhtml");
     }
 
     public void createLogin(SignupBean user) throws SQLException {
@@ -166,8 +166,8 @@ public class SignupController implements Serializable {
     }
 
     public String mailBody(String link) {
-        String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />This is the verification link. Pls click on the following link to reset your password<br/>."
-                + "click <a href =" + link + ">&nbsphere</a> to activate.<br /><br/> This Link will expire once you change your password"
+        String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />Thank you for signing up on LinkEDU<br/>."
+                + "Click <b><a href =" + link + ">&nbsphere</a></b> to confirm email address.<br /><br/>"
                 + "<br/> Thank you<br/>LinkEDU Team";
         return msg;
     }

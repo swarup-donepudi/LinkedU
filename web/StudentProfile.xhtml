@@ -7,6 +7,9 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{studentController.loadStudentProfile()}"/>
+    </f:metadata>
     <ui:decorate template="templates\AppThemeStudent.xhtml">
         <ui:define name="content">
             <h:form id="editStudentProfileForm" enctype="multipart/form-data">
@@ -246,11 +249,25 @@
                     <p:tab title="Notifications">
 
                     </p:tab>
+<<<<<<< HEAD
                     <p:tab title="Resume">
                         <h:form id="inputForms" enctype="multipart/form-data"> 
                             <h:inputFile id="resume" value="#{studentController.studentProfile.resume}"/><br/>
                             <h:commandButton id="upload" value="upload"  action="#{studentController.upload()}"/>
                         </h:form>
+=======
+                    <p:tab title="Uploads">
+                        <table id="uploadTable" cellspacing="20">
+                            <tr>
+                                <td>Resume</td>
+                                <td>
+                                    <p:fileUpload value="#{fileUploadView.file}" mode="simple"/>
+                                    <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" />
+
+                                    <p:growl id="messages" showDetail="true" /></td>
+                            </tr>
+                        </table>
+>>>>>>> origin/master
                     </p:tab>
                 </p:tabView>
                 <br />

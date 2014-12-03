@@ -116,12 +116,21 @@ public class RecruiterController implements Serializable {
         this.profileUpdateMessage = profileUpdateMessage;
     }
 
+<<<<<<< HEAD
     public String showRecruiterHisProfile() throws IOException, SQLException {
         RecruiterDAO profileDao = new RecruiterDAO();
         if (profileDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
             this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.getUsername());
+=======
+    public void loadRecruiterProfile() throws IOException, SQLException {
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            RecruiterDAO profileDao = new RecruiterDAO();
+            if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
+                this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
+            }
+>>>>>>> origin/master
         }
-        return ("RecruiterProfile.xhtml");
     }
 
     public void showStudentProfileToRecruiter() throws SQLException, ParseException {
@@ -180,12 +189,12 @@ public class RecruiterController implements Serializable {
             this.watchListUpdateMsg = "Error adding this student to your Watch List. Apologies for inconvinience";
         }
     }
-    
+
     public void loadRecruiterWatchList() throws SQLException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();
         RecruiterDAO recruiterDB = new RecruiterDAO();
-        recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner,this.recruiterWatchList);
-    }    
+        recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);
+    }
 }

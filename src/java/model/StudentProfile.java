@@ -9,6 +9,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -26,10 +27,19 @@ public class StudentProfile extends UserProfile{
     private int GRE;
     private int IELTS;
     private String ceritifications;
+    private UploadedFile resume;
 
     public StudentProfile(){
         this.preferredPrograms = new ArrayList<>();
         this.preferredInsts = new ArrayList<>();
+    }
+
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+    public void setResume(UploadedFile resume) {
+        this.resume = resume;
     }
     
     public Date getDob() {

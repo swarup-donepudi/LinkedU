@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
@@ -132,8 +133,23 @@ public class StudentController {
     public void setInstitutionSearchCriteria(InstitutionSearchCriteria institutionSearchCriteria) {
         this.institutionSearchCriteria = institutionSearchCriteria;
     }
+<<<<<<< HEAD
     
     public void updateStudentProfile() throws SQLException, IOException {
+=======
+
+    public void loadStudentProfile() throws IOException, SQLException, ParseException {
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            StudentDAO studentDao = new StudentDAO();
+            if (studentDao.studentHasProfile(this.studentProfile.username)) {
+                this.studentProfile = studentDao.fetchStudentProfile(this.studentProfile.username);
+            }
+        }
+    }
+
+    public void updateStudentProfile() throws SQLException {
+>>>>>>> origin/master
         StudentDAO profileDao = new StudentDAO();
         if (profileDao.studentHasProfile(this.studentProfile.getUsername())) {
             profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.getUsername());
@@ -239,6 +255,7 @@ public class StudentController {
         StudentDAO studentDB = new StudentDAO();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
+<<<<<<< HEAD
     
     public void upload() throws IOException, SQLException, MessagingException{
         InputStream inputStream = null;
@@ -253,4 +270,6 @@ public class StudentController {
     public void setSelectedRecruiterNotInWatchList(boolean selectedRecruiterNotInWatchList) {
         this.selectedRecruiterNotInWatchList = selectedRecruiterNotInWatchList;
     }
+=======
+>>>>>>> origin/master
 }

@@ -27,8 +27,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
 
     public boolean recruiterHasProfile(String username) throws SQLException {
         boolean recruiterHasProfile = false;
-
-        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE USERNAME = '" + username + "'";
+        username=username.toLowerCase();
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -49,8 +49,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
 
     public RecruiterProfile fetchRecruiterProfile(String username) {
         RecruiterProfile recruiterProfile = new RecruiterProfile();
-
-        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE USERNAME = '" + username + "'";
+        username = username.toLowerCase();
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);

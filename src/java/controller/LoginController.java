@@ -97,32 +97,31 @@ public class LoginController implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-    
-    public void sendForgotPasswordEmail() throws SQLException, IOException{
+
+    public void sendForgotPasswordEmail() throws SQLException, IOException {
         setErrorMessage("");
         LoginDAO loginDB = new LoginDAO();
         String username = loginDB.verifyEmailID(loginBean.getUserName());
-        if(!username.equals("")){
+        if (!username.equals("")) {
             String verifyString = this.generateRandonString();
             int count = loginDB.addVerificationDetails(username, verifyString);
-            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink="+verifyString;
+            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
             EmailController sendemail = new EmailController();
             sendemail.mail(loginBean.getUserName(), "Change password", this.mailBody(link));
             setErrorMessage("Email Sent");
-        }
-        else{
+        } else {
             setErrorMessage("Something went wrong. Please retry");
         }
-        
+
     }
 
-    public String mailBody(String link){
+    public String mailBody(String link) {
         String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />Click the following link to reset your password.<br /><br />"
-                + "Click&nbsp<bold><a href ="+link+">here</a><bold>&nbsp to reset you password.</a><br/> This Link will expire once you change your password"
+                + "Click&nbsp<bold><a href =" + link + ">here</a><bold>&nbsp to reset you password.</a><br/> This Link will expire once you change your password"
                 + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>LinkEDU Team";
         return msg;
     }
-    
+
     public String generateRandonString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -136,47 +135,96 @@ public class LoginController implements Serializable {
     }
 
     public void validateCredentials() throws IOException, SQLException, ParseException {
+<<<<<<< HEAD
         
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+=======
+        String username = loginBean.getUserName();
+        String password = loginBean.getPassword();
+        char accStatus = 'N';
+        char accType = 'N';
+        boolean validLogin = true;
+        validLogin = this.validLoginCredentials(username, password);
+        if (validLogin) {
+            accStatus = this.checkAccountStatus(username);
+            accType = this.checkAccountType(username);
+            this.loadUserProfile(username, accType);
+            this.setSessionVariables(username);
+        }
+        this.redirectToNextPage(validLogin, accStatus, accType);
+    }
+
+    public boolean validLoginCredentials(String username, String password) throws SQLException {
+>>>>>>> origin/master
         LoginDAO loginDB = new LoginDAO();
-        if (loginDB.validCredentials(loginBean.getUserName(), loginBean.getPassword())) {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-            session.setAttribute("loggedIn", "true");
-            session.setAttribute("username", loginBean.getUserName());
-            this.setLoggedIn(true);
-            if (loginDB.getAccountType(loginBean.getUserName()) == 'S') {
-                loginBean.setAccountType('S');
-                StudentProfile studentProfile;
-                StudentDAO profileDB = new StudentDAO();
-                String studentUsername = this.loginBean.getUserName();
-                if (profileDB.studentHasProfile(studentUsername)) {
-                    studentProfile = profileDB.fetchStudentProfile(studentUsername);
-                } else {
-                    studentProfile = new StudentProfile();
-                    studentProfile.setUsername(studentUsername);
-                    CommonDAO commonDB = new CommonDAO();
-                    String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
-                    studentProfile.setEmail(studentEmail);
-                }
-                this.studentController.setStudentProfile(studentProfile);
-                externalContext.redirect("StudentHome.xhtml");
+        return (loginDB.validCredentials(username, password));
+    }
+
+    private char checkAccountStatus(String username) {
+        CommonDAO commonDB = new CommonDAO();
+        return (commonDB.getAccountStatusFromDB(username));
+    }
+
+    private char checkAccountType(String username) {
+        CommonDAO commonDB = new CommonDAO();
+        return (commonDB.getAccountTypeFromDB(username));
+    }
+
+    private void setSessionVariables(String username) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        session.setAttribute("loggedIn", "true");
+        session.setAttribute("username", loginBean.getUserName());
+    }
+
+    private void loadUserProfile(String username, char accType) throws SQLException, ParseException {
+        if (accType == 'S') {
+            StudentProfile studentProfile;
+            StudentDAO profileDB = new StudentDAO();
+            String studentUsername = this.loginBean.getUserName();
+            if (profileDB.studentHasProfile(studentUsername)) {
+                studentProfile = profileDB.fetchStudentProfile(studentUsername);
             } else {
-                loginBean.setAccountType('R');
+                studentProfile = new StudentProfile();
+                studentProfile.setUsername(studentUsername);
+                CommonDAO commonDB = new CommonDAO();
+                String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
+                studentProfile.setEmail(studentEmail);
+            }
+            this.studentController.setStudentProfile(studentProfile);
+            if (accType == 'S') {
                 RecruiterProfile recruiterProfile;
-                RecruiterDAO profileDB = new RecruiterDAO();
-                String recruiterUsername = this.loginBean.getUserName();
-                if (profileDB.recruiterHasProfile(recruiterUsername)) {
-                    recruiterProfile = profileDB.fetchRecruiterProfile(recruiterUsername);
+                RecruiterDAO recruiterDB = new RecruiterDAO();
+                if (recruiterDB.recruiterHasProfile(username)) {
+                    recruiterProfile = recruiterDB.fetchRecruiterProfile(username);
                 } else {
                     recruiterProfile = new RecruiterProfile();
+                    recruiterProfile.setUsername(username);
+                    CommonDAO commonDB = new CommonDAO();
+                    String recruiterEmail = commonDB.getEmailFromUserInfoTable(username);
+                    recruiterProfile.setEmail(recruiterEmail);
                 }
                 this.recruiterController.setRecruiterProfile(recruiterProfile);
-                externalContext.redirect("RecruiterHome.xhtml");
             }
+        }
+    }
 
+    private void redirectToNextPage(boolean validLogin, char accStatus, char accType) throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        if (validLogin) {
+            if (accStatus == 'A') {
+                if (accType == 'S') {
+                    externalContext.redirect("StudentHome.xhtml");
+                }
+                if (accType == 'R') {
+                    externalContext.redirect("RecruiterHome.xhtml");
+                }
+            }
+            if (accStatus == 'I') {
+                externalContext.redirect("InactiveAccount.xhtml");
+            }
         } else {
-            this.errorMessage = "Invalid Username/Password";
+            this.errorMessage = "Invalid Username/Password. Try again";
             externalContext.redirect("LoginFailed.xhtml");
         }
     }
@@ -189,30 +237,28 @@ public class LoginController implements Serializable {
             externalContext.redirect("index.xhtml");
         }
     }
-    
-    public void verifyLink() throws SQLException, IOException{
+
+    public void verifyLink() throws SQLException, IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         String username = loginDB.verifyForgotPasswordLink(loginBean.getVerifyLink());
-        if(!username.equals("")){
+        if (!username.equals("")) {
             loginBean.setUserName(username);
             loginDB.deleteVerificationData(username);
-        }
-        else{
+        } else {
             externalContext.redirect("InvalidVerificationLink.xhtml");
         }
     }
-    
-    public void changePassword() throws SQLException, IOException{
+
+    public void changePassword() throws SQLException, IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         int count = loginDB.changePasswordLogin(loginBean.getUserName(), loginBean.getPassword());
-        if(count==1){
+        if (count == 1) {
             externalContext.redirect("index.xhtml");
-        }
-        else{
+        } else {
             externalContext.redirect("PlsRetryAgain.xhtml");
         }
-        
+
     }
 }

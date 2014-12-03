@@ -7,6 +7,9 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{recruiterController.loadRecruiterProfile()}"/>
+    </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
             <h:form id="recruiterProfileForm">
