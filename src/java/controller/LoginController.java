@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.CommonDAO;
 import dao.LoginDAO;
 import dao.RecruiterDAO;
 import dao.StudentDAO;
@@ -103,6 +104,7 @@ public class LoginController implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
             session.setAttribute("loggedIn", "true");
+            session.setAttribute("username", loginBean.getUserName());
             this.setLoggedIn(true);
             if (loginDB.getAccountType(loginBean.getUserName()) == 'S') {
                 loginBean.setAccountType('S');
@@ -113,6 +115,10 @@ public class LoginController implements Serializable {
                     studentProfile = profileDB.fetchStudentProfile(studentUsername);
                 } else {
                     studentProfile = new StudentProfile();
+                    studentProfile.setUsername(studentUsername);
+                    CommonDAO commonDB = new CommonDAO();
+                    String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
+                    studentProfile.setEmail(studentEmail);
                 }
                 this.studentController.setStudentProfile(studentProfile);
                 externalContext.redirect("StudentHome.xhtml");

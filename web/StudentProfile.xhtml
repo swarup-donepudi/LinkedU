@@ -10,167 +10,196 @@
     <ui:decorate template="templates\AppThemeStudent.xhtml">
         <ui:define name="content">
             <h:form id="editStudentProfileForm">
-                <table id="studentProfileTable" cellspacing="20">
-                    <tr>
-                        <td>  
-                            Username </td>
-                        <td>
-                            <p:inputText id="studentUsername" readonly="true" value="#{studentController.studentProfile.username}"></p:inputText>
-                            <p:tooltip id="toolTipstudentUsername" for="studentUsername" value="Cannot change Username" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Password </td>
-                        <td>
-                            <p:password id="pwd" value="#{studentController.studentProfile.password}" feedback="true" />
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>  
-                            Confirm </td>
-                        <td>
-                            <p:password id="pwd2" value="#{studentController.studentProfile.password}" feedback="true" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            First Name </td>
-                        <td>
-                            <p:inputText id="studentFName" value="#{studentController.studentProfile.fName}"></p:inputText>
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>                
-                            Last Name  </td>
-                        <td>
-                            <p:inputText id="studentLName" value="#{studentController.studentProfile.lName}"></p:inputText>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            E-Mail </td>
-                        <td>
-                            <p:inputText id="email" value="#{studentController.studentProfile.email}"></p:inputText>
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>  
-                            Gender 
-                        </td>
-                        <td> 
-                            <h:selectOneRadio id="gender" value="#{studentController.studentProfile.gender}">
-                                <f:selectItem itemValue="M" itemLabel="Male" />
-                                <f:selectItem itemValue="F" itemLabel="Female" />
-                            </h:selectOneRadio>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>                          
-                            DOB 
-                        </td>
-                        <td>
-                            <p:calendar id="event" value="#{studentController.studentProfile.dob}">
-                                <p:ajax event="dateSelect" listener="#{studentController.onDateSelect}" update="dobMsg"/>
-                            </p:calendar>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Highest Degree  
-                        </td>
-                        <td> 
-                            <p:inputText id="instURL" value="#{studentController.studentProfile.highestDegree}"></p:inputText>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td> 
-                            GPA 
-                        </td>
-                        <td> 
-                            <p:inputText id="gpa" value="#{studentController.studentProfile.GPA}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 
-                            Preferred Program 
-                        </td>
-                        <td> 
-                            <p:autoComplete value="#{studentController.studentProfile.preferredPrograms}" id="preferredProgs"
-                                            completeMethod="#{suggestionsController.suggestPrograms}"
-                                            forceSelection="true"
-                                            multiple="true" queryDelay="200"
-                                            maxResults="5" cache="true"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 
-                            Preferred Institutions 
-                        </td>
-                        <td> 
-                            <p:autoComplete value="#{studentController.studentProfile.preferredInsts}" id="instNames"
-                                            completeMethod="#{suggestionsController.suggestInsts}"
-                                            forceSelection="true"
-                                            multiple="true" queryDelay="200"
-                                            maxResults="5" cache="true"/>                                
-                        </td>
-                    </tr>                
-                    <tr>                    
-                        <td>
-                            City 
-                        </td>
-                        <td>
-                            <p:autoComplete value="#{studentController.studentProfile.city}" id="city"
-                                            completeMethod="#{suggestionsController.suggestCities}"
-                                            forceSelection="true"
-                                            queryDelay="200"
-                                            scrollHeight="150"
-                                            maxResults="20" cache="true">
-                                <p:ajax event="itemSelect" listener="#{suggestionsController.autofillWithCityName()}"  update="city state country primaryCode secCode" />
-                            </p:autoComplete>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            State 
-                        </td>
-                        <td>
-                            <p:inputText readonly="true" id="state" value="#{studentController.studentProfile.state}"/>
-                            <p:tooltip id="toolTipState" for="state" value="Enter City" />
-                        </td>
-                    </tr>                        
-                    <tr>                    
-                        <td>
-                            Country 
-                        </td>
-                        <td>
-                            <p:inputText readonly="true" id="country" value="#{studentController.studentProfile.country}"/>
-                            <p:tooltip id="toolTipCountry" for="country" value="Enter City" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 
-                            Primary Phone 
-                        </td>
-                        <td> 
+                <p:tabView id="institutionTabs">
+                    <p:tab title="User Account">
+                        <table id="studentProfileTable" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    Username </td>
+                                <td>
+                                    <p:inputText id="studentUsername" readonly="true" value="#{studentController.studentProfile.username}"></p:inputText>
+                                    <p:tooltip id="toolTipstudentUsername" for="studentUsername" value="Cannot change Username" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Password </td>
+                                <td>
+                                    <p:password id="pwd" value="#{studentController.studentProfile.password}" feedback="true" />
+                                </td>
+                            </tr>                        
+                            <tr>
+                                <td>  
+                                    Confirm </td>
+                                <td>
+                                    <p:password id="pwd2" value="#{studentController.studentProfile.password}" feedback="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    E-Mail </td>
+                                <td>
+                                    <p:inputText id="email" value="#{studentController.studentProfile.email}"></p:inputText>
+                                </td>
+                            </tr> 
 
-                            <p:inputText id="primaryCode" readonly="true" size="4" value="#{studentController.studentProfile.countryDialingCode}"/>&#xA0;&#xA0;
-                            <p:tooltip id="toolTipprimaryCode" for="primaryCode" value="Enter City" />
-                            <p:inputMask id="phone" value="#{studentController.studentProfile.primaryPhNum}" mask="(999) 999-9999"/>                                
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>                                 
-                            Secondary Phone 
-                        </td>
-                        <td>
-                            <p:inputText id="secCode" readonly="true" size="4" value="#{studentController.studentProfile.countryDialingCode}"/>&#xA0;&#xA0;
-                            <p:tooltip id="toolTipsecCode" for="secCode" value="Enter City" />
-                            <p:inputMask id="secNum" value="#{studentController.studentProfile.secondaryPhNum}" mask="(999) 999-9999"/>
-                        </td>
-                    </tr>
-                </table>
-                <p:growl id="dobMsg" showDetail="true" />
+
+                        </table>
+                    </p:tab>
+                    <p:tab title="Personal Info">
+                        <table id="personalInfo" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    First Name </td>
+                                <td>
+                                    <p:inputText id="studentFName" value="#{studentController.studentProfile.fName}"></p:inputText>
+                                </td>
+                            </tr>                        
+                            <tr>
+                                <td>                
+                                    Last Name  </td>
+                                <td>
+                                    <p:inputText id="studentLName" value="#{studentController.studentProfile.lName}"></p:inputText>
+                                </td>
+                            </tr>                       
+                            <tr>
+                                <td>  
+                                    Gender 
+                                </td>
+                                <td>
+                                    <p:selectOneRadio id="gender" value="#{studentController.studentProfile.gender}" >
+                                        <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
+                                        <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
+                                    </p:selectOneRadio> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>                          
+                                    DOB 
+                                </td>
+                                <td>
+                                    <p:calendar id="event" value="#{studentController.studentProfile.dob}">
+                                        <p:ajax event="dateSelect" listener="#{studentController.onDateSelect}"/>
+                                    </p:calendar>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Academics">
+                        <table id="academics" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    Highest Degree  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.highestDegree}"></p:inputText>
+                                </td>
+                            </tr>  
+                            <tr>
+                                <td> 
+                                    GPA 
+                                </td>
+                                <td> 
+                                    <p:inputText id="gpa" value="#{studentController.studentProfile.GPA}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    Preferred Program 
+                                </td>
+                                <td> 
+                                    <p:autoComplete value="#{studentController.studentProfile.preferredPrograms}" id="preferredProgs"
+                                                    completeMethod="#{suggestionsController.suggestPrograms}"
+                                                    forceSelection="true"
+                                                    multiple="true" queryDelay="200"
+                                                    maxResults="5" cache="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    Preferred Institutions 
+                                </td>
+                                <td> 
+                                    <p:autoComplete value="#{studentController.studentProfile.preferredInsts}" id="instNames"
+                                                    completeMethod="#{suggestionsController.suggestInsts}"
+                                                    forceSelection="true"
+                                                    multiple="true" queryDelay="200"
+                                                    maxResults="5" cache="true"/>                                
+                                </td>
+                            </tr> 
+                        </table>
+                    </p:tab>
+                    <p:tab title="Contact">
+                        <table id="contactInfo" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    E-Mail </td>
+                                <td>
+                                    <p:inputText id="emailInContact" readonly="true" value="#{studentController.studentProfile.email}"></p:inputText>
+                                </td>
+                            </tr>
+                            <tr>                    
+                                <td>
+                                    City 
+                                </td>
+                                <td>
+                                    <p:autoComplete value="#{studentController.studentProfile.city}" id="city"
+                                                    completeMethod="#{suggestionsController.suggestCities}"
+                                                    forceSelection="true"
+                                                    queryDelay="200"
+                                                    scrollHeight="150"
+                                                    maxResults="20" cache="true">
+                                        <p:ajax event="itemSelect" listener="#{suggestionsController.autofillWithCityName()}"  update="city state country primaryCode secCode" />
+                                    </p:autoComplete>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    State 
+                                </td>
+                                <td>
+                                    <p:inputText readonly="true" id="state" value="#{studentController.studentProfile.state}"/>
+                                    <p:tooltip id="toolTipState" for="state" value="Enter City" />
+                                </td>
+                            </tr>                        
+                            <tr>                    
+                                <td>
+                                    Country 
+                                </td>
+                                <td>
+                                    <p:inputText readonly="true" id="country" value="#{studentController.studentProfile.country}"/>
+                                    <p:tooltip id="toolTipCountry" for="country" value="Enter City" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> 
+                                    Primary Phone 
+                                </td>
+                                <td> 
+
+                                    <p:inputText id="primaryCode" readonly="true" size="4" value="#{studentController.studentProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                                    <p:tooltip id="toolTipprimaryCode" for="primaryCode" value="Enter City" />
+                                    <p:inputMask id="phone" value="#{studentController.studentProfile.primaryPhNum}" mask="(999) 999-9999"/>                                
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>                                 
+                                    Secondary Phone 
+                                </td>
+                                <td>
+                                    <p:inputText id="secCode" readonly="true" size="4" value="#{studentController.studentProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                                    <p:tooltip id="toolTipsecCode" for="secCode" value="Enter City" />
+                                    <p:inputMask id="secNum" value="#{studentController.studentProfile.secondaryPhNum}" mask="(999) 999-9999"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Notifications">
+
+                    </p:tab>
+                </p:tabView>
+                <br />
                 <p:commandButton value="Update Profile" 
                                  action="#{studentController.updateStudentProfile()}"/>
             </h:form><br /><br />

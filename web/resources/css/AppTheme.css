@@ -172,6 +172,10 @@ input[type="text"]{
     font-size:15px;
 }
 
+input[type="password"]{
+    font-size:15px;
+}
+
 button[type="submit"]{
     font-family: sans-serif;
     font-size:15px;

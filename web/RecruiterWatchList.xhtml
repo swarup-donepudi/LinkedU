@@ -7,23 +7,32 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
+        <f:metadata>
+        <f:event type="preRenderView" listener="#{recruiterController.loadRecruiterWatchList()}"/>
+    </f:metadata>
     <ui:decorate template="#{templateController.pageTemplate}">
         <ui:define name="content">
-            <p:dataTable id="watchList" value="#{commonController.watchList}" var="wl">
-                <p:column>
+            <p:dataTable id="watchList" value="#{recruiterController.recruiterWatchList}" var="wl">
+                <p:column width="10%">
                     <!-- column header -->
                     <f:facet name="header">Click</f:facet>
                     <!-- row record -->
-                    <h:link id="selectedUsername" outcome="#{commonController.watchListViewProfile}" value="View" includeViewParams="true">
-                        <f:param  name="selectedUsername" value="#{wl}" /> 
+                    <h:link id="selectedUsername" outcome="StudentProfileForRecruiter" value="View Profile" includeViewParams="true">
+                        <f:param  name="selectedUsername" value="#{wl.wlItem}" /> 
                     </h:link>
                 </p:column>
                 <p:column>
                     <!-- column header -->
-                    <f:facet name="header">Username</f:facet>
+                    <f:facet name="header">First Name</f:facet>
                     <!-- row record -->
-                    #{wl}
+                    #{wl.itemFname}
                 </p:column>
+                <p:column>
+                    <!-- column header -->
+                    <f:facet name="header">Last Name</f:facet>
+                    <!-- row record -->
+                    #{wl.itemLname}
+                </p:column>                
             </p:dataTable>
         </ui:define>
     </ui:decorate>

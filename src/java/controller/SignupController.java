@@ -35,6 +35,7 @@ public class SignupController implements Serializable {
     private StudentController studentController;
     private SignupBean signupBean;
     private String usernameMsg;
+    private boolean dusplicateUsername;
 
     /**
      * Creates a new instance of SignupController
@@ -67,6 +68,14 @@ public class SignupController implements Serializable {
         this.signupBean = signupBean;
     }
 
+    public boolean isDusplicateUsername() {
+        return dusplicateUsername;
+    }
+
+    public void setDusplicateUsername(boolean dusplicateUsername) {
+        this.dusplicateUsername = dusplicateUsername;
+    }
+
     public String getUsernameMsg() throws SQLException {
         this.checkDuplicateUsername();
         if (this.signupBean.getUserName() != null) {
@@ -85,7 +94,9 @@ public class SignupController implements Serializable {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
             usernameMsg = "Username Already Exists";
+            this.dusplicateUsername = true;
         } else {
+            this.dusplicateUsername = false;
             usernameMsg = "";
         }
     }

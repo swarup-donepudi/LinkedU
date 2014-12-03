@@ -58,11 +58,11 @@
                         <td>  
                             Gender 
                         </td>
-                        <td> 
-                            <h:selectOneRadio id="gender" value="#{recruiterController.recruiterProfile.gender}">
-                                <f:selectItem itemValue="M" itemLabel="Male" />
-                                <f:selectItem itemValue="F" itemLabel="Female" />
-                            </h:selectOneRadio>
+                        <td>
+                            <p:selectOneRadio id="gender" value="#{recruiterController.recruiterProfile.gender}" >
+                                <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
+                                <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
+                            </p:selectOneRadio> 
                         </td>
                     </tr>
                     <tr>
@@ -147,7 +147,7 @@
                             Primary Phone 
                         </td>
                         <td> 
-                            <p:inputText id="primaryCode" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                            <p:inputText id="primaryCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
                             <p:tooltip id="tootipPrimaryCode" for="primaryCode" value="Enter City" />
                             <p:inputMask id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}" mask="(999) 999-9999"/>
                         </td>
@@ -157,7 +157,7 @@
                             Secondary Phone 
                         </td>
                         <td>
-                            <p:inputText id="secCode" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                            <p:inputText id="secCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
                             <p:tooltip id="tootipSecCode" for="primaryCode" value="Enter City" />
                             <p:inputMask id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}" mask="(999) 999-9999"/>
                         </td>

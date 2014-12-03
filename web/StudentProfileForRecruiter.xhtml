@@ -7,6 +7,9 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{recruiterController.showStudentProfileToRecruiter()}"/>
+    </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
             <h:form id="StudentProfileForm">
@@ -118,8 +121,8 @@
                 </table>
                 <table cellspacing="20">
                     <tr>
-                        <td><p:commandButton id ="wlButton" rendered="#{commonController.selectedUserNotInWatchList}"
-                                             action="#{commonController.addToWatchList()}"
+                        <td><p:commandButton id ="wlButton" rendered="#{recruiterController.selectedStudentNotInWatchList}"
+                                             action="#{recruiterController.addStudentToWatchList()}"
                                              value="Add to Watch List">
                                 <f:ajax execute="StudentProfileForm" render="wlButton"/>
                             </p:commandButton></td>
@@ -127,7 +130,7 @@
                         <td><p:commandButton action="ScheduleAppointment?faces-redirect=true" value="Schedule Appointment" ajax="false"></p:commandButton></td>                            
                     </tr>
                 </table>
-                <p:outputLabel id="wlLbl" value="#{commonController.watchListUpdateMsg}"/>
+                <p:outputLabel id="wlLbl" value="#{recruiterController.watchListUpdateMsg}"/>
             </h:form>
         </ui:define>
     </ui:decorate>

@@ -1,0 +1,58 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata>
+        <f:metadata>
+        <f:event type="preRenderView" listener="#{studentController.loadStudentWatchList()}"/>
+    </f:metadata>
+    <ui:decorate template="#{templateController.pageTemplate}">
+        <ui:define name="content">
+            <h4> Institutions in your watchlist</h4><br />
+            <p:dataTable id="watchListInstitutions" value="#{studentController.studentWatchListInstitutions}" var="wli">
+                <p:column width="10%">
+                    <!-- column header -->
+                    <f:facet name="header">Click</f:facet>
+                    <!-- row record -->
+                    <h:link id="selectedInstitute" outcome="UniversityProfileForStudent" value="View Profile" includeViewParams="true">
+                        <f:param  name="instID" value="#{wli.wlItem}" /> 
+                    </h:link>
+                </p:column>
+                <p:column>
+                    <!-- column header -->
+                    <f:facet name="header">Institution Name</f:facet>
+                    <!-- row record -->
+                    #{wli.itemLname}
+                </p:column>
+            </p:dataTable>
+            <br /><h4> Recruiters in your watchlist</h4><br />
+            <p:dataTable id="watchListRecruiters" value="#{studentController.studentWatchListRecruiters}" var="wlr">
+                <p:column width="10%">
+                    <!-- column header -->
+                    <f:facet name="header">Click</f:facet>
+                    <!-- row record -->
+                    <h:link id="selectedUsername" outcome="RecruiterProfileForStudent" value="View Profile" includeViewParams="true">
+                        <f:param  name="selectedUsername" value="#{wlr.wlItem}" /> 
+                    </h:link>
+                </p:column>
+                <p:column>
+                    <!-- column header -->
+                    <f:facet name="header">First Name</f:facet>
+                    <!-- row record -->
+                    #{wlr.itemFname}
+                </p:column>
+                <p:column>
+                    <!-- column header -->
+                    <f:facet name="header">First Name</f:facet>
+                    <!-- row record -->
+                    #{wlr.itemLname}
+                </p:column>
+            </p:dataTable>            
+        </ui:define>
+    </ui:decorate>
+</ui:composition>

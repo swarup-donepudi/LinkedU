@@ -32,14 +32,15 @@
                     </p:column> 
                     <p:column style="width: 8%">
                         <f:facet name="header">Reply</f:facet>
-                        <h:link id="replyMsg" outcome="RecruiterProfileForStudent" value="Reply" includeViewParams="true">
+                        <h:link id="replyMsg" outcome="UserInbox" value="Reply" includeViewParams="true">
                             <f:param  name="selectedMsg" value="#{message.msgId}" /> 
                         </h:link>                            
                     </p:column>
                     <p:column style="width: 8%">
                         <f:facet name="header">Delete</f:facet>
-                        <h:link id="deleteMsg" outcome="LoginFailed" value="Delete" includeViewParams="true">
+                        <h:link id="deleteMsg" outcome="UserInbox" value="Delete" includeViewParams="true">
                             <f:param  name="selectedMsg" value="#{message.msgId}" /> 
+                        
                         </h:link>                            
                     </p:column>                        
                 </p:dataTable>                

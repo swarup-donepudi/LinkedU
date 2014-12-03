@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.CommonDAO;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
@@ -17,10 +18,12 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.InstitutionProfile;
 import model.InstitutionSearchCriteria;
+import model.WatchListItem;
 
 /**
  *
@@ -36,6 +39,11 @@ public class StudentController {
     private String profileUpdateMessage;
     private InstitutionSearchCriteria institutionSearchCriteria;
     private ArrayList<InstitutionProfile> institutionSearchResults;
+    private boolean selectedInstitutionNotInWatchList;
+    private boolean selectedRecruiterNotInWatchList;
+    private String watchListUpdateMsg;
+    private ArrayList<WatchListItem> studentWatchListInstitutions;
+    private ArrayList<WatchListItem> studentWatchListRecruiters;
 
     /**
      * Creates a new instance of StudentController
@@ -44,6 +52,36 @@ public class StudentController {
         this.selectedRecruiter = new RecruiterProfile();
         this.institutionSearchCriteria = new InstitutionSearchCriteria();
         this.institutionSearchResults = new ArrayList<>();
+        this.studentWatchListInstitutions = new ArrayList<>();
+        this.studentWatchListRecruiters = new ArrayList<>();
+    }
+
+    public ArrayList<WatchListItem> getStudentWatchListInstitutions() {
+        return studentWatchListInstitutions;
+    }
+
+    public void setStudentWatchListInstitutions(ArrayList<WatchListItem> studentWatchListInstitutions) {
+        this.studentWatchListInstitutions = studentWatchListInstitutions;
+    }
+
+    public ArrayList<WatchListItem> getStudentWatchListRecruiters() {
+        return studentWatchListRecruiters;
+    }
+
+    public void setStudentWatchListRecruiters(ArrayList<WatchListItem> studentWatchListRecruiters) {
+        this.studentWatchListRecruiters = studentWatchListRecruiters;
+    }
+
+    public String getWatchListUpdateMsg() {
+        return watchListUpdateMsg;
+    }
+
+    public void setWatchListUpdateMsg(String watchListUpdateMsg) {
+        this.watchListUpdateMsg = watchListUpdateMsg;
+    }
+
+    public void setSelectedInstitutionNotInWatchList(boolean selectedInstitutionNotInWatchList) {
+        this.selectedInstitutionNotInWatchList = selectedInstitutionNotInWatchList;
     }
 
     public ArrayList<InstitutionProfile> getInstitutionSearchResults() {
@@ -130,9 +168,72 @@ public class StudentController {
 
     public void showRecruiterProfileToStudent() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        String selectedRecruiterUsername = params.get("selectedUsername");
-        RecruiterDAO recruiterDB = new RecruiterDAO();
-        this.selectedRecruiter = recruiterDB.fetchRecruiterProfile(selectedRecruiterUsername);
+        if (!fc.isPostback()) {
+            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            String selectedRecruiterUsername = params.get("selectedUsername");
+            RecruiterDAO recruiterDB = new RecruiterDAO();
+            this.selectedRecruiter = recruiterDB.fetchRecruiterProfile(selectedRecruiterUsername);
+        }
+    }
+
+    public boolean isSelectedInstitutionNotInWatchList() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedInstitution.getInstName();
+        StudentDAO studentDB = new StudentDAO();
+        this.selectedInstitutionNotInWatchList = studentDB.institutionNotInWatchListInDB(wlOwner, wlItem);
+        return this.selectedInstitutionNotInWatchList;
+    }
+
+    public boolean isSelectedRecruiterNotInWatchList() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedRecruiter.getUsername();
+        StudentDAO studentDB = new StudentDAO();
+        this.selectedRecruiterNotInWatchList = studentDB.recruiterNotInWatchListInDB(wlOwner, wlItem);
+        return this.selectedRecruiterNotInWatchList;
+    }
+
+    public void addInstitutionToWatchList() throws SQLException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedInstitution.getDoeUID();
+        String wlLname = this.selectedInstitution.getInstName();
+        StudentDAO studentDB = new StudentDAO();
+        int insertCount = studentDB.addUniversityToWatchListInDB(wlOwner, wlItem, wlLname);
+        if (insertCount == 1) {
+            this.watchListUpdateMsg = "This institution has been added to your Watch List";
+        } else {
+            this.watchListUpdateMsg = "Error adding this institution to your Watch List. Apologies for inconvinience";
+        }
+    }
+
+    public void addRecruiterToWatchList() throws SQLException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedRecruiter.getUsername();
+        String itemFName = this.selectedRecruiter.getfName();
+        String itemLname = this.selectedRecruiter.getlName();
+
+        StudentDAO studentDB = new StudentDAO();
+        int insertCount = studentDB.addRecruiterToWatchListInDB(wlOwner, wlItem, itemFName, itemLname);
+
+        if (insertCount == 1) {
+            this.watchListUpdateMsg = "This recruiter has been added to your Watch List";
+        } else {
+            this.watchListUpdateMsg = "Error adding this recruiter to your Watch List. Apologies for inconvinience";
+        }
+    }
+
+    public void loadStudentWatchList() throws SQLException, IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        StudentDAO studentDB = new StudentDAO();
+        studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
 }

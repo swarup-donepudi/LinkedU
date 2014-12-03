@@ -121,7 +121,7 @@
                             <p:selectBooleanCheckbox value="#{notificationsController.notifyStudentOnRecruiterAvaialable}" />&#xA0;
                             <h:outputLabel value="Notify me when a recuiter is available for this institution on LinkedU"/><br /><br />
                         </p:outputPanel>
-                        <p:dataTable id="studentSearchResults" rendered ="#{studentController.selectedInstitution.hasRecruiters}" 
+                        <p:dataTable id="selectedInstRecruiters" rendered ="#{studentController.selectedInstitution.hasRecruiters}" 
                                      value="#{studentController.selectedInstitution.recruiters}" var="rl"
                                      paginator="true" rows="10">
                             <p:column>

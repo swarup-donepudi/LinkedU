@@ -11,6 +11,7 @@ package model;
  * @author skdonep
  */
 public class UserProfile {
+    public byte[] profileImage;
     public String fName;
     public String lName;
     public char gender;
@@ -23,6 +24,14 @@ public class UserProfile {
     public String email;
     public String username;
     public String password;
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
 
     public String getPassword() {
         return password;

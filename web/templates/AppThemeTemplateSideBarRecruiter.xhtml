@@ -19,12 +19,9 @@
                     <h:link id="inbox" value="Inbox" outcome="UserInbox"><sup><h:outputText value="#{messageController.unreadMsgsCount}" id="unreadCount"/></sup></h:link>
                     <p:tooltip id="toolTipGrow" for="inbox" value="#{messageController.toolTipInbox}" showEffect="clip" hideEffect="explode" />
                 </li>
-            </ul>
-            <ul>                
-                <li><h:form>
-                        <h:commandLink value="My Watch List" action="#{commonController.showUserWatchList}"></h:commandLink>
-                    </h:form>
-                </li>
+                <li>
+                    <h:link value="My Watch List" outcome="RecruiterWatchList"></h:link>
+                </li> 
                 <li>
                     <h:link value="Search Students" outcome="SearchStudents"></h:link>
                 </li>

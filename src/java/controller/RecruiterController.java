@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.CommonDAO;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
@@ -17,9 +18,11 @@ import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
+import model.WatchListItem;
 
 /**
  *
@@ -34,6 +37,9 @@ public class RecruiterController implements Serializable {
     private RecruiterProfile recruiterProfile;
     private StudentProfile selectedStudent;
     private String profileUpdateMessage;
+    private boolean selectedStudentNotInWatchList;
+    private String watchListUpdateMsg;
+    private ArrayList<WatchListItem> recruiterWatchList;
 
     /**
      * Creates a new instance of RecruiterController
@@ -42,6 +48,31 @@ public class RecruiterController implements Serializable {
         this.selectedStudent = new StudentProfile();
         this.studentSearchCriteria = new StudentSearchCriteria();
         this.studentSearchResults = new ArrayList<>();
+        this.recruiterWatchList = new ArrayList<>();
+    }
+
+    public ArrayList<WatchListItem> getRecruiterWatchList() {
+        return recruiterWatchList;
+    }
+
+    public void setRecruiterWatchList(ArrayList<WatchListItem> recruiterWatchList) {
+        this.recruiterWatchList = recruiterWatchList;
+    }
+
+    public boolean isSelectedStudentNotInWatchList() {
+        return selectedStudentNotInWatchList;
+    }
+
+    public void setSelectedStudentNotInWatchList(boolean selectedStudentNotInWatchList) {
+        this.selectedStudentNotInWatchList = selectedStudentNotInWatchList;
+    }
+
+    public String getWatchListUpdateMsg() {
+        return watchListUpdateMsg;
+    }
+
+    public void setWatchListUpdateMsg(String watchListUpdateMsg) {
+        this.watchListUpdateMsg = watchListUpdateMsg;
     }
 
     public StudentSearchCriteria getStudentSearchCriteria() {
@@ -114,9 +145,43 @@ public class RecruiterController implements Serializable {
 
     public void searchStudents() throws SQLException, IOException, ParseException {
         this.studentSearchResults.clear();
-        if(this.studentSearchCriteria.getPreferredInst()!=null){
+        if (this.studentSearchCriteria.getPreferredInst() != null) {
             SearchDAO db = new SearchDAO();
             db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
         }
     }
+
+    public boolean isSelectedUniversityNotInWatchList() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedStudent.getUsername();
+        RecruiterDAO recruiterDB = new RecruiterDAO();
+        this.selectedStudentNotInWatchList = recruiterDB.studentNotInWatchListInDB(wlOwner, wlItem);
+
+        return this.selectedStudentNotInWatchList;
+    }
+
+    public void addStudentToWatchList() throws SQLException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        String wlItem = this.selectedStudent.getUsername();
+        RecruiterDAO recruiterDB = new RecruiterDAO();
+        int insertCount = recruiterDB.addStudentToWatchListInDB(wlOwner, wlItem);
+
+        if (insertCount == 1) {
+            this.watchListUpdateMsg = "This Student has been added to your Watch List";
+        } else {
+            this.watchListUpdateMsg = "Error adding this student to your Watch List. Apologies for inconvinience";
+        }
+    }
+    
+    public void loadRecruiterWatchList() throws SQLException, IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String wlOwner = session.getAttribute("username").toString();
+        RecruiterDAO recruiterDB = new RecruiterDAO();
+        recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner,this.recruiterWatchList);
+    }    
 }
