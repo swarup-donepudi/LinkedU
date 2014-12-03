@@ -20,6 +20,12 @@ public class StudentProfile extends UserProfile{
     private String GPA;
     private List<String> preferredPrograms;
     private List<String> preferredInsts;
+    private String SAT;
+    private String ACT;
+    private String TOEFL;
+    private String GRE;
+    private String IELTS;
+    private String ceritifications;
 
     public StudentProfile(){
         this.preferredPrograms = new ArrayList<>();
@@ -64,5 +70,89 @@ public class StudentProfile extends UserProfile{
 
     public void setPreferredInsts(List<String> preferredInsts) {
         this.preferredInsts = preferredInsts;
+    }
+
+    /**
+     * @return the SAT
+     */
+    public String getSAT() {
+        return SAT;
+    }
+
+    /**
+     * @param SAT the SAT to set
+     */
+    public void setSAT(String SAT) {
+        this.SAT = SAT;
+    }
+
+    /**
+     * @return the ACT
+     */
+    public String getACT() {
+        return ACT;
+    }
+
+    /**
+     * @param ACT the ACT to set
+     */
+    public void setACT(String ACT) {
+        this.ACT = ACT;
+    }
+
+    /**
+     * @return the TOEFL
+     */
+    public String getTOEFL() {
+        return TOEFL;
+    }
+
+    /**
+     * @param TOEFL the TOEFL to set
+     */
+    public void setTOEFL(String TOEFL) {
+        this.TOEFL = TOEFL;
+    }
+
+    /**
+     * @return the GRE
+     */
+    public String getGRE() {
+        return GRE;
+    }
+
+    /**
+     * @param GRE the GRE to set
+     */
+    public void setGRE(String GRE) {
+        this.GRE = GRE;
+    }
+
+    /**
+     * @return the IELTS
+     */
+    public String getIELTS() {
+        return IELTS;
+    }
+
+    /**
+     * @param IELTS the IELTS to set
+     */
+    public void setIELTS(String IELTS) {
+        this.IELTS = IELTS;
+    }
+
+    /**
+     * @return the ceritifications
+     */
+    public String getCeritifications() {
+        return ceritifications;
+    }
+
+    /**
+     * @param ceritifications the ceritifications to set
+     */
+    public void setCeritifications(String ceritifications) {
+        this.ceritifications = ceritifications;
     }
 }

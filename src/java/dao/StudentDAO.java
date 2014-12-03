@@ -4,7 +4,9 @@
  */
 package dao;
 
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -327,5 +329,21 @@ public class StudentDAO extends AppDBInfoDAO {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
         }
+    }
+    
+    public int uploadResume(String email, InputStream file) throws SQLException {
+        email = email.toLowerCase();
+        boolean emailExits=false;
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword); 
+        String sql = "UPDATE LINKEDU.STUDENT_PROFILE (RESUME) values (?) WHERE EMAIL = '" + email +"'" ;
+            PreparedStatement stmt = DBConn.prepareStatement(sql);
+            if (file != null) {
+                // fetches input stream of the upload file for the blob column
+                stmt.setBlob(2, file);
+            }
+        int row = stmt.executeUpdate();
+        this.DBConn.close();
+        stmt.close();
+        return row;
     }
 }

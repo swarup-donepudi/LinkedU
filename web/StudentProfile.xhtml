@@ -9,7 +9,7 @@
     </f:metadata>
     <ui:decorate template="templates\AppThemeStudent.xhtml">
         <ui:define name="content">
-            <h:form id="editStudentProfileForm">
+            <h:form id="editStudentProfileForm" enctype="multipart/form-data">
                 <p:tabView id="institutionTabs">
                     <p:tab title="User Account">
                         <table id="studentProfileTable" cellspacing="20">
@@ -104,6 +104,54 @@
                                 </td>
                             </tr>
                             <tr>
+                                <tr>
+                                <td>  
+                                    SAT  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.SAT}"></p:inputText>
+                                </td>
+                            </tr>
+                                <tr>
+                                <td>  
+                                    ACT  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.ACT}"></p:inputText>
+                                </td>
+                            </tr>
+                                <tr>
+                                <td>  
+                                    TOEFL  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.TOEFL}"></p:inputText>
+                                </td>
+                            </tr>
+                                <tr>
+                                <td>  
+                                    GRE  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.GRE}"></p:inputText>
+                                </td>
+                            </tr>
+                                <tr>
+                                <td>  
+                                    IELTS  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.IELTS}"></p:inputText>
+                                </td>
+                            </tr>
+                                <tr>
+                                <td>  
+                                    Any Additional Certification  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instURL" value="#{studentController.studentProfile.ceritifications}"></p:inputText>
+                                </td>
+                            </tr>
                                 <td> 
                                     Preferred Program 
                                 </td>
@@ -197,6 +245,12 @@
                     </p:tab>
                     <p:tab title="Notifications">
 
+                    </p:tab>
+                    <p:tab title="Resume">
+                        <h:form id="inputForms" enctype="multipart/form-data"> 
+                        <h:inputFile id="resume" value="#{studentController.studentProfile.resume}"/><br/>
+                        <h:commandButton id="upload" value="upload"  action="#{studentController.upload()}"/>
+                        </h:form>
                     </p:tab>
                 </p:tabView>
                 <br />
