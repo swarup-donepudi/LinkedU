@@ -20,7 +20,7 @@ import javax.inject.Named;
 public class SignupBean implements Serializable {
     String userName;
     String password;
-    String eMail;
+    String email;
     char accountType;
     private char acc_status;
     private String verifyString;
@@ -41,12 +41,12 @@ public class SignupBean implements Serializable {
         this.password = password;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public char getAccountType() {

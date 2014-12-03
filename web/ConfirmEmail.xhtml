@@ -8,7 +8,18 @@
         <f:viewParam name="verifylink" value="#{signupController.signupBean.verifyString}" required="true" />
         <f:event type="preRenderView" listener="#{signupController.verifyLink()}" />
     </f:metadata>
-    <ui:decorate template="templates\AppThemeRecruiter.xhtml">
+    <ui:decorate template="templates\AppTheme.xhtml">
+        <ui:define name="header">
+            <h:form>
+                <h:link outcome="index">
+                    <div id="logo"></div>
+                </h:link>
+            </h:form>
+        </ui:define>
+        <ui:define name="logoutFrame">
+            <div id="noLogout">
+            </div>
+        </ui:define>
         <ui:define name="content">
             <p>You successfully verified your account </p> 
             <h:outputText value="#{signupController.signupBean.userName}"/>

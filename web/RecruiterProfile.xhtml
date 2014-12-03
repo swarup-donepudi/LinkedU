@@ -10,165 +10,200 @@
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
             <h:form id="recruiterProfileForm">
-                <table id="recruiterProfileTable" cellspacing="20">
-                    <tr>
-                        <td>  
-                            Username </td>
-                        <td>
-                            <p:inputText readonly="true" id="recruiterUsername" value="#{recruiterController.recruiterProfile.username}"></p:inputText>
-                            <p:tooltip id="toolTipstudentUsername" for="recruiterUsername" value="Cannot change Username" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Password </td>
-                        <td>
-                            <p:password id="pwd" value="#{recruiterController.recruiterProfile.password}"></p:password>
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>  
-                            Confirm </td>
-                        <td>
-                            <p:password id="pwd2" value="#{recruiterController.recruiterProfile.password}"></p:password>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            First Name </td>
-                        <td>
-                            <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fName}"></p:inputText>
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>                
-                            Last Name  </td>
-                        <td>
-                            <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lName}"></p:inputText>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            E-Mail </td>
-                        <td>
-                            <p:inputText id="email" value="#{recruiterController.recruiterProfile.email}"></p:inputText>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Gender 
-                        </td>
-                        <td>
-                            <p:selectOneRadio id="gender" value="#{recruiterController.recruiterProfile.gender}" >
-                                <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
-                                <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
-                            </p:selectOneRadio> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>                          
-                            Institution Name 
-                        </td>
-                        <td>
-                            <p:autoComplete size="80" value="#{recruiterController.recruiterProfile.instName}" id="instName"
-                                            completeMethod="#{suggestionsController.suggestInsts}"
-                                            forceSelection="true"
-                                            cache="true" maxResults="5"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Why are you here  
-                        </td>
-                        <td>
-                            <p:inputTextarea  id="reasonForLinkEDU" 
-                                              value="#{recruiterController.recruiterProfile.reasonForLinkEDU}"
-                                              scrollHeight="60"></p:inputTextarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Institution URL  
-                        </td>
-                        <td> 
-                            <p:inputText id="instURL" value="#{recruiterController.recruiterProfile.instURL}"></p:inputText>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>  
-                            Institution FB Page  
-                        </td>
-                        <td> 
-                            <p:inputText id="instFBPage" value="#{recruiterController.recruiterProfile.instFBPage}"></p:inputText>
-                        </td>
-                    </tr>                        
-                    <tr>
-                        <td>  
-                            Institution Twitter Handle 
-                        </td>
-                        <td> 
-                            <p:inputText id="instTwitterHandle" value="#{recruiterController.recruiterProfile.twitterHandle}"></p:inputText>
-                        </td>
-                    </tr>
-                    <tr>                    
-                        <td>
-                            City 
-                        </td>
-                        <td>
-                            <p:autoComplete value="#{recruiterController.recruiterProfile.city}" id="city"
-                                            completeMethod="#{suggestionsController.suggestCities}"
-                                            forceSelection="true"
-                                            queryDelay="200"
-                                            maxResults="20" cache="true">
-                                <p:ajax event="itemSelect" listener="#{suggestionsController.autofillWithCityName()}"  update="city state country primaryCode secCode" />
-                            </p:autoComplete>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            State 
-                        </td>
-                        <td>
-                            <p:inputText id="state" value="#{recruiterController.recruiterProfile.state}" readonly="true"/>
-                            <p:tooltip id="tootipState" for="state" value="Enter City" />
-                        </td>
-                    </tr>                        
-                    <tr>                    
-                        <td>
-                            Country 
-                        </td>
-                        <td>
-                            <p:inputText id="country" value="#{recruiterController.recruiterProfile.country}" readonly="true"/>
-                            <p:tooltip id="tootipCountry" for="country" value="Enter City" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> 
-                            Primary Phone 
-                        </td>
-                        <td> 
-                            <p:inputText id="primaryCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
-                            <p:tooltip id="tootipPrimaryCode" for="primaryCode" value="Enter City" />
-                            <p:inputMask id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}" mask="(999) 999-9999"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>                                 
-                            Secondary Phone 
-                        </td>
-                        <td>
-                            <p:inputText id="secCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
-                            <p:tooltip id="tootipSecCode" for="primaryCode" value="Enter City" />
-                            <p:inputMask id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}" mask="(999) 999-9999"/>
-                        </td>
-                    </tr>                        
-                    <tr>                    
-                        <td>
-                            <p:commandButton value="Update Profile" 
-                                             action="#{recruiterController.updateRecruiterProfile()}"/>
-                        </td>
-                    </tr>                
-                </table>
+                <p:tabView id="institutionTabs">
+                    <p:tab title="User Account">
+                        <table id="recruiterUserAccount" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    Username </td>
+                                <td>
+                                    <p:inputText readonly="true" id="recruiterUsername" value="#{recruiterController.recruiterProfile.username}"></p:inputText>
+                                    <p:tooltip id="toolTipstudentUsername" for="recruiterUsername" value="Cannot change Username" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Password </td>
+                                <td>
+                                    <p:password id="pwd" value="#{recruiterController.recruiterProfile.password}" feedback="true"></p:password>
+                                </td>
+                            </tr>                        
+                            <tr>
+                                <td>  
+                                    Confirm </td>
+                                <td>
+                                    <p:password id="pwd2" value="#{recruiterController.recruiterProfile.password}" feedback="true"></p:password>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    E-Mail </td>
+                                <td>
+                                    <p:inputText id="email" value="#{recruiterController.recruiterProfile.email}"></p:inputText>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Personal Info">
+                        <table id="recruiterPersonalInfo" cellspacing="20">
+                            <tr>
+                                <td>  
+                                    First Name </td>
+                                <td>
+                                    <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fName}"></p:inputText>
+                                </td>
+                            </tr>                        
+                            <tr>
+                                <td>                
+                                    Last Name  </td>
+                                <td>
+                                    <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lName}"></p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Gender 
+                                </td>
+                                <td>
+                                    <p:selectOneRadio id="gender" value="#{recruiterController.recruiterProfile.gender}" >
+                                        <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
+                                        <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
+                                    </p:selectOneRadio> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Why are you here  
+                                </td>
+                                <td>
+                                    <p:inputTextarea  id="reasonForLinkEDU" 
+                                                      value="#{recruiterController.recruiterProfile.reasonForLinkEDU}"
+                                                      scrollHeight="60"></p:inputTextarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Department Info">
+                        <table id="recruiterDeptInfo" cellspacing="20">
+                            <tr>
+                                <td>                          
+                                    Institution Name 
+                                </td>
+                                <td>
+                                    <p:autoComplete size="80" value="#{recruiterController.recruiterProfile.instName}" id="instName"
+                                                    completeMethod="#{suggestionsController.suggestInsts}"
+                                                    forceSelection="true"
+                                                    cache="true" maxResults="5"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Department  
+                                </td>
+                                <td> 
+                                    <p:inputText id="deptName" value="#{recruiterController.recruiterProfile.instFBPage}"></p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    GPA Minimum  
+                                </td>
+                                <td> 
+                                    <p:inputText id="GPAMinimum" value="#{recruiterController.recruiterProfile.instFBPage}"></p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    SAT Minimum Score  
+                                </td>
+                                <td> 
+                                    <p:inputText id="SATMinimum" value="#{recruiterController.recruiterProfile.instFBPage}"></p:inputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  
+                                    Institution FB Page  
+                                </td>
+                                <td> 
+                                    <p:inputText id="instFBPage" value="#{recruiterController.recruiterProfile.instFBPage}"></p:inputText>
+                                </td>
+                            </tr>                        
+                            <tr>
+                                <td>  
+                                    Institution Twitter Handle 
+                                </td>
+                                <td> 
+                                    <p:inputText id="instTwitterHandle" value="#{recruiterController.recruiterProfile.twitterHandle}"></p:inputText>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:tab>
+                    <p:tab title="Contact">      
+                        <table id="recruiterContact" cellspacing="20">
+                            <tr> 
+                                <tr>
+                                    <td>  
+                                        E-Mail </td>
+                                    <td>
+                                        <p:inputText readonly="true" id="email2" value="#{recruiterController.recruiterProfile.email}"></p:inputText>
+                                    </td>
+                                </tr>
+                                <td>
+                                    City 
+                                </td>
+                                <td>
+                                    <p:autoComplete value="#{recruiterController.recruiterProfile.city}" id="city"
+                                                    completeMethod="#{suggestionsController.suggestCities}"
+                                                    forceSelection="true"
+                                                    queryDelay="200"
+                                                    maxResults="20" cache="true">
+                                        <p:ajax event="itemSelect" listener="#{suggestionsController.autofillWithCityName()}"  update="city state country primaryCode secCode" />
+                                    </p:autoComplete>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    State 
+                                </td>
+                                <td>
+                                    <p:inputText id="state" value="#{recruiterController.recruiterProfile.state}" readonly="true"/>
+                                    <p:tooltip id="tootipState" for="state" value="Enter City" />
+                                </td>
+                            </tr>                        
+                            <tr>                    
+                                <td>
+                                    Country 
+                                </td>
+                                <td>
+                                    <p:inputText id="country" value="#{recruiterController.recruiterProfile.country}" readonly="true"/>
+                                    <p:tooltip id="tootipCountry" for="country" value="Enter City" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    Primary Phone 
+                                </td>
+                                <td> 
+                                    <p:inputText id="primaryCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                                    <p:tooltip id="tootipPrimaryCode" for="primaryCode" value="Enter City" />
+                                    <p:inputMask id="primaryNum" value="#{recruiterController.recruiterProfile.primaryPhNum}" mask="(999) 999-9999"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>                                 
+                                    Secondary Phone 
+                                </td>
+                                <td>
+                                    <p:inputText id="secCode" size="4" readonly="true" value="#{recruiterController.recruiterProfile.countryDialingCode}"/>&#xA0;&#xA0;
+                                    <p:tooltip id="tootipSecCode" for="primaryCode" value="Enter City" />
+                                    <p:inputMask id="secNum" value="#{recruiterController.recruiterProfile.secondaryPhNum}" mask="(999) 999-9999"/>
+                                </td>
+                            </tr>                                       
+                        </table>
+                    </p:tab>
+                </p:tabView>
+                        <p:commandButton value="Update Profile" 
+                                         action="#{recruiterController.updateRecruiterProfile()}"/>
             </h:form> <br/>
             <h:outputText value="#{recruiterController.profileUpdateMessage}"></h:outputText>
         </ui:define>

@@ -115,11 +115,11 @@ public class LoginController implements Serializable {
         }
         
     }
-    //http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink=twtwdatdexdkphf
+
     public String mailBody(String link){
-        String msg = "This is the link to reset the password. Pls click on the following link to reset your password<br/>."
-                + "<a href ="+link+">Click Here to activate.</a><br/> This Link will expire once you change your password"
-                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
+        String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />Click the following link to reset your password.<br /><br />"
+                + "Click&nbsp<bold><a href ="+link+">here</a><bold>&nbsp to reset you password.</a><br/> This Link will expire once you change your password"
+                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>LinkEDU Team";
         return msg;
     }
     
