@@ -11,21 +11,21 @@
         <script language="javascript">
             function ValidateEmail()
             {
-                var inputText= document.getElementById();
+                var newEmail = document.getElementById("newEmail");
                 var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                if (inputText.value.match(mailformat))
+                if (newEmail.value.match(mailformat))
                 {
-                    document.form1.text1.focus();
+                    document.getElementById("newEmail").focus();
                     return true;
                 }
                 else
                 {
-                    alert("You have entered an invalid email address!");
-                    document.form1.text1.focus();
+                    document.getElementById("newEmailMsg").innerHTML = "Invalid Email";
+                    document.getElementById("newEmail").focus();
                     return false;
                 }
             }
-        
+
             function validateLoginForm() {
                 var userName = document.getElementById("loginForm:username");
                 var pwd = document.getElementById("loginForm:pwd");
@@ -121,18 +121,12 @@
                 <tr>
                     <td>
                         <div id="signupFrame">
-
                             <table id="signupTable" cellspacing="20">
                                 <tr>
                                     <td colspan="2">Not a member yet? Signup is easy!!!</td>
                                 </tr>
                                 <tr>
-                                    <td>Username </td><td><p:inputText id="newUsername"   value="#{signupController.signupBean.userName}" >
-                                            <p:ajax update="signupForm:signupError2" event="keyup" listener="#{signupController.checkDuplicateUsername()}"></p:ajax>
-        
-                                
-                                        </p:inputText>
-                                    </td>
+                                    <td>Username </td><td><p:inputText id="newUsername"   value="#{signupController.signupBean.userName}" ></p:inputText></td>
                                 </tr>
                                 <tr>
                                     <td>Password </td><td><p:password id="newPwd1" redisplay="false"   value="#{signupController.signupBean.password}" ></p:password><h4 class="UserWarning" id="noPwd1"></h4></td>
@@ -157,30 +151,25 @@
                         </div><!-- Closing signupFrame DIV -->
                     </td>
                     <td>
-                        
-                        <p:outputPanel id="signupError2" rendered="#{signupController.dusplicateUsername}">
-                                <label> Username Exists</label>
-                            </p:outputPanel>
-                        
-                        <!--<table id="signupErrorTable" cellspacing="25">
+                        <table id="signupErrorTable" cellspacing="25">
                             <tr>
                             </tr>                            
                             <tr>
-                                <td>USERNAMEMSG</td>
+                                <td><label id="newUsernameMsg"></label></td>
                             </tr>
                             <tr>
-                                <td>Password MSG </td>
+                                <td><label id="newPwd1Msg"></label></td>
                             </tr>
                             <tr>
-                                <td>Password MSG </td>
+                                <td><label id="newPwd2Msg"></label></td>
                             </tr>
                             <tr>
-                                <td>E-Mail  MSG</td>
+                                <td><label id="newEmailMsg"></label></td>
                             </tr>
                             <tr>
-                                <td>Type Msg</td>
+                                <td><label id="newAccountTypeMsg"></label></td>
                             </tr>
-                            <tr>-->
+                        </table>
                     </td>
                 </tr>
             </table>
