@@ -30,16 +30,12 @@ public class EmailController {
      * and open the template in the editor.
      */
 
-    public String cid;// = generateCID();
-//public void triggerMail(String userID, String fName, String lName, String pwd, String email)
+    public void mail(String email, String subject, String msg){
 
-    public void triggerMail(String userID, String email) {
-
-        // Recipient's email ID needs to be mentioned.
-        String to = "\"" + email + "\"";
+        String to = email;
 
         // Sender's email ID needs to be mentioned
-        String from = "mananda@ilstu.edu";
+        String from = "hgindra@ilstu.edu";
 
         // Assuming you are sending email from this host
         String host = "smtp.ilstu.edu";
@@ -49,8 +45,8 @@ public class EmailController {
 
         // Setup mail server
         properties.setProperty("mail.smtp.host", host);
-        //properties.setProperty("mail.user", "yourID"); // if needed
-        //properties.setProperty("mail.password", "yourPassword"); // if needed
+        properties.setProperty("mail.user", "yourID"); // if needed
+        properties.setProperty("mail.password", "yourPassword"); // if needed
 
         // Get the default Session object.
         Session session = Session.getDefaultInstance(properties);
@@ -67,41 +63,19 @@ public class EmailController {
                     new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("LinkEDU Sign Up Successful !");
+            message.setSubject(subject);
 
             // Send the actual HTML message, as big as you like
-            // This mail has 2 part, the BODY and the embedded image
-            MimeMultipart multipart = new MimeMultipart("related");
+         //   String m=msg;
+            message.setContent(msg,
+                    "text/html");
 
-             // first part (the html)
-             BodyPart messageBodyPart = new MimeBodyPart();
-             String htmlText = "<center><img src=\"cid:image\"></center><br/><H1>Hello " + userID + "!!! </H1><br/><p>Welcome to LinkedU ! You have been successfully registered</p>";
-             messageBodyPart.setContent(htmlText, "text/html");
-             // add it
-             multipart.addBodyPart(messageBodyPart);
-
-             // second part (the image)
-             messageBodyPart = new MimeBodyPart();
-             DataSource fds = new FileDataSource(
-             // "./LinkedU/web/resources/images/linkedulogo2.png");
-             "H:/LinkedU/web/resources/images/linkedulogo2.png");
-
-             messageBodyPart.setDataHandler(new DataHandler(fds));
-             messageBodyPart.setHeader("Content-ID", "<image>");
-
-             // add image to the multipart
-             multipart.addBodyPart(messageBodyPart);
-
-             // put everything together
-             message.setContent(multipart); 
-            
             // Send message
             Transport.send(message);
             System.out.println("Sent message successfully....");
-
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-    }    
+    }
     
 }
