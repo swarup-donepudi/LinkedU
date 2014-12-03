@@ -238,11 +238,4 @@ public class StudentController {
         StudentDAO studentDB = new StudentDAO();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
-    
-    public void upload() throws IOException, SQLException, MessagingException{
-        InputStream inputStream = null;
-        inputStream = studentProfile.getResume().getInputStream();
-        StudentDAO upload = new StudentDAO();
-        upload.uploadResume("abc", inputStream);        
-    }
 }
