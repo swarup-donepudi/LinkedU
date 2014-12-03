@@ -133,10 +133,6 @@ public class StudentController {
     public void setInstitutionSearchCriteria(InstitutionSearchCriteria institutionSearchCriteria) {
         this.institutionSearchCriteria = institutionSearchCriteria;
     }
-<<<<<<< HEAD
-    
-    public void updateStudentProfile() throws SQLException, IOException {
-=======
 
     public void loadStudentProfile() throws IOException, SQLException, ParseException {
         FacesContext externalContext = FacesContext.getCurrentInstance();
@@ -149,7 +145,6 @@ public class StudentController {
     }
 
     public void updateStudentProfile() throws SQLException {
->>>>>>> origin/master
         StudentDAO profileDao = new StudentDAO();
         if (profileDao.studentHasProfile(this.studentProfile.getUsername())) {
             profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.getUsername());
@@ -157,8 +152,8 @@ public class StudentController {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         }
         this.profileUpdateMessage = "Profile updated successfully.";
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SearchInstitutions.xhtml");
+//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//        externalContext.redirect("SearchInstitutions.xhtml");
     }
 
     public void showInstitutionsSearchForm() throws IOException {
@@ -255,7 +250,6 @@ public class StudentController {
         StudentDAO studentDB = new StudentDAO();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
-<<<<<<< HEAD
     
     public void upload() throws IOException, SQLException, MessagingException{
         InputStream inputStream = null;
@@ -270,6 +264,4 @@ public class StudentController {
     public void setSelectedRecruiterNotInWatchList(boolean selectedRecruiterNotInWatchList) {
         this.selectedRecruiterNotInWatchList = selectedRecruiterNotInWatchList;
     }
-=======
->>>>>>> origin/master
 }

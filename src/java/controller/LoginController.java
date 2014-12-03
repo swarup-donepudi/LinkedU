@@ -135,10 +135,7 @@ public class LoginController implements Serializable {
     }
 
     public void validateCredentials() throws IOException, SQLException, ParseException {
-<<<<<<< HEAD
-        
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-=======
         String username = loginBean.getUserName();
         String password = loginBean.getPassword();
         char accStatus = 'N';
@@ -155,7 +152,6 @@ public class LoginController implements Serializable {
     }
 
     public boolean validLoginCredentials(String username, String password) throws SQLException {
->>>>>>> origin/master
         LoginDAO loginDB = new LoginDAO();
         return (loginDB.validCredentials(username, password));
     }

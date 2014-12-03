@@ -6,7 +6,6 @@
 
 package model;
 
-import java.io.File;
 import javax.mail.Part;
 
 /**
@@ -14,7 +13,6 @@ import javax.mail.Part;
  * @author skdonep
  */
 public class UserProfile {
-<<<<<<< HEAD
     private byte[] profileImage;
     private String fname;
     private String lname;
@@ -26,24 +24,9 @@ public class UserProfile {
     private String city;
     private String state;
     private String email;
-    private String username;
+    public String username;
     private String password;
     private Part resume;
-=======
-    public byte[] profileImage;
-    public String fName;
-    public String lName;
-    public char gender;
-    public String countryDialingCode;
-    public String primaryPhNum;
-    public String secondaryPhNum;
-    public String Country;
-    public String City;
-    public String State;
-    public String email;
-    public String username;
-    public String password;
->>>>>>> origin/master
 
     public byte[] getProfileImage() {
         return profileImage;
@@ -206,7 +189,7 @@ public class UserProfile {
      */
     public void setUsername(String username) {
         this.username = username;
-<<<<<<< HEAD
+
     }
 
     /**
@@ -238,7 +221,4 @@ public class UserProfile {
     }
 
 }
-=======
-    }   
-}
->>>>>>> origin/master
+

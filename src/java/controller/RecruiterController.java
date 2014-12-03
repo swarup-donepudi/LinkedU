@@ -116,12 +116,6 @@ public class RecruiterController implements Serializable {
         this.profileUpdateMessage = profileUpdateMessage;
     }
 
-<<<<<<< HEAD
-    public String showRecruiterHisProfile() throws IOException, SQLException {
-        RecruiterDAO profileDao = new RecruiterDAO();
-        if (profileDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
-            this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.getUsername());
-=======
     public void loadRecruiterProfile() throws IOException, SQLException {
         FacesContext externalContext = FacesContext.getCurrentInstance();
         if (externalContext.isPostback()) {
@@ -129,7 +123,6 @@ public class RecruiterController implements Serializable {
             if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
                 this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
             }
->>>>>>> origin/master
         }
     }
 
