@@ -10,6 +10,7 @@ import dao.SearchDAO;
 import dao.StudentDAO;
 import dao.InstitutionDAO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import model.RecruiterProfile;
 import model.StudentProfile;
@@ -235,5 +237,12 @@ public class StudentController {
         String wlOwner = session.getAttribute("username").toString();
         StudentDAO studentDB = new StudentDAO();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
+    }
+    
+    public void upload() throws IOException, SQLException, MessagingException{
+        InputStream inputStream = null;
+        inputStream = studentProfile.getResume().getInputStream();
+        StudentDAO upload = new StudentDAO();
+        upload.uploadResume("abc", inputStream);        
     }
 }

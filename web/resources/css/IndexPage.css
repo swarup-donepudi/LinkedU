@@ -130,23 +130,10 @@ button[type="submit"]{
     font-size:13px;
 }
 
-.signupErrMessage{
-
-    border:2px solid red;
+.signupErrors{
+    color: red;
 }
 
 a{
     color:white;
-}
-
-.signupError{
-    height:80px;
-    width:130px;
-    padding-top:25px;
-    padding-left:55px;
-    margin-left:-40px;
-   background: url("#{resource['images:Error.PNG']}"); 
-   background-size: 100%;
-   background-repeat: no-repeat;
-   color:white;
 }

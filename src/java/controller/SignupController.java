@@ -32,7 +32,7 @@ public class SignupController implements Serializable {
     private StudentController studentController;
     private SignupBean signupBean;
     private String usernameMsg;
-    private boolean dusplicateUsername;
+    private boolean duplicateUsername;
     private String emailMsg;
 
     /**
@@ -77,12 +77,12 @@ public class SignupController implements Serializable {
         this.emailMsg = emailMsg;
     }
 
-    public boolean isDusplicateUsername() {
-        return dusplicateUsername;
+    public boolean isDuplicateUsername() {
+        return duplicateUsername;
     }
 
-    public void setDusplicateUsername(boolean dusplicateUsername) {
-        this.dusplicateUsername = dusplicateUsername;
+    public void setDuplicateUsername(boolean duplicateUsername) {
+        this.duplicateUsername = duplicateUsername;
     }
 
     public String getUsernameMsg() throws SQLException {
@@ -100,14 +100,16 @@ public class SignupController implements Serializable {
     }
 
     public void checkDuplicateUsername() throws SQLException {
-        SignupDAO signupDB = new SignupDAO();
-        if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
-            usernameMsg = "Username Already Exists";
-            this.dusplicateUsername = true;
-        } else {
-            this.dusplicateUsername = false;
-            usernameMsg = "";
-            this.usernameMsg = "Username Already Exists";
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            SignupDAO signupDB = new SignupDAO();
+            if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
+                this.usernameMsg = "Username Already Exists";
+                this.duplicateUsername = true;
+            } else {
+                this.duplicateUsername = false;
+                this.usernameMsg = "";
+            }
         }
     }
 
@@ -125,7 +127,7 @@ public class SignupController implements Serializable {
         this.createLogin(this.signupBean);
         this.createVerificationString(this.signupBean);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SignupSuccessful.xhtml");
+        externalContext.redirect("abc.xhtml");
     }
 
     public void createLogin(SignupBean user) throws SQLException {
@@ -140,11 +142,24 @@ public class SignupController implements Serializable {
 
     public void createVerificationString(SignupBean user) throws SQLException, IOException {
         SignupDAO verify = new SignupDAO();
+<<<<<<< HEAD
         String randomString = this.generateRandonString();
         String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
         EmailController mailing = new EmailController();
         mailing.mail(user.getEmail(), "Verify your Email Address", this.mailBody(link));
         verify.insertVerificationDetails(user.getUserName(), randomString);
+=======
+        String randomString = generateRandonString();
+        String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
+        if (verify.userAccStatus(user.geteMail())) {
+            EmailController mailing = new EmailController();
+            mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
+            verify.insertVerificationDetails(user.geteMail(), randomString);
+        } else {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("abc.xhtml");
+        }
+>>>>>>> origin/master
     }
 
     public void resendVerificationLink() throws SQLException, IOException {
@@ -164,9 +179,15 @@ public class SignupController implements Serializable {
     }
 
     public String mailBody(String link) {
+<<<<<<< HEAD
         String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />This is the verification link. Pls click on the following link to reset your password<br/>."
                 + "<a href =" + link + ">&nbsphere</a> to activate.<br /><br/> This Link will expire once you change your password"
                 + "<br/> Thank you<br/>LinkEDU Team";
+=======
+        String msg = "This is the verification link. Pls click on the following link to reset your password<br/>."
+                + "<a href =" + link + ">Click Here to activate.</a><br/> This Link will expire once you change your password"
+                + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
+>>>>>>> origin/master
         return msg;
     }
 

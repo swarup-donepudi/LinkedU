@@ -6,6 +6,9 @@
 
 package model;
 
+import java.io.File;
+import javax.mail.Part;
+
 /**
  *
  * @author skdonep
@@ -24,6 +27,7 @@ public class UserProfile {
     public String email;
     public String username;
     public String password;
+    private Part resume;
 
     public byte[] getProfileImage() {
         return profileImage;
@@ -127,6 +131,20 @@ public class UserProfile {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * @return the resume
+     */
+    public Part getResume() {
+        return resume;
+    }
+
+    /**
+     * @param resume the resume to set
+     */
+    public void setResume(Part resume) {
+        this.resume = resume;
     }
     
 }
