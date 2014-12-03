@@ -185,14 +185,9 @@
                                 <tr>
                                     <td>Confirm  </td> <td><p:password id="newPwd2" redisplay="false"   value="#{signupController.signupBean.password}" onblur="ValidatePasswordMatch()"></p:password> <h4 class="UserWarning" id="noPwd2"></h4></td>
                                 </tr>
-                                <tr>
-<<<<<<< HEAD
-                                    <td>E-Mail </td><td><p:inputText   id="newEmail"  value="#{signupController.signupBean.email}" onblur="ValidateEmail()"></p:inputText><h4 class="UserWarning" id="noEmail"></h4></td>
-=======
-                                    <td>E-Mail </td><td><p:inputText   id="newEmail"  value="#{signupController.signupBean.eMail}" onkeyup="ValidateEmail()">
-                                            <f:ajax event="keyup" render="newEmailMsgAjax" listener="#{signupController.checkDuplicateEmail()}" />
-                                        </p:inputText><h4 class="UserWarning" id="noEmail"></h4></td>
->>>>>>> origin/master
+                                <tr>                                   
+                                    <td>E-Mail </td><td><p:inputText   id="newEmail"  value="#{signupController.signupBean.email}" onkeyup="ValidateEmail()">
+                                            <f:ajax event="keyup" render="newEmailMsgAjax" listener="#{signupController.checkDuplicateEmail()}" /></p:inputText></td>
                                 </tr>
                                 <tr>
                                     <td>I'm a</td><td><p:selectOneRadio id="newAccountType" value="#{signupController.signupBean.accountType}" ><h4 class="UserWarning" id="noType"></h4>
