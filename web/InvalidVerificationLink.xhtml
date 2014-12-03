@@ -7,16 +7,26 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html" >
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Invalid Email</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h2>Pls check your mail box for the verification email and try again. If you want to the verification link 
-        to be send back again then press the button below.</h2><br/>
-        <h:inputText id="username" value="#{signupController.signupBean.geteMail}"/>
-        <h:commandButton id="resendLink" value="Click here to resend the link" action="#{signupController.resendVerificationLink()}"/>
-        
+        <ui:composition template="templates\AppTheme.xhtml">
+            <ui:define name="logoutFrame">
+            </ui:define>
+            <ui:define name="content">
+                <div>
+                    <h:form id ="check">
+                        <h2>Pls check your mail box for the verification email and try again. If you did not receive the verification link, pls 
+                        enter your email id and select resend email. </h2><br/>
+                        <h:inputText id="username" value="#{signupController.signupBean.geteMail()}"/><br/>
+                        <h:commandButton id="resendLink" value="Click here to resend the link" action="#{signupController.resendVerificationLink()}"/>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

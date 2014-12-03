@@ -202,14 +202,15 @@ public class LoginController implements Serializable {
         }
     }
     
-    public void changePassword() throws SQLException{
+    public void changePassword() throws SQLException, IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         LoginDAO loginDB = new LoginDAO();
         int count = loginDB.changePasswordLogin(loginBean.getUserName(), loginBean.getPassword());
         if(count==1){
-            setErrorMessage("password changed successfully");
+            externalContext.redirect("index.xhtml");
         }
         else{
-            setErrorMessage("Something went wrong. Pls retry");
+            externalContext.redirect("PlsRetryAgain.xhtml");
         }
         
     }
