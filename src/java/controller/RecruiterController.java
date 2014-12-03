@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.RecruiterProfile;
@@ -117,8 +118,8 @@ public class RecruiterController implements Serializable {
 
     public String showRecruiterHisProfile() throws IOException, SQLException {
         RecruiterDAO profileDao = new RecruiterDAO();
-        if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
-            this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
+        if (profileDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
+            this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.getUsername());
         }
         return ("RecruiterProfile.xhtml");
     }
@@ -133,22 +134,25 @@ public class RecruiterController implements Serializable {
 
     public String updateRecruiterProfile() throws SQLException {
         RecruiterDAO recruiterDao = new RecruiterDAO();
-        if (recruiterDao.recruiterHasProfile(this.recruiterProfile.username)) {
-            recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+        if (recruiterDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
+            recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.getUsername());
         } else {
-            recruiterDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.username);
+            recruiterDao.createRecruiterProfile(this.recruiterProfile, this.recruiterProfile.getUsername());
         }
-        this.recruiterProfile.setUsername(this.recruiterProfile.username);
+        this.recruiterProfile.setUsername(this.recruiterProfile.getUsername());
         this.profileUpdateMessage = "Profile updated successfully.";
         return ("RecruiterProfile.xhtml");
     }
 
-    public void searchStudents() throws SQLException, IOException, ParseException {
+    public String searchStudents() throws SQLException, IOException, ParseException {
         this.studentSearchResults.clear();
         if (this.studentSearchCriteria.getPreferredInst() != null) {
             SearchDAO db = new SearchDAO();
-            db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
+            this.studentSearchResults = db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
         }
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SearchStudents.xhtml");
+        return null;
     }
 
     public boolean isSelectedUniversityNotInWatchList() {

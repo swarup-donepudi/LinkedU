@@ -52,14 +52,14 @@
                                 <td>  
                                     First Name </td>
                                 <td>
-                                    <p:inputText id="studentFName" value="#{studentController.studentProfile.fName}"></p:inputText>
+                                    <p:inputText id="studentFName" value="#{studentController.studentProfile.fname}"></p:inputText>
                                 </td>
                             </tr>                        
                             <tr>
                                 <td>                
                                     Last Name  </td>
                                 <td>
-                                    <p:inputText id="studentLName" value="#{studentController.studentProfile.lName}"></p:inputText>
+                                    <p:inputText id="studentLName" value="#{studentController.studentProfile.lname}"></p:inputText>
                                 </td>
                             </tr>                       
                             <tr>
@@ -105,53 +105,53 @@
                             </tr>
                             <tr>
                                 <tr>
-                                <td>  
-                                    SAT  
-                                </td>
-                                <td> 
-                                    <p:inputText id="satScore" value="#{studentController.studentProfile.SAT}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        SAT  
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="satScore" value="#{studentController.studentProfile.SAT}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <tr>
-                                <td>  
-                                    ACT  
-                                </td>
-                                <td> 
-                                    <p:inputText id="sctScore" value="#{studentController.studentProfile.ACT}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        ACT  
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="sctScore" value="#{studentController.studentProfile.ACT}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <tr>
-                                <td>  
-                                    TOEFL  
-                                </td>
-                                <td> 
-                                    <p:inputText id="toeflScore" value="#{studentController.studentProfile.TOEFL}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        TOEFL  
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="toeflScore" value="#{studentController.studentProfile.TOEFL}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <tr>
-                                <td>  
-                                    GRE  
-                                </td>
-                                <td> 
-                                    <p:inputText id="greScore" value="#{studentController.studentProfile.GRE}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        GRE  
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="greScore" value="#{studentController.studentProfile.GRE}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <tr>
-                                <td>  
-                                    IELTS  
-                                </td>
-                                <td> 
-                                    <p:inputText id="ieltsScore" value="#{studentController.studentProfile.IELTS}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        IELTS  
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="ieltsScore" value="#{studentController.studentProfile.IELTS}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <tr>
-                                <td>  
-                                    Certifications 
-                                </td>
-                                <td> 
-                                    <p:inputText id="certifications" value="#{studentController.studentProfile.ceritifications}"></p:inputText>
-                                </td>
-                            </tr>
+                                    <td>  
+                                        Certifications 
+                                    </td>
+                                    <td> 
+                                        <p:inputText id="certifications" value="#{studentController.studentProfile.ceritifications}"></p:inputText>
+                                    </td>
+                                </tr>
                                 <td> 
                                     Preferred Programs 
                                 </td>
@@ -248,16 +248,17 @@
                     </p:tab>
                     <p:tab title="Resume">
                         <h:form id="inputForms" enctype="multipart/form-data"> 
-                        <h:inputFile id="resume" value="#{studentController.studentProfile.resume}"/><br/>
-                        <h:commandButton id="upload" value="upload"  action="#{studentController.upload()}"/>
+                            <h:inputFile id="resume" value="#{studentController.studentProfile.resume}"/><br/>
+                            <h:commandButton id="upload" value="upload"  action="#{studentController.upload()}"/>
                         </h:form>
                     </p:tab>
                 </p:tabView>
                 <br />
-                <p:commandButton value="Update Profile" 
-                                 action="#{studentController.updateStudentProfile()}"/>
+                <p:commandButton value="Update Profile" ajax="true">
+                    <p:ajax update="updateMsg" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
+                <h:outputText id="updateMsg" value="#{studentController.profileUpdateMessage}"></h:outputText>
             </h:form><br /><br />
-            <h:outputText value="#{studentController.profileUpdateMessage}"></h:outputText>                    
+
         </ui:define>
     </ui:decorate>
 </ui:composition>

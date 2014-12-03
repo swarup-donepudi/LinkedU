@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.CommonDAO;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
@@ -133,15 +132,17 @@ public class StudentController {
     public void setInstitutionSearchCriteria(InstitutionSearchCriteria institutionSearchCriteria) {
         this.institutionSearchCriteria = institutionSearchCriteria;
     }
-
-    public void updateStudentProfile() throws SQLException {
+    
+    public void updateStudentProfile() throws SQLException, IOException {
         StudentDAO profileDao = new StudentDAO();
-        if (profileDao.studentHasProfile(this.studentProfile.username)) {
-            profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.username);
+        if (profileDao.studentHasProfile(this.studentProfile.getUsername())) {
+            profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         } else {
-            profileDao.createStudentProfile(this.studentProfile, this.studentProfile.username);
+            profileDao.createStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         }
         this.profileUpdateMessage = "Profile updated successfully.";
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SearchInstitutions.xhtml");
     }
 
     public void showInstitutionsSearchForm() throws IOException {
@@ -194,7 +195,7 @@ public class StudentController {
         String wlOwner = session.getAttribute("username").toString();
         String wlItem = this.selectedRecruiter.getUsername();
         StudentDAO studentDB = new StudentDAO();
-        this.selectedRecruiterNotInWatchList = studentDB.recruiterNotInWatchListInDB(wlOwner, wlItem);
+        this.setSelectedRecruiterNotInWatchList(studentDB.recruiterNotInWatchListInDB(wlOwner, wlItem));
         return this.selectedRecruiterNotInWatchList;
     }
 
@@ -218,8 +219,8 @@ public class StudentController {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();
         String wlItem = this.selectedRecruiter.getUsername();
-        String itemFName = this.selectedRecruiter.getfName();
-        String itemLname = this.selectedRecruiter.getlName();
+        String itemFName = this.selectedRecruiter.getFname();
+        String itemLname = this.selectedRecruiter.getLname();
 
         StudentDAO studentDB = new StudentDAO();
         int insertCount = studentDB.addRecruiterToWatchListInDB(wlOwner, wlItem, itemFName, itemLname);
@@ -244,5 +245,12 @@ public class StudentController {
         inputStream = studentProfile.getResume().getInputStream();
         StudentDAO upload = new StudentDAO();
         upload.uploadResume("abc", inputStream);        
+    }
+
+    /**
+     * @param selectedRecruiterNotInWatchList the selectedRecruiterNotInWatchList to set
+     */
+    public void setSelectedRecruiterNotInWatchList(boolean selectedRecruiterNotInWatchList) {
+        this.selectedRecruiterNotInWatchList = selectedRecruiterNotInWatchList;
     }
 }

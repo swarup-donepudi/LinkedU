@@ -17,14 +17,14 @@ import java.util.List;
 public class StudentProfile extends UserProfile{
     private Date dob;
     private String highestDegree;
-    private String GPA;
+    private float GPA;
     private List<String> preferredPrograms;
     private List<String> preferredInsts;
-    private String SAT;
-    private String ACT;
-    private String TOEFL;
-    private String GRE;
-    private String IELTS;
+    private int SAT;
+    private int ACT;
+    private int TOEFL;
+    private int GRE;
+    private int IELTS;
     private String ceritifications;
 
     public StudentProfile(){
@@ -48,11 +48,11 @@ public class StudentProfile extends UserProfile{
         this.highestDegree = highestDegree;
     }
 
-    public String getGPA() {
+    public float getGPA() {
         return GPA;
     }
 
-    public void setGPA(String GPA) {
+    public void setGPA(float GPA) {
         this.GPA = GPA;
     }
 
@@ -75,70 +75,70 @@ public class StudentProfile extends UserProfile{
     /**
      * @return the SAT
      */
-    public String getSAT() {
+    public int getSAT() {
         return SAT;
     }
 
     /**
      * @param SAT the SAT to set
      */
-    public void setSAT(String SAT) {
+    public void setSAT(int SAT) {
         this.SAT = SAT;
     }
 
     /**
      * @return the ACT
      */
-    public String getACT() {
+    public int getACT() {
         return ACT;
     }
 
     /**
      * @param ACT the ACT to set
      */
-    public void setACT(String ACT) {
+    public void setACT(int ACT) {
         this.ACT = ACT;
     }
 
     /**
      * @return the TOEFL
      */
-    public String getTOEFL() {
+    public int getTOEFL() {
         return TOEFL;
     }
 
     /**
      * @param TOEFL the TOEFL to set
      */
-    public void setTOEFL(String TOEFL) {
+    public void setTOEFL(int TOEFL) {
         this.TOEFL = TOEFL;
     }
 
     /**
      * @return the GRE
      */
-    public String getGRE() {
+    public int getGRE() {
         return GRE;
     }
 
     /**
      * @param GRE the GRE to set
      */
-    public void setGRE(String GRE) {
+    public void setGRE(int GRE) {
         this.GRE = GRE;
     }
 
     /**
      * @return the IELTS
      */
-    public String getIELTS() {
+    public int getIELTS() {
         return IELTS;
     }
 
     /**
      * @param IELTS the IELTS to set
      */
-    public void setIELTS(String IELTS) {
+    public void setIELTS(int IELTS) {
         this.IELTS = IELTS;
     }
 

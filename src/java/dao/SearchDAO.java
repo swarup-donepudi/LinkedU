@@ -49,19 +49,44 @@ public class SearchDAO extends AppDBInfoDAO {
         this.DBConn = DBConn;
     }
 
-    public void retrieveStudentSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException, ParseException {
+    public ArrayList<StudentProfile> retrieveStudentSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException, ParseException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String institutions = ssc.getPreferredInst();
+        String gpa = ssc.getGPA();
+        String programs = ssc.getPreferredPrograms();
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE";
         Statement stmt = DBConn.createStatement();
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE PREFERRED_UNIVS LIKE '%" + ssc.getPreferredInst() + "%'";
+        if (!institutions.equals("")) {
+            selectQuery += " WHERE PREFERRED_UNIVS LIKE '%" + institutions + "%' ";
+        }
+        if (!gpa.equals("")) {
+            if (!institutions.equals("")) {
+                selectQuery += " AND";
+            } else {
+                selectQuery += " where ";
+            }
+            selectQuery += " GPA > = " + ssc.getGPA() + "";
+        }
+        if (!programs.equals("")) {
+            if (!institutions.equals("") || !gpa.equals("")) {
+                selectQuery += " and";
+            } else {
+                selectQuery += " where ";
+            }
+            selectQuery += " PREFERRED_PROGRAMS LIKE '% " + programs + "%' ";
+        }
+
+        
+
         ResultSet rs = stmt.executeQuery(selectQuery);
         while (rs.next()) {
             StudentProfile studentProfile = new StudentProfile();
-            studentProfile.setfName(rs.getString("FIRST_NAME"));
-            studentProfile.setlName(rs.getString("LAST_NAME"));
+            studentProfile.setFname(rs.getString("FIRST_NAME"));
+            studentProfile.setLname(rs.getString("LAST_NAME"));
             studentProfile.setGender(rs.getString("GENDER").charAt(0));
             studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
             studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-            studentProfile.setGPA(rs.getString("GPA"));
+            studentProfile.setGPA(rs.getFloat("GPA"));
             studentProfile.setPreferredPrograms(this.convertStringToList("Information Systems"));//Replace the hard coded value with PREFERRED_PROGRAMS Column name
             studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
             studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
@@ -75,6 +100,7 @@ public class SearchDAO extends AppDBInfoDAO {
         rs.close();
         this.DBConn.close();
         stmt.close();
+        return studentSearchResults;
     }
 
     public void retrieveInstitutionSearchResults(InstitutionSearchCriteria usc, ArrayList<InstitutionProfile> institutionSearchResults) throws SQLException, UnsupportedEncodingException, IOException {

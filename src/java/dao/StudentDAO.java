@@ -65,12 +65,12 @@ public class StudentDAO extends AppDBInfoDAO {
             ResultSet rs = stmt.executeQuery(selectQuery);
 
             while (rs.next()) {
-                studentProfile.setfName(rs.getString("FIRST_NAME"));
-                studentProfile.setlName(rs.getString("LAST_NAME"));
+                studentProfile.setFname(rs.getString("FIRST_NAME"));
+                studentProfile.setLname(rs.getString("LAST_NAME"));
                 studentProfile.setGender(rs.getString("GENDER").charAt(0));
                 studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-                studentProfile.setGPA(rs.getString("GPA"));
+                studentProfile.setGPA(rs.getFloat("GPA"));
                 studentProfile.setEmail(rs.getString("EMAILID"));
                 studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));
                 studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
@@ -95,9 +95,9 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public void updateStudentProfile(StudentProfile studentProfile, String username) {
         String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
-                + studentProfile.getfName() + "', "
+                + studentProfile.getFname() + "', "
                 + "LAST_NAME = '"
-                + studentProfile.getlName() + "', "
+                + studentProfile.getLname() + "', "
                 + "GENDER = '"
                 + studentProfile.getGender() + "', "
                 + "DOB = '"
@@ -105,6 +105,20 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "HIGHEST_DEGREE = '"
                 + studentProfile.getHighestDegree() + "', "
                 + "GPA = '"
+                + studentProfile.getGPA() + "', "
+                + "SAT = '"
+                + studentProfile.getGPA() + "', "
+                + "ACT = '"
+                + studentProfile.getGPA() + "', "
+                + "TOEFL = '"
+                + studentProfile.getGPA() + "', "
+                + "GRE = '"
+                + studentProfile.getGPA() + "', "
+                + "IELTS = '"
+                + studentProfile.getGPA() + "', "
+                + "CERTIFICATIONS = '"
+                + studentProfile.getGPA() + "', "
+                + "EMAILID = '"
                 + studentProfile.getGPA() + "', "
                 + "PREFERRED_PROGRAMS = '"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
@@ -120,8 +134,10 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getState() + "', "
                 + "CITY = '"
                 + studentProfile.getCity() + ");"
-                + "EMAIL = '"
-                + studentProfile.getEmail() + "', "
+                + "PROFILE_IMAGE = '"
+                + studentProfile.getProfileImage() + "', "
+                + "RESUME = '"
+                + studentProfile.getResume() + "'"
                 + "' WHERE USERNAME='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -144,6 +160,12 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "DOB,"
                 + "HIGHEST_DEGREE,"
                 + "GPA,"
+                 + "SAT,"
+                 + "ACT,"
+                 + "TOEFL,"
+                 + "GRE,"
+                 + "IELTS,"
+                 + "CERTIFICATIONS,"           
                 + "PREFERRED_PROGRAMS,"
                 + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
@@ -151,15 +173,22 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-                + "USERNAME,"
-                + "EMAIL)"
+                + "PROFILE_IMAGE,"
+                + "RESUME,"
+                + "USERNAME) "
                 + "VALUES('"
-                + studentProfile.getfName() + "','"
-                + studentProfile.getlName() + "','"
-                + studentProfile.getGender() + "','"
+                + studentProfile.getFname() + "','"
+                + studentProfile.getLname() + "','"
+                + "M','"
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
+                + studentProfile.getSAT() + "','"
+                + studentProfile.getACT() + "','"
+                + studentProfile.getTOEFL() + "','"
+                + studentProfile.getGRE() + "','"
+                + studentProfile.getIELTS() + "','"
+                + studentProfile.getCeritifications() + "','"                
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
                 + this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
@@ -167,8 +196,9 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + username + "','"
-                + emailFromUserInfo + "')";
+                + studentProfile.getProfileImage() + "','"
+                + studentProfile.getResume() + "','"
+                + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
