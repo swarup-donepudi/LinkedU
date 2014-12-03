@@ -125,7 +125,7 @@ public class SignupController implements Serializable {
         this.createLogin(this.signupBean);
         this.createVerificationString(this.signupBean);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("abc.xhtml");
+        externalContext.redirect("SignupSuccessful.xhtml");
     }
     
     public void createLogin(SignupBean user) throws SQLException{

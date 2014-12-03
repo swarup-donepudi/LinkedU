@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <title>LinkEDU</title>
+        <h:outputStylesheet library="css" name="AppTheme.css"  />
+    </h:head>
+    <body>
+        <ui:composition template="templates\AppTheme.xhtml">
+            <ui:define name="logoutFrame">
+            </ui:define>
+            <ui:define name="content">
+                <div>
+                    <h:outputLabel value="Congratualations!You have successfully signed up on LinkEDU."></h:outputLabel><br/>
+                    <h:outputLabel value="An activation link has been sent to your email."></h:outputLabel><br/>
+                    <h:outputLabel value="Click on the link to start using LinkEDU services."></h:outputLabel><br/>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
