@@ -34,10 +34,6 @@ public class StudentProfile extends UserProfile{
         this.preferredInsts = new ArrayList<>();
     }
 
-    public UploadedFile getResume() {
-        return resume;
-    }
-
     public void setResume(UploadedFile resume) {
         this.resume = resume;
     }
