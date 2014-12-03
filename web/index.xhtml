@@ -9,90 +9,139 @@
       >
     <h:head>
         <script language="javascript">
-            function ValidateEmail()
-            {
-                var newEmail = document.getElementById("newEmail");
+
+            var validEmailFlag = false;
+            var validUsernameFlag = false;
+            var validPasswordFlag = false;
+            var validAccountTypeFlag = false;
+            
+            function ValidateEmail(){
+
+                var newEmail = document.getElementById("signupForm:newEmail");
                 var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                validEmailFlag = false;
                 if (newEmail.value.match(mailformat))
                 {
-                    document.getElementById("newEmail").focus();
-                    return true;
+                    document.getElementById("newEmailMsg").innerHTML = "";
+                    validEmailFlag = true;
                 }
                 else
                 {
-                    document.getElementById("newEmailMsg").innerHTML = "Invalid Email";
-                    document.getElementById("newEmail").focus();
-                    return false;
+                     document.getElementById("newEmailMsg").innerHTML = "Invalid Email<br/>";
+                     validEmailFlag = false;
+                }
+            }
+
+            function ValidateUsername(){
+               
+                var username = document.getElementById("signupForm:newUsername");
+                var usernameFormat = /^[A-Za-z0-9_]{3,15}$/;
+                validUsernameFlag = false;
+                if (username.value.match(usernameFormat)){
+                    document.getElementById("newUsernameMsg").innerHTML = "";
+                    validUsernameFlag = true;
+                }
+                 else
+                {
+                    document.getElementById("newUsernameMsg").innerHTML = "Invalid Username<br/>";
+                    validUsernameFlag = false;
+                }
+
+            }
+
+            function ValidatePasswordMatch(){
+                var newPwd1 = document.getElementById("signupForm:newPwd1");
+                var newPwd2 = document.getElementById("signupForm:newPwd2");
+                validPasswordFlag = false;
+                if ((newPwd1.value)==(newPwd2.value)){
+                    document.getElementById("newPwd2Msg").innerHTML = "";
+                    validUsernameFlag = true;
+                }
+                 else
+                {
+                    document.getElementById("newPwd2Msg").innerHTML = "Password Mismatch";
+                    validUsernameFlag = false;
                 }
             }
 
             function validateLoginForm() {
-                var userName = document.getElementById("loginForm:username");
-                var pwd = document.getElementById("loginForm:pwd");
-                if (userName.value == "") {
-                    return false;
-                }
-                if (pwd.value == "") {
-                    return false;
-                }
-                return true;
+                    var userName = document.getElementById("loginForm:username");
+                    var pwd = document.getElementById("loginForm:pwd");
+                    if (userName.value == "") {
+            return false;
+            }
+            if (pwd.value == "") {
+            return false;
+            }
+            return true;
             }
 
             function validateSignupForm() {
-                var newUsername = document.getElementById("signupForm:newUsername");
-                var newPwd1 = document.getElementById("signupForm:newPwd1");
-                var newPwd2 = document.getElementById("signupForm:newPwd2");
-                var newEmail = document.getElementById("signupForm:newEmail");
-                var newAccountType = document.getElementById("signupForm:newAccountType");
-                if (newUsername.value == "") {
-                    document.getElementById("noNewUserName").innerHTML = "pls enter the user name";
-                    return false;
-                }
-                else {
-                    document.getElementById("noNewUserName").innerHTML = "";
-                }
-                if (newPwd1.value == "") {
-                    document.getElementById("noPwd1").innerHTML = "Password Missing";
-                    return false;
-                }
-                else {
-                    document.getElementById("noPwd1").innerHTML = "";
-                }
+                    var newUsername = document.getElementById("signupForm:newUsername");
+                    var newPwd1 = document.getElementById("signupForm:newPwd1");
+                    var newPwd2 = document.getElementById("signupForm:newPwd2");
+                    var newEmail = document.getElementById("signupForm:newEmail");
+                    var newAccountType = document.getElementById("signupForm:newAccountType");
+                    if (newUsername.value == "") {
+                        document.getElementById("newUsernameMsg").innerHTML = "pls enter the user name";
+                        return (false);
+                    }
+                    else {
+                        document.getElementById("newUsernameMsg").innerHTML = "";
+                    }
+                    if (newPwd1.value == "") {
+                    document.getElementById("newPwd1Msg").innerHTML = "Password Missing";
+                            return (false);
+                    }
+                    else {
+                    document.getElementById("newPwd1Msg").innerHTML = "";
+                    }
 
-                if (newPwd2.value == "") {
-                    document.getElementById("noPwd2").innerHTML = "Retype the password";
-                    return false;
-                }
-                else {
-                    document.getElementById("noPwd2").innerHTML = "";
-                }
+                    if (newPwd2.value == "") {
+                    document.getElementById("newPwd2Msg").innerHTML = "Retype the password";
+                            return (false);
+                    }
+                    else {
+                    document.getElementById("newPwd2Msg").innerHTML = "";
+                    }
 
-                if (newPwd1.equals(newPwd2)) {
-                    document.getElementById("noPwd2").innerHTML = "Password do not match.";
-                    return false;
-                }
-                else {
-                    document.getElementById("noPwd2").innerHTML = "";
-                }
+                    if (newPwd1.equals(newPwd2)) {
+                    document.getElementById("newPwd2Msg").innerHTML = "Password do not match.";
+                            return (false);
+                    }
+                    else {
+                    document.getElementById("newPwd2Msg").innerHTML = "";
+                    }
 
-                if (newEmail.value == "") {
-                    document.getElementById("noEmail").innerHTML = "Email Field Empty";
-                    return false;
-                }
-                else {
-                    document.getElementById("noEmail").innerHTML = "Email Field Empty";
-                }
-                if (newAccountType.value == "") {
-                    document.getElementById("noType").innerHTML = "Pls select the type of account";
-                    return false;
-                }
-                else {
-                    document.getElementById("noType").innerHTML = "";
-                }
+                    if (newEmail.value == "") {
+                    document.getElementById("newEmailMsg").innerHTML = "Email Field Empty";
+                            return (false);
+                    }
+                    else {
+                    document.getElementById("newEmailMsg").innerHTML = "Email Field Empty";
+                    }
+                    if (newAccountType.value == "") {
+                    document.getElementById("newAccountTypeMsg").innerHTML = "Pls select the type of account";
+                            return (false);
+                    }
+                    else {
+                    document.getElementById("newAccountTypeMsg").innerHTML = "";
+                    }
+                    if(document.getElementById("signupForm:newAccountType").checked){
+                       validAccountTypeFlag = true; 
+                    }
+                    else{
+                       validAccountTypeFlag = false; 
+                    }
+                    
+                    if ((validEmailFlag) &amp;&amp; (validUsernameFlag) &amp;&amp; (validPasswordFlag) &amp;&amp; (validAccountTypeFlag)){
+                        return (true);
+                    }
+                    else{
+                        return (false);
+                    }
+        }
 
-
-                return true;
-            }
         </script>
         <title>LinkedU Login</title>
     </h:head>
@@ -126,16 +175,20 @@
                                     <td colspan="2">Not a member yet? Signup is easy!!!</td>
                                 </tr>
                                 <tr>
-                                    <td>Username </td><td><p:inputText id="newUsername"   value="#{signupController.signupBean.userName}" ></p:inputText></td>
+                                    <td>Username </td><td><p:inputText id="newUsername" value="#{signupController.signupBean.userName}" onkeyup="ValidateUsername()">
+                                            <f:ajax event="keyup" render="newUsernameMsgAjax" listener="#{signupController.checkDuplicateUsername()}" />
+                                        </p:inputText></td>
                                 </tr>
                                 <tr>
                                     <td>Password </td><td><p:password id="newPwd1" redisplay="false"   value="#{signupController.signupBean.password}" ></p:password><h4 class="UserWarning" id="noPwd1"></h4></td>
                                 </tr>
                                 <tr>
-                                    <td>Confirm  </td> <td><p:password id="newPwd2" redisplay="false"   value="#{signupController.signupBean.password}" ></p:password> <h4 class="UserWarning" id="noPwd2"></h4></td>
+                                    <td>Confirm  </td> <td><p:password id="newPwd2" redisplay="false"   value="#{signupController.signupBean.password}" onblur="ValidatePasswordMatch()"></p:password> <h4 class="UserWarning" id="noPwd2"></h4></td>
                                 </tr>
                                 <tr>
-                                    <td>E-Mail </td><td><p:inputText   id="newEmail"  value="#{signupController.signupBean.eMail}" onblur="ValidateEmail()"></p:inputText><h4 class="UserWarning" id="noEmail"></h4></td>
+                                    <td>E-Mail </td><td><p:inputText   id="newEmail"  value="#{signupController.signupBean.eMail}" onkeyup="ValidateEmail()">
+                                            <f:ajax event="keyup" render="newEmailMsgAjax" listener="#{signupController.checkDuplicateEmail()}" />
+                                        </p:inputText><h4 class="UserWarning" id="noEmail"></h4></td>
                                 </tr>
                                 <tr>
                                     <td>I'm a</td><td><p:selectOneRadio id="newAccountType" value="#{signupController.signupBean.accountType}" ><h4 class="UserWarning" id="noType"></h4>
@@ -151,11 +204,10 @@
                         </div><!-- Closing signupFrame DIV -->
                     </td>
                     <td>
-                        <table id="signupErrorTable" cellspacing="25">
+                        <table id="signupErrorTable" class="signupErrors" cellspacing="25">                            
                             <tr>
-                            </tr>                            
-                            <tr>
-                                <td><label id="newUsernameMsg"></label></td>
+                                <td><label id="newUsernameMsg"></label>
+                                    <h:outputText id="newUsernameMsgAjax"  value="#{signupController.usernameMsg}" /></td>
                             </tr>
                             <tr>
                                 <td><label id="newPwd1Msg"></label></td>
@@ -164,7 +216,8 @@
                                 <td><label id="newPwd2Msg"></label></td>
                             </tr>
                             <tr>
-                                <td><label id="newEmailMsg"></label></td>
+                                <td><label id="newEmailMsg"></label>
+                                    <h:outputText id="newEmailMsgAjax" value="#{signupController.emailMsg}" /></td>
                             </tr>
                             <tr>
                                 <td><label id="newAccountTypeMsg"></label></td>

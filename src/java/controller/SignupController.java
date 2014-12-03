@@ -32,7 +32,7 @@ public class SignupController implements Serializable {
     private StudentController studentController;
     private SignupBean signupBean;
     private String usernameMsg;
-    private boolean dusplicateUsername;
+    private boolean duplicateUsername;
     private String emailMsg;
 
     /**
@@ -65,7 +65,7 @@ public class SignupController implements Serializable {
     public void setSignupBean(SignupBean signupBean) {
         this.signupBean = signupBean;
     }
-    
+
     public String getEmailMsg() {
         return emailMsg;
     }
@@ -77,12 +77,12 @@ public class SignupController implements Serializable {
         this.emailMsg = emailMsg;
     }
 
-    public boolean isDusplicateUsername() {
-        return dusplicateUsername;
+    public boolean isDuplicateUsername() {
+        return duplicateUsername;
     }
 
-    public void setDusplicateUsername(boolean dusplicateUsername) {
-        this.dusplicateUsername = dusplicateUsername;
+    public void setDuplicateUsername(boolean duplicateUsername) {
+        this.duplicateUsername = duplicateUsername;
     }
 
     public String getUsernameMsg() throws SQLException {
@@ -100,17 +100,19 @@ public class SignupController implements Serializable {
     }
 
     public void checkDuplicateUsername() throws SQLException {
-        SignupDAO signupDB = new SignupDAO();
-        if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
-            usernameMsg = "Username Already Exists";
-            this.dusplicateUsername = true;
-        } else {
-            this.dusplicateUsername = false;
-            usernameMsg = "";
-            this.usernameMsg = "Username Already Exists";
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            SignupDAO signupDB = new SignupDAO();
+            if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
+                this.usernameMsg = "Username Already Exists";
+                this.duplicateUsername = true;
+            } else {
+                this.duplicateUsername = false;
+                this.usernameMsg = "";
+            }
         }
     }
-    
+
     public void checkDuplicateEmail() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.emailAlreadyExits(this.signupBean.geteMail())) {
@@ -127,36 +129,35 @@ public class SignupController implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("abc.xhtml");
     }
-    
-    public void createLogin(SignupBean user) throws SQLException{
+
+    public void createLogin(SignupBean user) throws SQLException {
         SignupDAO create = new SignupDAO();
         int count = create.createLoginAccount(user);
     }
-    
-    public void createUserInfo(SignupBean user) throws SQLException{
+
+    public void createUserInfo(SignupBean user) throws SQLException {
         SignupDAO create = new SignupDAO();
         int count = create.createUserAccount(user);
     }
-    
-    public void createVerificationString(SignupBean user) throws SQLException, IOException{
+
+    public void createVerificationString(SignupBean user) throws SQLException, IOException {
         SignupDAO verify = new SignupDAO();
         String randomString = generateRandonString();
-        String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink="+randomString;
-        if(verify.userAccStatus(user.geteMail())){        
-        EmailController mailing = new EmailController();
-        mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
-        verify.insertVerificationDetails(user.geteMail(), randomString);
-    }
-        else{
+        String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
+        if (verify.userAccStatus(user.geteMail())) {
+            EmailController mailing = new EmailController();
+            mailing.mail(user.geteMail(), "Verify your Email Address", mailBody(link));
+            verify.insertVerificationDetails(user.geteMail(), randomString);
+        } else {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             externalContext.redirect("abc.xhtml");
         }
     }
-    
-    public void resendVerificationLink() throws SQLException, IOException{
+
+    public void resendVerificationLink() throws SQLException, IOException {
         this.createVerificationString(signupBean);
     }
-    
+
     public String generateRandonString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -168,25 +169,23 @@ public class SignupController implements Serializable {
         }
         return buffer.toString();
     }
-    
-    public String mailBody(String link){
+
+    public String mailBody(String link) {
         String msg = "This is the verification link. Pls click on the following link to reset your password<br/>."
-                + "<a href ="+link+">Click Here to activate.</a><br/> This Link will expire once you change your password"
+                + "<a href =" + link + ">Click Here to activate.</a><br/> This Link will expire once you change your password"
                 + " or if not changed will expire in 24 hours.<br/><br/> Thank you<br/>Linkedu Team";
         return msg;
     }
-    
-    public void verifyLink() throws ClassNotFoundException, IOException, SQLException{
+
+    public void verifyLink() throws ClassNotFoundException, IOException, SQLException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         SignupDAO check = new SignupDAO();
         String username = check.checkLink(signupBean.getVerifyString());
-        if(!username.equals("")){
+        if (!username.equals("")) {
             check.updateAccStatus(username);
             check.deleteVerificationData(username);
-        }
-        else{
+        } else {
             externalContext.redirect("InvalidVerificationLink.xhtml");
         }
     }
 }
-
