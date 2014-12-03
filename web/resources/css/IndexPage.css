@@ -131,6 +131,12 @@ button[type="submit"]{
 }
 
 .signupErrors{
+    /*margin:-20px;
+    padding-left:20px;
+    background-image:url("#{resource['images:Error.PNG']}");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: white;*/
     color: red;
 }
 
