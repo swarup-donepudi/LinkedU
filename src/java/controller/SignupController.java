@@ -5,9 +5,7 @@
  */
 package controller;
 
-import dao.RecruiterDAO;
 import dao.SignupDAO;
-import dao.StudentDAO;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -18,9 +16,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import model.RecruiterProfile;
 import model.SignupBean;
-import model.StudentProfile;
 
 /**
  *
@@ -36,11 +32,8 @@ public class SignupController implements Serializable {
     private StudentController studentController;
     private SignupBean signupBean;
     private String usernameMsg;
-<<<<<<< HEAD
     private boolean dusplicateUsername;
-=======
     private String emailMsg;
->>>>>>> origin/master
 
     /**
      * Creates a new instance of SignupController
@@ -109,16 +102,12 @@ public class SignupController implements Serializable {
     public void checkDuplicateUsername() throws SQLException {
         SignupDAO signupDB = new SignupDAO();
         if (signupDB.usernameAlreadyExists(this.signupBean.getUserName())) {
-<<<<<<< HEAD
             usernameMsg = "Username Already Exists";
             this.dusplicateUsername = true;
         } else {
             this.dusplicateUsername = false;
             usernameMsg = "";
-=======
             this.usernameMsg = "Username Already Exists";
-        } else {
-            this.usernameMsg = "";
         }
     }
     
@@ -128,7 +117,6 @@ public class SignupController implements Serializable {
             this.setEmailMsg("Email Already Exists");
         } else {
             this.setEmailMsg("");
->>>>>>> origin/master
         }
     }
 
