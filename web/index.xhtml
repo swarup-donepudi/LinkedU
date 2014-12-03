@@ -134,9 +134,13 @@
                     validAccountTypeFlag = false;
                 }
 
-                if (validEmailFlag &amp;&amp; validUsernameFlag &amp;&amp; validPasswordFlag &amp;&amp; validAccountTypeFlag &amp;&amp; validForm) 
+                if (validEmailFlag)
+                     if (validUsernameFlag)
+                                 if(validPasswordFlag)
+                                             if(validAccountTypeFlag)
+                                                         if(validForm) 
                     return true;
-                else
+                
                     return false;
             }
 
@@ -178,7 +182,7 @@
                                         </p:inputText></td>
                                 </tr>
                                 <tr>
-                                    <td>Password </td><td><p:password id="newPwd1" redisplay="false"  feedback="true" value="#{signupController.signupBean.password}" onblur="ValidatePassword()"></p:password><h4 class="UserWarning" id="noPwd1"></h4></td>
+                                    <td>Password </td><td><p:password id="newPwd1" redisplay="false"  feedback="true" value="#{signupController.signupBean.password}"></p:password><h4 class="UserWarning" id="noPwd1"></h4></td>
                                 </tr>
                                 <tr>
                                     <td>Confirm  </td> <td><p:password id="newPwd2" redisplay="false"   value="#{signupController.signupBean.password}" onblur="ValidatePasswordMatch()"></p:password> <h4 class="UserWarning" id="noPwd2"></h4></td>
