@@ -86,10 +86,13 @@ public class SignupController implements Serializable {
     }
 
     public String getUsernameMsg() throws SQLException {
-        this.checkDuplicateUsername();
-        if (this.signupBean.getUserName() != null) {
-            if (this.signupBean.getUserName().equals("")) {
-                this.usernameMsg = "";
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (externalContext.isPostback()) {
+            this.checkDuplicateUsername();
+            if (this.signupBean.getUserName() != null) {
+                if (this.signupBean.getUserName().equals("")) {
+                    this.usernameMsg = "";
+                }
             }
         }
         return usernameMsg;
@@ -167,7 +170,7 @@ public class SignupController implements Serializable {
 
     public String mailBody(String link) {
         String msg = "<img src=\"https://s3-us-west-1.amazonaws.com/swarup921/linkedULogo.png\"/><br /><br />Thank you for signing up on LinkEDU<br/>."
-                + "Click <b><a href =" + link + ">&nbsphere</a></b> to confirm email address.<br /><br/>"
+                + "Click <b><a href =" + link + ">here</a></b> to confirm email address.<br /><br/>"
                 + "<br/> Thank you<br/>LinkEDU Team";
         return msg;
     }
