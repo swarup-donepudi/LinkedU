@@ -6,20 +6,26 @@
 
 package model;
 
+import dao.RecruiterDAO;
+import java.util.List;
+
 /**
  *
  * @author skdonep
  */
 public class StudentSearchCriteria {
-    private String GPA;
+    private float GPA;
     private String preferredPrograms;
     private String preferredInst;
+    private String student1;
+    private String student2;
+    private List watchListNames;
 
-    public String getGPA() {
+    public float getGPA() {
         return GPA;
     }
 
-    public void setGPA(String GPA) {
+    public void setGPA(float GPA) {
         this.GPA = GPA;
     }
 
@@ -37,6 +43,53 @@ public class StudentSearchCriteria {
 
     public void setPreferredInst(String preferredInst) {
         this.preferredInst = preferredInst;
+    }
+
+    /**
+     * @return the student1
+     */
+    public String getStudent1() {
+        return student1;
+    }
+
+    /**
+     * @param student1 the student1 to set
+     */
+    public void setStudent1(String student1) {
+        this.student1 = student1;
+    }
+
+    /**
+     * @return the student2
+     */
+    public String getStudent2() {
+        return student2;
+    }
+    
+    public void studentComparison(){
+        RecruiterDAO fetch = new RecruiterDAO();       
+        this.watchListNames = fetch.getStudentListFromDB("abc");
+    }
+
+    /**
+     * @param student2 the student2 to set
+     */
+    public void setStudent2(String student2) {
+        this.student2 = student2;
+    }
+
+    /**
+     * @return the watchListNames
+     */
+    public List getWatchListNames() {
+        return watchListNames;
+    }
+
+    /**
+     * @param watchListNames the watchListNames to set
+     */
+    public void setWatchListNames(List watchListNames) {
+        this.watchListNames = watchListNames;
     }
     
     

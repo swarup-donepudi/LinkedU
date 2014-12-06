@@ -4,13 +4,13 @@
  */
 package dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.RecruiterProfile;
+import model.StudentProfile;
 import model.WatchListItem;
 
 /**
@@ -27,7 +27,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
 
     public boolean recruiterHasProfile(String username) throws SQLException {
         boolean recruiterHasProfile = false;
-        username=username.toLowerCase();
+        username = username.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
 
         try {
@@ -184,16 +184,20 @@ public class RecruiterDAO extends AppDBInfoDAO {
         return studentNotInWatchList;
     }
 
-    public int addStudentToWatchListInDB(String wlOwner, String wlEntry) throws SQLException {
+    public int addStudentToWatchListInDB(String recruiter, StudentProfile ssc) throws SQLException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
-        String insertStatement = "INSERT INTO LINKEDU.WATCH_LIST VALUES('" + wlOwner + "','" + wlEntry + "')";
+        String insertStatement = "INSERT INTO LINKEDU.RECRUITER_WATCHLIST VALUES('"
+                + recruiter + "','"
+                + ssc.getUsername()
+                + "','" + ssc.getFname()
+                + "','" + ssc.getLname() + "')";
         int rowCount = stmt.executeUpdate(insertStatement);
         return rowCount;
     }
 
     public void retrieveRecruiterWatchListFromDB(String wlOwner, ArrayList<WatchListItem> recruiterWatchList) {
-                String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -204,9 +208,9 @@ public class RecruiterDAO extends AppDBInfoDAO {
             while (rs.next()) {
                 WatchListItem wli = new WatchListItem();
                 wli.setWlItem(rs.getString("WL_ITEM"));
-                    wli.setItemFname("ITEM_FNAME");
-                    wli.setItemLname("ITEM_LNAME");
-                    recruiterWatchList.add(wli);
+                wli.setItemFname(rs.getString("ITEM_FNAME"));
+                wli.setItemLname(rs.getString("ITEM_LNAME"));
+                recruiterWatchList.add(wli);
             }
             rs.close();
             this.DBConn.close();
@@ -215,5 +219,26 @@ public class RecruiterDAO extends AppDBInfoDAO {
             System.err.println("ERROR: Problems with SQL select");
             e.printStackTrace();
         }
+    }
+
+    public ArrayList getStudentListFromDB(String wlOwner) {
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
+        ArrayList names = new ArrayList();
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(selectQuery);
+            while (rs.next()) {
+                String name = rs.getString("WL_ITEM");
+                names.add(name);
+            }
+            rs.close();
+            this.DBConn.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
+        }
+        return names;
     }
 }

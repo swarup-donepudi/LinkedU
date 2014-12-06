@@ -5,7 +5,6 @@
  */
 package controller;
 
-import dao.CommonDAO;
 import dao.RecruiterDAO;
 import dao.SearchDAO;
 import dao.StudentDAO;
@@ -46,11 +45,14 @@ public class RecruiterController implements Serializable {
      * Creates a new instance of RecruiterController
      */
     public RecruiterController() {
+
         this.selectedStudent = new StudentProfile();
         this.studentSearchCriteria = new StudentSearchCriteria();
         this.studentSearchResults = new ArrayList<>();
         this.recruiterWatchList = new ArrayList<>();
     }
+
+  
 
     public ArrayList<WatchListItem> getRecruiterWatchList() {
         return recruiterWatchList;
@@ -153,8 +155,16 @@ public class RecruiterController implements Serializable {
             this.studentSearchResults = db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
         }
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SearchStudents.xhtml");
+        //externalContext.redirect("SearchStudents.xhtml");
         return null;
+    }
+
+    public void compareStudents() throws SQLException, IOException, ParseException {
+        this.studentSearchResults.clear();
+        SearchDAO db = new SearchDAO();
+        this.studentSearchResults = db.retrieveStudentResultsForComparison(studentSearchCriteria, studentSearchResults);
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("CompareStudents.xhtml");        
     }
 
     public boolean isSelectedUniversityNotInWatchList() {
@@ -164,17 +174,15 @@ public class RecruiterController implements Serializable {
         String wlItem = this.selectedStudent.getUsername();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         this.selectedStudentNotInWatchList = recruiterDB.studentNotInWatchListInDB(wlOwner, wlItem);
-
         return this.selectedStudentNotInWatchList;
     }
 
     public void addStudentToWatchList() throws SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
-        String wlItem = this.selectedStudent.getUsername();
+        String wlOwner = session.getAttribute("username").toString();        
         RecruiterDAO recruiterDB = new RecruiterDAO();
-        int insertCount = recruiterDB.addStudentToWatchListInDB(wlOwner, wlItem);
+        int insertCount = recruiterDB.addStudentToWatchListInDB(wlOwner, this.selectedStudent);
 
         if (insertCount == 1) {
             this.watchListUpdateMsg = "This Student has been added to your Watch List";
@@ -186,8 +194,9 @@ public class RecruiterController implements Serializable {
     public void loadRecruiterWatchList() throws SQLException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("username").toString();        
         RecruiterDAO recruiterDB = new RecruiterDAO();
         recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);
     }
+
 }

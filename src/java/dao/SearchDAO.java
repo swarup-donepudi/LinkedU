@@ -33,6 +33,7 @@ import model.StudentSearchCriteria;
 import model.InstitutionProfile;
 import model.InstitutionSearchCriteria;
 
+
 /**
  *
  * @author skdonep
@@ -52,14 +53,14 @@ public class SearchDAO extends AppDBInfoDAO {
     public ArrayList<StudentProfile> retrieveStudentSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException, ParseException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         String institutions = ssc.getPreferredInst();
-        String gpa = ssc.getGPA();
+        float gpa = ssc.getGPA();
         String programs = ssc.getPreferredPrograms();
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE";
         Statement stmt = DBConn.createStatement();
         if (!institutions.equals("")) {
             selectQuery += " WHERE PREFERRED_UNIVS LIKE '%" + institutions + "%' ";
         }
-        if (!gpa.equals("")) {
+        if (gpa!=0.0) {
             if (!institutions.equals("")) {
                 selectQuery += " AND";
             } else {
@@ -68,16 +69,13 @@ public class SearchDAO extends AppDBInfoDAO {
             selectQuery += " GPA > = " + ssc.getGPA() + "";
         }
         if (!programs.equals("")) {
-            if (!institutions.equals("") || !gpa.equals("")) {
+            if (!institutions.equals("") || (gpa!=0.0)) {
                 selectQuery += " and";
             } else {
                 selectQuery += " where ";
             }
             selectQuery += " PREFERRED_PROGRAMS LIKE '% " + programs + "%' ";
         }
-
-        
-
         ResultSet rs = stmt.executeQuery(selectQuery);
         while (rs.next()) {
             StudentProfile studentProfile = new StudentProfile();
@@ -87,6 +85,12 @@ public class SearchDAO extends AppDBInfoDAO {
             studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
             studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
             studentProfile.setGPA(rs.getFloat("GPA"));
+            studentProfile.setIELTS(rs.getFloat("IELTS"));
+            studentProfile.setSAT(rs.getInt("sat"));
+            studentProfile.setTOEFL(rs.getInt("toefl"));
+            studentProfile.setACT(rs.getInt("act"));
+            studentProfile.setGRE(rs.getInt("gre"));
+            studentProfile.setCeritifications(rs.getString("certifications"));
             studentProfile.setPreferredPrograms(this.convertStringToList("Information Systems"));//Replace the hard coded value with PREFERRED_PROGRAMS Column name
             studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
             studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
@@ -95,6 +99,44 @@ public class SearchDAO extends AppDBInfoDAO {
             studentProfile.setState(rs.getString("STATE"));
             studentProfile.setCity(rs.getString("CITY"));
             studentProfile.setUsername(rs.getString("USERNAME"));
+            studentProfile.setYoutubeLink(rs.getString("YOUTUBE_LINK"));
+            studentSearchResults.add(studentProfile);
+        }
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
+        return studentSearchResults;
+    }
+    
+    public ArrayList<StudentProfile> retrieveStudentResultsForComparison(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException, ParseException {
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);        
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE where username = '"
+                +ssc.getStudent1() +"' or username = '"+ssc.getStudent2()+"'";
+        Statement stmt = DBConn.createStatement();
+        ResultSet rs = stmt.executeQuery(selectQuery);
+        while (rs.next()) {
+            StudentProfile studentProfile = new StudentProfile();
+            studentProfile.setFname(rs.getString("FIRST_NAME"));
+            studentProfile.setLname(rs.getString("LAST_NAME"));
+            studentProfile.setGender(rs.getString("GENDER").charAt(0));
+            studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
+            studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
+            studentProfile.setGPA(rs.getFloat("GPA"));
+            studentProfile.setIELTS(rs.getFloat("IELTS"));
+            studentProfile.setSAT(rs.getInt("sat"));
+            studentProfile.setTOEFL(rs.getInt("toefl"));
+            studentProfile.setACT(rs.getInt("act"));
+            studentProfile.setGRE(rs.getInt("gre"));
+            studentProfile.setCeritifications(rs.getString("certifications"));
+            studentProfile.setPreferredPrograms(this.convertStringToList("Information Systems"));//Replace the hard coded value with PREFERRED_PROGRAMS Column name
+            studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
+            studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
+            studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
+            studentProfile.setCity(rs.getString("COUNTRY"));
+            studentProfile.setState(rs.getString("STATE"));
+            studentProfile.setCity(rs.getString("CITY"));
+            studentProfile.setUsername(rs.getString("USERNAME"));
+            studentProfile.setYoutubeLink(rs.getString("YOUTUBE_LINK"));
             studentSearchResults.add(studentProfile);
         }
         rs.close();

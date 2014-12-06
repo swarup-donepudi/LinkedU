@@ -25,9 +25,10 @@ public class StudentProfile extends UserProfile{
     private int ACT;
     private int TOEFL;
     private int GRE;
-    private int IELTS;
+    private float IELTS;
     private String ceritifications;
     private UploadedFile resume;
+    private String youtubeLink;
 
     public StudentProfile(){
         this.preferredPrograms = new ArrayList<>();
@@ -137,14 +138,14 @@ public class StudentProfile extends UserProfile{
     /**
      * @return the IELTS
      */
-    public int getIELTS() {
+    public float getIELTS() {
         return IELTS;
     }
 
     /**
      * @param IELTS the IELTS to set
      */
-    public void setIELTS(int IELTS) {
+    public void setIELTS(float IELTS) {
         this.IELTS = IELTS;
     }
 
@@ -160,5 +161,25 @@ public class StudentProfile extends UserProfile{
      */
     public void setCeritifications(String ceritifications) {
         this.ceritifications = ceritifications;
+    }
+
+    /**
+     * @return the youtubeLink
+     */
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    /**
+     * @param youtubeLink the youtubeLink to set
+     */
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
+    }
+    
+    public String fetchYoutubeLink(){
+        String a = getYoutubeLink();
+        return a;
+        
     }
 }

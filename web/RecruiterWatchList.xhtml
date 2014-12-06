@@ -34,6 +34,10 @@
                     #{wl.itemLname}
                 </p:column>                
             </p:dataTable>
+            <h:form>
+            <p:commandButton ajax="false" id="searchButton" action="#{recruiterController.fetchUserNamesforComparision()}" value="Compare Students">    
+                            </p:commandButton>
+            </h:form>
         </ui:define>
     </ui:decorate>
 </ui:composition>

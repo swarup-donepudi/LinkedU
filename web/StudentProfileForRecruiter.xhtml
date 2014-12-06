@@ -97,7 +97,7 @@
                             IELTS 
                         </td>
                         <td> 
-                            <h:outputLabel id="gpa" value="#{recruiterController.selectedStudent.IELTS}"/>
+                            <h:outputLabel id="ielts" value="#{recruiterController.selectedStudent.IELTS}"/>
                         </td>
                     </tr>
                     <tr>
@@ -131,7 +131,15 @@
                         <td> 
                             <h:outputLabel id="preferredInsts" value="#{recruiterController.selectedStudent.preferredInsts}"/>
                         </td>
-                    </tr>                
+                    </tr>  
+                    <tr>                    
+                        <td>
+                            Youtube Links 
+                        </td>
+                        <td>
+                            <p:media value="#{recruiterController.selectedStudent.youtubeLink}" width="420" height="315" player="flash"/>
+                        </td>
+                    </tr>
                     <tr>
                         <td> 
                             Primary Phone 
@@ -184,6 +192,7 @@
                             </p:commandButton></td>
                         <td><p:commandButton action="RequestMoreInfo?faces-redirect=true" value="Request More Info" ajax="false"></p:commandButton></td>
                         <td><p:commandButton action="ScheduleAppointment?faces-redirect=true" value="Schedule Appointment" ajax="false"></p:commandButton></td>                            
+                        <td><p:commandButton action="#{recruiterController.addStudentToWatchList()}" value="Add to watch list" ajax="false"></p:commandButton></td>                            
                     </tr>
                 </table>
                 <p:outputLabel id="wlLbl" value="#{recruiterController.watchListUpdateMsg}"/>

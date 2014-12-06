@@ -5,11 +5,79 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
     <f:metadata>
+        <f:event type="preRenderView" listener="#{recruiterController.studentSearchCriteria.studentComparison()}"/>
+    </f:metadata>
+    <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
-            Compare Students
+
+            <h2>Select Students for comparison</h2><br />
+            <h:form id="studentdetails">
+                <p:outputLabel for="student1" value="Select Student1 : " />
+                <p:selectOneMenu id="student1" value="#{recruiterController.studentSearchCriteria.student1}">
+                    <f:selectItems value="#{recruiterController.studentSearchCriteria.watchListNames}" />
+                </p:selectOneMenu><br/>
+
+                <p:outputLabel for="student2" value="Select Student2 : " />
+                <p:selectOneMenu id="student2" value="#{recruiterController.studentSearchCriteria.student2}">
+                    <f:selectItems value="#{recruiterController.studentSearchCriteria.watchListNames}" />
+                </p:selectOneMenu><br/><br/>
+                <p:commandButton id="searchButton" action="#{recruiterController.compareStudents()}" value="Search">
+                    <f:ajax execute="studentdetails" />
+                </p:commandButton><br /><br />
+            </h:form>
+
+            <p:dataTable id="compare" value="#{recruiterController.studentSearchResults}" var="sr"
+                         paginator="true" rows="10">
+                <p:column>
+                    <f:facet name="header">First Name</f:facet>
+                    <!-- row record -->
+                    #{sr.fname}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Last Name</f:facet>
+                    <!-- row record -->
+                    #{sr.lname}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">GPA</f:facet>
+                    <!-- row record -->
+                    #{sr.GPA}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">ACT</f:facet>
+                    <!-- row record -->
+                    #{sr.ACT}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">TOEFL</f:facet>
+                    <!-- row record -->
+                    #{sr.TOEFL}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">IELTS</f:facet>
+                    <!-- row record -->
+                    #{sr.GPA}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">GRE</f:facet>
+                    <!-- row record -->
+                    #{sr.GRE}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Programs Preferred</f:facet>
+                    <!-- row record -->
+                    #{sr.preferredPrograms}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Email ID</f:facet>
+                    <!-- row record -->
+                    #{sr.email}
+                </p:column>
+
+            </p:dataTable>
         </ui:define>
     </ui:decorate>
 </ui:composition>
