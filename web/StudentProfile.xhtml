@@ -281,7 +281,7 @@
                 </p:tabView>
                 <br />
                 <p:commandButton value="Update Profile" ajax="true">
-                    <p:ajax update="updateMsg" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
+                    <p:ajax update="updateMsg" process="@form" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
                 <h:outputText id="updateMsg" value="#{studentController.profileUpdateMessage}"></h:outputText>
             </h:form><br /><br />
 

@@ -137,12 +137,12 @@ public class StudentController {
 
     public void loadStudentProfile() throws IOException, SQLException, ParseException {
         FacesContext externalContext = FacesContext.getCurrentInstance();
-      //  if (externalContext.isPostback()) {
+        if (externalContext.isPostback()) {
             StudentDAO studentDao = new StudentDAO();
             if (studentDao.studentHasProfile(this.studentProfile.username)) {
                 this.studentProfile = studentDao.fetchStudentProfile(this.studentProfile.username);
             }
-      //  }
+        }
     }
 
     public void updateStudentProfile() throws SQLException, IOException {
@@ -153,8 +153,6 @@ public class StudentController {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         }
         this.profileUpdateMessage = "Profile updated successfully.";
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("SearchInstitutions.xhtml");
     }
 
     public void showInstitutionsSearchForm() throws IOException {

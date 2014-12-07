@@ -186,6 +186,7 @@ public class LoginController implements Serializable {
                 studentProfile.setUsername(studentUsername);
                 CommonDAO commonDB = new CommonDAO();
                 String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
+                studentProfile.setEmail(studentEmail);
             }
             this.studentController.setStudentProfile(studentProfile);
         }

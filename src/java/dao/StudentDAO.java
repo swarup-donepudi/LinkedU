@@ -18,6 +18,7 @@ import java.util.*;
 import model.StudentProfile;
 import model.WatchListItem;
 import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -183,8 +184,16 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public void createStudentProfile(StudentProfile studentProfile, String username) throws IOException {
         CommonDAO coomonDB = new CommonDAO();
-        InputStream profileImage = studentProfile.getImageUpload().getInputstream();
-        InputStream resume = studentProfile.getResume().getInputstream();
+        UploadedFile profileImageUpload = studentProfile.getImageUpload();
+        InputStream profileImage=null;
+        if(profileImageUpload!=null){
+            profileImage = studentProfile.getImageUpload().getInputstream();
+        }
+        UploadedFile resumeUpload = studentProfile.getResume();
+        InputStream resume=null;
+        if(resumeUpload!=null){
+             resume = studentProfile.getResume().getInputstream();
+        }
         //String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
@@ -198,8 +207,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "GRE,"
                 + "IELTS,"
                 + "CERTIFICATIONS,"
-                + "PREFERRED_PROGRAMS,"
-                + "PREFERRED_UNIVS,"
+               // + "PREFERRED_PROGRAMS,"
+               // + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
                 + "SECONDARY_PHONE,"
                 + "COUNTRY,"
@@ -211,16 +220,16 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getLname() + "','"
                 + studentProfile.getGender() + "','"
                 + studentProfile.getDob() + "','"
-                + studentProfile.getHighestDegree() + "','"
-                + studentProfile.getGPA() + "','"
-                + studentProfile.getSAT() + "','"
-                + studentProfile.getACT() + "','"
-                + studentProfile.getTOEFL() + "','"
-                + studentProfile.getGRE() + "','"
-                + studentProfile.getIELTS() + "','"
+                + studentProfile.getHighestDegree() + "',"
+                + studentProfile.getGPA() + ","
+                + studentProfile.getSAT() + ","
+                + studentProfile.getACT() + ","
+                + studentProfile.getTOEFL() + ","
+                + studentProfile.getGRE() + ","
+                + studentProfile.getIELTS() + ",'"
                 + studentProfile.getCeritifications() + "','"
-                + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
-                + this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
+                //+ this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
+                //+ this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
