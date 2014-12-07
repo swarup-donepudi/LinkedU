@@ -7,12 +7,12 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{recruiterController.loadRecruiterProfile()}"/>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{recruiterController.loadRecruiterProfile()}"/>
     </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
-            <h:form id="recruiterProfileForm">
+            <h:form id="recruiterProfileForm" enctype="multipart/form-data">
                 <p:tabView id="institutionTabs">
                     <p:tab title="User Account">
                         <table id="recruiterUserAccount" cellspacing="20">
@@ -53,14 +53,14 @@
                                 <td>  
                                     First Name </td>
                                 <td>
-                                    <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fName}"></p:inputText>
+                                    <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fname}"></p:inputText>
                                 </td>
                             </tr>                        
                             <tr>
                                 <td>                
                                     Last Name  </td>
                                 <td>
-                                    <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lName}"></p:inputText>
+                                    <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lname}"></p:inputText>
                                 </td>
                             </tr>
                             <tr>
@@ -204,9 +204,28 @@
                             </tr>                                       
                         </table>
                     </p:tab>
+                    <p:tab title="uploads">
+
+                        <tr>
+                            <td>Upload Image</td>
+                            <td>
+                                <p:fileUpload value="#{recruiterController.recruiterProfile.imageUpload}" mode="simple"/><br />
+                            </td>
+                            <td> <p:commandButton value="upload" ajax="false" actionListener="#{recruiterController.uploadImage()}" /></td>
+                            <td>
+<!--                                <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                    <p:fileDownload value="#{recruiterController.recruiterProfile.downloadResume}" />
+                                </p:commandButton>-->
+                            </td>
+                        </tr>
+                        <td>Image Uploaded: </td>
+                        <td><p:graphicImage id="imagedisplay" value="#{recruiterController.recruiterProfile.imageDisplay}" width="300px" height="300px">
+                            </p:graphicImage><br /></td>
+
+                    </p:tab>
                 </p:tabView>
-                        <p:commandButton value="Update Profile" 
-                                         action="#{recruiterController.updateRecruiterProfile()}"/>
+                <p:commandButton ajax = "false" value="Update Profile" 
+                                 actionListener="#{recruiterController.updateRecruiterProfile()}"/>
             </h:form> <br/>
             <h:outputText value="#{recruiterController.profileUpdateMessage}"></h:outputText>
         </ui:define>

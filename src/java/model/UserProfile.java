@@ -6,14 +6,14 @@
 
 package model;
 
-import javax.mail.Part;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author skdonep
  */
 public class UserProfile {
-    private byte[] profileImage;
     private String fname;
     private String lname;
     private char gender;
@@ -25,16 +25,12 @@ public class UserProfile {
     private String state;
     private String email;
     public String username;
+    private DefaultStreamedContent downloadResume;
     private String password;
-    private Part resume;
+    private UploadedFile imageUpload;
+    private DefaultStreamedContent imageDisplay;
 
-    public byte[] getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(byte[] profileImage) {
-        this.setProfileImage(profileImage);
-    }
+    
 
     
     /**
@@ -206,18 +202,49 @@ public class UserProfile {
         this.password = password;
     }
 
+    
+
     /**
-     * @return the resume
+     * @return the downloadResume
      */
-    public Part getResume() {
-        return resume;
+    public DefaultStreamedContent getDownloadResume() {
+        return downloadResume;
     }
 
     /**
-     * @param resume the resume to set
+     * @param downloadResume the downloadResume to set
      */
-    public void setResume(Part resume) {
-        this.resume = resume;
+    public void setDownloadResume(DefaultStreamedContent downloadResume) {
+        this.downloadResume = downloadResume;
+    }
+
+    /**
+     * @return the imageUpload
+     */
+    public UploadedFile getImageUpload() {
+        
+        return imageUpload;
+    }
+
+    /**
+     * @param imageUpload the imageUpload to set
+     */
+    public void setImageUpload(UploadedFile imageUpload) {
+        this.imageUpload = imageUpload;
+    }
+
+    /**
+     * @return the imageDisplay
+     */
+    public DefaultStreamedContent getImageDisplay() {
+        return imageDisplay;
+    }
+
+    /**
+     * @param imageDisplay the imageDisplay to set
+     */
+    public void setImageDisplay(DefaultStreamedContent imageDisplay) {
+        this.imageDisplay = imageDisplay;
     }
 
 }

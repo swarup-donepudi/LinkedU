@@ -17,6 +17,10 @@ public class RecruiterProfile extends UserProfile {
     private String twitterHandle;
     private String reasonForLinkEDU;
     
+    
+    private String uploadStatus;
+
+    
     public RecruiterProfile(){
     }
 
@@ -59,5 +63,19 @@ public class RecruiterProfile extends UserProfile {
     public void setReasonForLinkEDU(String reasonForLinkEDU) {
         this.reasonForLinkEDU = reasonForLinkEDU;
     }
+    /**
+     * @return the uploadStatus
+     */
+    public String getUploadStatus() {
+        return uploadStatus;
+    }
+
+    /**
+     * @param uploadStatus the uploadStatus to set
+     */
+    public void setUploadStatus(String uploadStatus) {
+        this.uploadStatus = uploadStatus;
+    }
+
     
 }

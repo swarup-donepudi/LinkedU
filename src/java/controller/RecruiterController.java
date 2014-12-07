@@ -23,6 +23,7 @@ import model.RecruiterProfile;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
 import model.WatchListItem;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -40,12 +41,12 @@ public class RecruiterController implements Serializable {
     private boolean selectedStudentNotInWatchList;
     private String watchListUpdateMsg;
     private ArrayList<WatchListItem> recruiterWatchList;
-
+   
     /**
      * Creates a new instance of RecruiterController
      */
     public RecruiterController() {
-
+        this.recruiterProfile = new RecruiterProfile();
         this.selectedStudent = new StudentProfile();
         this.studentSearchCriteria = new StudentSearchCriteria();
         this.studentSearchResults = new ArrayList<>();
@@ -198,5 +199,19 @@ public class RecruiterController implements Serializable {
         RecruiterDAO recruiterDB = new RecruiterDAO();
         recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);
     }
+    
+    public void uploadImage() throws SQLException, IOException{
+        RecruiterDAO upload = new RecruiterDAO();
+        int uploadStatus = upload.uploadImageToDB(recruiterProfile);
+        if(uploadStatus==0){
+            recruiterProfile.setUploadStatus("Upload not successfull. Please retry");
+        }
+        else{
+            recruiterProfile.setUploadStatus("Upload successfull. Congratulations");
+        }
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("RecruiterProfile.xhtml");
+    }
 
+    
 }

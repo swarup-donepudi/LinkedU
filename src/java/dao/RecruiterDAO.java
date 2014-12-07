@@ -4,7 +4,11 @@
  */
 package dao;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.WatchListItem;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -47,7 +52,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
         return recruiterHasProfile;
     }
 
-    public RecruiterProfile fetchRecruiterProfile(String username) {
+    public RecruiterProfile fetchRecruiterProfile(String username) throws SQLException {
         RecruiterProfile recruiterProfile = new RecruiterProfile();
         username = username.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
@@ -55,6 +60,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
+            byte[] displayImg;
+            DefaultStreamedContent displayImage = null;
 
             ResultSet rs = stmt.executeQuery(selectQuery);
 
@@ -71,20 +78,29 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 recruiterProfile.setState(rs.getString("STATE"));
                 recruiterProfile.setCity(rs.getString("CITY"));
                 recruiterProfile.setUsername(rs.getString("USERNAME"));
+                displayImg = rs.getBytes("UNIVERSITY_IMAGE");
+                if (displayImg != null) {
+                    displayImage = new DefaultStreamedContent(new ByteArrayInputStream(displayImg), "image/jpeg");
+                }
             }
+        recruiterProfile.setImageDisplay(displayImage);
 
-            rs.close();
-            this.DBConn.close();
-            stmt.close();
+        rs.close();
+        this.DBConn.close();
+        stmt.close();
 
-        } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
-        }
-        return recruiterProfile;
     }
+    catch (SQLException e
 
-    public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
+    
+        ) {
+            System.err.println("ERROR: Problems with SQL select");
+        e.printStackTrace();
+    }
+    return recruiterProfile ;
+}
+
+public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
         String updateQuery = "UPDATE LINKEDU.RECRUITER_PROFILE SET FIRST_NAME = '"
                 + recruiterProfile.getFname() + "', "
                 + "LAST_NAME = '"
@@ -240,5 +256,21 @@ public class RecruiterDAO extends AppDBInfoDAO {
             e.printStackTrace();
         }
         return names;
+    }
+
+    public int uploadImageToDB(RecruiterProfile recPro) throws SQLException, IOException {
+        this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);        
+        InputStream f2 = recPro.getImageUpload().getInputstream();
+        String query = "UPDATE LINKEDU.recruiter_profile SET university_image = ? WHERE username = ?";
+        int rowCount;
+        try (PreparedStatement ps = this.DBConn.prepareStatement(query)) {
+            ps.setBinaryStream(1, f2);
+            ps.setString(2, recPro.username);
+            rowCount = ps.executeUpdate();
+//        String selectSQL = "SELECT university_image FROM LINKEDU.recruiter_profile WHERE username = ?";
+//        ps = this.DBConn.prepareStatement(selectSQL);  
+//        ps.setString(1, username);
+        }
+        return rowCount;
     }
 }

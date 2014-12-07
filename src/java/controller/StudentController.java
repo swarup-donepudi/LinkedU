@@ -9,7 +9,6 @@ import dao.SearchDAO;
 import dao.StudentDAO;
 import dao.InstitutionDAO;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -26,6 +25,7 @@ import model.StudentProfile;
 import model.InstitutionProfile;
 import model.InstitutionSearchCriteria;
 import model.WatchListItem;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -51,6 +51,7 @@ public class StudentController {
      * Creates a new instance of StudentController
      */
     public StudentController() {
+        this.studentProfile = new StudentProfile();
         this.selectedRecruiter = new RecruiterProfile();
         this.institutionSearchCriteria = new InstitutionSearchCriteria();
         this.institutionSearchResults = new ArrayList<>();
@@ -144,7 +145,7 @@ public class StudentController {
         }
     }
 
-    public void updateStudentProfile() throws SQLException {
+    public void updateStudentProfile() throws SQLException, IOException {
         StudentDAO profileDao = new StudentDAO();
         if (profileDao.studentHasProfile(this.studentProfile.getUsername())) {
             profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.getUsername());
@@ -152,8 +153,8 @@ public class StudentController {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         }
         this.profileUpdateMessage = "Profile updated successfully.";
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        externalContext.redirect("SearchInstitutions.xhtml");
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SearchInstitutions.xhtml");
     }
 
     public void showInstitutionsSearchForm() throws IOException {
@@ -180,7 +181,7 @@ public class StudentController {
         this.selectedInstitution = institutionDB.fetchInstitutionProfileFromDB(selectedInstID);
     }
 
-    public void showRecruiterProfileToStudent() {
+    public void showRecruiterProfileToStudent() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (!fc.isPostback()) {
             Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -250,16 +251,34 @@ public class StudentController {
         StudentDAO studentDB = new StudentDAO();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
-    
-    public void upload() throws IOException, SQLException, MessagingException{
-        InputStream inputStream = null;
-        inputStream = studentProfile.getResume().getInputStream();
+
+    public void uploadResumeImg() throws IOException, SQLException, MessagingException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         StudentDAO upload = new StudentDAO();
-        upload.uploadResume("abc", inputStream);        
+        int uploadCheck = 0;
+        if (studentProfile.getResume() != null) {
+            uploadCheck = upload.uploadResume(studentProfile.username, studentProfile);
+        }
+        if (studentProfile.getImageUpload() != null) {
+            uploadCheck += upload.uploadImg(studentProfile.username, studentProfile);
+        }
+        if (uploadCheck == 0) {
+
+            externalContext.redirect("StudentHome.xhtml");
+        } else {
+            externalContext.redirect("StudentProfile.xhtml");
+        }
+
+    }
+
+    public DefaultStreamedContent downloadResume() {
+        StudentDAO download = new StudentDAO();
+        return download.downloadResume(studentProfile.username);
     }
 
     /**
-     * @param selectedRecruiterNotInWatchList the selectedRecruiterNotInWatchList to set
+     * @param selectedRecruiterNotInWatchList the
+     * selectedRecruiterNotInWatchList to set
      */
     public void setSelectedRecruiterNotInWatchList(boolean selectedRecruiterNotInWatchList) {
         this.selectedRecruiterNotInWatchList = selectedRecruiterNotInWatchList;

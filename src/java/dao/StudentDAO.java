@@ -4,6 +4,8 @@
  */
 package dao;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import model.StudentProfile;
 import model.WatchListItem;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -61,6 +64,10 @@ public class StudentDAO extends AppDBInfoDAO {
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
+            byte[] profileImg;
+            DefaultStreamedContent displayImagetodownload = null;
+            byte[] resume;
+            DefaultStreamedContent resumeDownload = null;
 
             ResultSet rs = stmt.executeQuery(selectQuery);
 
@@ -80,8 +87,17 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
                 studentProfile.setUsername(rs.getString("USERNAME"));
+                profileImg = rs.getBytes("PROFILE_IMAGE");
+                resume = rs.getBytes("RESUME");
+                if (resume != null) {
+                    resumeDownload = new DefaultStreamedContent(new ByteArrayInputStream(resume), "pdf/docx");
+                }
+                if (profileImg != null) {
+                    displayImagetodownload = new DefaultStreamedContent(new ByteArrayInputStream(profileImg), "image/jpeg");
+                }
             }
-
+            studentProfile.setDownloadResume(resumeDownload);
+            studentProfile.setImageDisplay(displayImagetodownload);
             rs.close();
             this.DBConn.close();
             stmt.close();
@@ -93,7 +109,37 @@ public class StudentDAO extends AppDBInfoDAO {
         return studentProfile;
     }
 
-    public void updateStudentProfile(StudentProfile studentProfile, String username) {
+    public DefaultStreamedContent downloadResume(String username) {
+        StudentProfile studentProfile = new StudentProfile();
+        byte[] resume;
+        DefaultStreamedContent resumeDownload = null;
+
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
+
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+
+            ResultSet rs = stmt.executeQuery(selectQuery);
+            while (rs.next()) {
+                if (rs.getBytes("resume") != null) {
+                    resume = rs.getBytes("RESUME");
+                    resumeDownload = new DefaultStreamedContent(new ByteArrayInputStream(resume), "application/pdf", "downloaded_primefaces.pdf");
+                }
+                rs.close();
+                this.DBConn.close();
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("ERROR: Problems with SQL select");
+        }
+        return resumeDownload;
+
+    }
+
+    public void updateStudentProfile(StudentProfile studentProfile, String username) throws IOException {
+        InputStream profileImage = studentProfile.getImageUpload().getInputstream();
+        InputStream resume = studentProfile.getResume().getInputstream();
         String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
                 + studentProfile.getFname() + "', "
                 + "LAST_NAME = '"
@@ -135,9 +181,9 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "CITY = '"
                 + studentProfile.getCity() + ");"
                 + "PROFILE_IMAGE = '"
-                + studentProfile.getProfileImage() + "', "
+                + profileImage + "', "
                 + "RESUME = '"
-                + studentProfile.getResume() + "'"
+                + resume + "'"
                 + "' WHERE USERNAME='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -151,21 +197,23 @@ public class StudentDAO extends AppDBInfoDAO {
         }
     }
 
-    public void createStudentProfile(StudentProfile studentProfile, String username) {
+    public void createStudentProfile(StudentProfile studentProfile, String username) throws IOException {
         CommonDAO coomonDB = new CommonDAO();
-        String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
+        InputStream profileImage = studentProfile.getImageUpload().getInputstream();
+        InputStream resume = studentProfile.getResume().getInputstream();
+        //String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
                 + "DOB,"
                 + "HIGHEST_DEGREE,"
                 + "GPA,"
-                 + "SAT,"
-                 + "ACT,"
-                 + "TOEFL,"
-                 + "GRE,"
-                 + "IELTS,"
-                 + "CERTIFICATIONS,"           
+                + "SAT,"
+                + "ACT,"
+                + "TOEFL,"
+                + "GRE,"
+                + "IELTS,"
+                + "CERTIFICATIONS,"
                 + "PREFERRED_PROGRAMS,"
                 + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
@@ -188,7 +236,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getTOEFL() + "','"
                 + studentProfile.getGRE() + "','"
                 + studentProfile.getIELTS() + "','"
-                + studentProfile.getCeritifications() + "','"                
+                + studentProfile.getCeritifications() + "','"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
                 + this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
@@ -196,8 +244,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + studentProfile.getProfileImage() + "','"
-                + studentProfile.getResume() + "','"
+                + profileImage + "','"
+                + resume + "','"
                 + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -312,10 +360,10 @@ public class StudentDAO extends AppDBInfoDAO {
         return universityNotInWatchList;
     }
 
-    public int addUniversityToWatchListInDB(String wlOwner, String wlEntry,String wlLname) throws SQLException {
+    public int addUniversityToWatchListInDB(String wlOwner, String wlEntry, String wlLname) throws SQLException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
-        String insertStatement = "INSERT INTO LINKEDU.STUDENT_WATCHLIST VALUES('" + wlOwner + "','" + wlEntry + "',NULL,+'"+wlLname+"','U')";
+        String insertStatement = "INSERT INTO LINKEDU.STUDENT_WATCHLIST VALUES('" + wlOwner + "','" + wlEntry + "',NULL,+'" + wlLname + "','U')";
         int rowCount = stmt.executeUpdate(insertStatement);
         return rowCount;
     }
@@ -360,20 +408,47 @@ public class StudentDAO extends AppDBInfoDAO {
             e.printStackTrace();
         }
     }
-    
-    public int uploadResume(String email, InputStream file) throws SQLException {
-        email = email.toLowerCase();
-        boolean emailExits=false;
-        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword); 
-        String sql = "UPDATE LINKEDU.STUDENT_PROFILE (RESUME) values (?) WHERE EMAIL = '" + email +"'" ;
-            PreparedStatement stmt = DBConn.prepareStatement(sql);
-            if (file != null) {
-                // fetches input stream of the upload file for the blob column
-                stmt.setBlob(2, file);
+
+    public int uploadResume(String username, StudentProfile stuPro) throws SQLException, IOException {
+        int rowCount = 0;
+        if (stuPro.getResume() != null) {
+            try {
+                this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+                InputStream resume = stuPro.getResume().getInputstream();
+                String query = "UPDATE LINKEDU.student_profile SET resume = ? WHERE username = ?";
+                PreparedStatement ps = this.DBConn.prepareStatement(query);
+                ps.setBinaryStream(1, resume);
+                ps.setString(2, username);
+                rowCount = ps.executeUpdate();
+
+                this.DBConn.close();
+            } catch (SQLException e) {
+                System.err.println("ERROR: Problems with SQL select");
             }
-        int row = stmt.executeUpdate();
-        this.DBConn.close();
-        stmt.close();
-        return row;
+        }
+        return rowCount;
+    }
+
+    public int uploadImg(String username, StudentProfile stuPro) throws SQLException, IOException {
+        int rowCount = 0;
+        if (stuPro.getImageUpload() != null) {
+            try {
+                this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+                InputStream profileImage = stuPro.getImageUpload().getInputstream();
+                String query = "UPDATE LINKEDU.student_profile SET profile_image = ? WHERE username = ?";
+                PreparedStatement ps = this.DBConn.prepareStatement(query);
+                ps.setBinaryStream(1, profileImage);
+                ps.setString(2, username);
+                rowCount = ps.executeUpdate();
+                this.DBConn.close();
+            } catch (SQLException e) {
+                System.err.println("ERROR: Problems with SQL select");
+            }
+        }
+        return rowCount;
+    }
+
+    public void fetchFilesBack() {
+
     }
 }

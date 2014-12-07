@@ -182,4 +182,13 @@ public class StudentProfile extends UserProfile{
         return a;
         
     }
+
+    /**
+     * @return the resume
+     */
+    public UploadedFile getResume() {
+        return resume;
+    }
+
+  
 }
