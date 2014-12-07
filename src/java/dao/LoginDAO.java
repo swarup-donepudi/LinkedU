@@ -6,12 +6,12 @@
 package dao;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import model.LoginBean;
 
 /**
  *
@@ -25,7 +25,7 @@ public class LoginDAO extends AppDBInfoDAO{
         super();
     }
     
-    public boolean validCredentials(String user, String password) {
+    public boolean validCredentials(String user, String password) throws IOException {
         user=user.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.LOGIN ";
         selectQuery += "WHERE LOWER(USERNAME) = '" + user + "' and PASSWORD = '" + password + "'";
@@ -55,13 +55,12 @@ public class LoginDAO extends AppDBInfoDAO{
                 return false;
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return false;
     }
 
-    public char getAccountType(String username) {
+    public char getAccountType(String username) throws IOException {
         username = username.toLowerCase();
         String selectQuery = " SELECT ACCTYPE FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
         try {
@@ -83,8 +82,7 @@ public class LoginDAO extends AppDBInfoDAO{
             stmt.close();
             this.DBConn.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return 'E';
     }
@@ -105,7 +103,7 @@ public class LoginDAO extends AppDBInfoDAO{
         return username;
     }
     
-    public int addVerificationDetails(String username, String verifyLink) {
+    public int addVerificationDetails(String username, String verifyLink) throws IOException {
         int rowCount = 0;
         try {
             this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
@@ -119,7 +117,7 @@ public class LoginDAO extends AppDBInfoDAO{
             System.out.println("insert string =" + insertString);
             this.DBConn.close();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            this.redirectToErrorPage();
         }
 
         // if insert is successful, rowCount will be set to 1 (1 row inserted successfully).

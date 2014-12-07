@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,6 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import model.MessageBean;
 
@@ -27,7 +27,7 @@ public class MessagesDAO extends AppDBInfoDAO {
         super();
     }
 
-    public int insertMessageIntoDB(MessageBean messageBean) {
+    public int insertMessageIntoDB(MessageBean messageBean) throws IOException {
         int rowCount = 0;
         String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROMADDRESS,"
                 + "TOADDRESS,"
@@ -46,16 +46,16 @@ public class MessagesDAO extends AppDBInfoDAO {
             rowCount = stmt.executeUpdate(insertQuery);
             this.DBConn.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return rowCount;
     }
 
-    public int fetchUnreadMsgsCountFromDB(String username) {
+    public int fetchUnreadMsgsCountFromDB(String username) throws IOException {
+        username = username.toLowerCase();
         int unreadCount = 0;
-        String getunreadCountQuery = "SELECT COUNT(*) FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "' AND"
-                + " STATUS='N'";
+        String getunreadCountQuery = "SELECT COUNT(*) FROM LINKEDU.MESSAGES WHERE LOWER(TO_ADDR)='" + username + "' AND"
+                + " MSG_STATUS='N'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -64,15 +64,15 @@ public class MessagesDAO extends AppDBInfoDAO {
                 unreadCount = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return unreadCount;
     }
 
-    public ArrayList<MessageBean> fetchInoxItemsFromDB(String username) throws ParseException {
+    public ArrayList<MessageBean> fetchInoxItemsFromDB(String username) throws ParseException, IOException {
         ArrayList<MessageBean> inboxItems = new ArrayList<MessageBean>();
-        String getInboxQuery = "SELECT * FROM LINKEDU.MESSAGES WHERE TOADDRESS='" + username + "'";
+        username = username.toLowerCase();
+        String getInboxQuery = "SELECT * FROM LINKEDU.MESSAGES WHERE LOWER(TO_ADDR)='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -80,17 +80,16 @@ public class MessagesDAO extends AppDBInfoDAO {
             while (rs.next()) {
                 MessageBean messageBean = new MessageBean();
                 messageBean.setToAddress(username);
-                messageBean.setFromAddress(rs.getString("FROMADDRESS"));
+                messageBean.setFromAddress(rs.getString("FROM_ADDR"));
                 messageBean.setSubject(rs.getString("SUBJECT"));
-                messageBean.setMessageBody(rs.getString("MESSAGEBODY"));
+                messageBean.setMessageBody(rs.getString("MESSAGE"));
                 messageBean.setStatus(rs.getString("STATUS").charAt(0));
                 messageBean.setMsgId(rs.getInt("MSG_ID"));
-                messageBean.setTimeStamp(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("TIME_STAMP")));
+                messageBean.setTimeStamp(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("TIMESTAMP")));
                 inboxItems.add(messageBean);
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return inboxItems;
     }

@@ -9,9 +9,6 @@ import dao.CommonDAO;
 import dao.LoginDAO;
 import dao.RecruiterDAO;
 import dao.StudentDAO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -22,14 +19,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import model.LoginBean;
 import model.RecruiterProfile;
 import model.StudentProfile;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import java.io.ByteArrayInputStream;
-import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -158,7 +151,7 @@ public class LoginController implements Serializable {
         this.redirectToNextPage(validLogin, accStatus, accType);
     }
 
-    public boolean validLoginCredentials(String username, String password) throws SQLException {
+    public boolean validLoginCredentials(String username, String password) throws SQLException, IOException {
         LoginDAO loginDB = new LoginDAO();
         return (loginDB.validCredentials(username, password));
     }
@@ -193,17 +186,6 @@ public class LoginController implements Serializable {
                 studentProfile.setUsername(studentUsername);
                 CommonDAO commonDB = new CommonDAO();
                 String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
-
-                String base64String;
-                try (ByteArrayOutputStream baos = new ByteArrayOutputStream(3000)) {
-                    BufferedImage img = ImageIO.read(new File("/resources/images/BlankProfileImage.png"));
-                    ImageIO.write(img, "jpg", baos);
-                    baos.flush();
-                    base64String = Base64.encode(baos.toByteArray());
-                    baos.close();
-                }
-                byte[] bytearray = Base64.decode(base64String);
-                //studentProfile.setProfileImage(new DefaultStreamedContent(new ByteArrayInputStream(bytearray), "image/png"));
             }
             this.studentController.setStudentProfile(studentProfile);
         }
@@ -230,26 +212,25 @@ public class LoginController implements Serializable {
                 if (accType == 'S') {
                     externalContext.redirect("StudentHome.xhtml");
                 }
-                if (accType == 'R') {
+                else if (accType == 'R') {
                     externalContext.redirect("RecruiterHome.xhtml");
                 }
             }
-            if (accStatus == 'I') {
+            else if (accStatus == 'I') {
                 externalContext.redirect("InactiveAccount.xhtml");
             }
         } else {
-            this.errorMessage = "Invalid Username/Password. Try again";
             externalContext.redirect("LoginFailed.xhtml");
         }
     }
 
     public void checkSessionStatus() throws IOException {
-//        FacesContext facesContext = FacesContext.getCurrentInstance();
-//        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-//        if (!session.getAttribute("loggedIn").toString().equals("true")) {
-//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//            externalContext.redirect("index.xhtml");
-//        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        if (!session.getAttribute("loggedIn").toString().equals("true")) {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("index.xhtml");
+        }
     }
 
     public void verifyLink() throws SQLException, IOException {

@@ -31,10 +31,10 @@ public class StudentDAO extends AppDBInfoDAO {
         super();
     }
 
-    public boolean studentHasProfile(String username) throws SQLException {
+    public boolean studentHasProfile(String username) throws SQLException, IOException {
         boolean studentHasProfile = false;
 
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -49,14 +49,13 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
 
         return studentHasProfile;
     }
 
-    public StudentProfile fetchStudentProfile(String username) throws ParseException {
+    public StudentProfile fetchStudentProfile(String username) throws ParseException, IOException {
         StudentProfile studentProfile = new StudentProfile();
 
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
@@ -98,13 +97,12 @@ public class StudentDAO extends AppDBInfoDAO {
             stmt.close();
 
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return studentProfile;
     }
 
-    public DefaultStreamedContent downloadResume(String username) {
+    public DefaultStreamedContent downloadResume(String username) throws IOException {
         StudentProfile studentProfile = new StudentProfile();
         byte[] resume;
         DefaultStreamedContent resumeDownload = null;
@@ -124,7 +122,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 stmt.close();
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
+            this.redirectToErrorPage();
         }
         return resumeDownload;
 
@@ -179,8 +177,7 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
     }
 
@@ -236,7 +233,7 @@ public class StudentDAO extends AppDBInfoDAO {
             stmt.execute(insertQuery);
             this.DBConn.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
+            this.redirectToErrorPage();
         }
     }
 
@@ -258,7 +255,7 @@ public class StudentDAO extends AppDBInfoDAO {
         return convertedList;
     }
 
-    public ArrayList<String> retrieveStudentWatchListRecruitersFromDB(String wlOwner) {
+    public ArrayList<String> retrieveStudentWatchListRecruitersFromDB(String wlOwner) throws IOException {
         String selectQuery = "SELECT * FROM LINKEDU.WATCH_LIST WHERE OWNER = '" + wlOwner + "'";
         ArrayList<String> watchList = new ArrayList<>();
         try {
@@ -271,13 +268,12 @@ public class StudentDAO extends AppDBInfoDAO {
                 i++;
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return watchList;
     }
 
-    public ArrayList<String> retrieveStudentWatchListUniversitiesFromDB(String wlOwner) {
+    public ArrayList<String> retrieveStudentWatchListUniversitiesFromDB(String wlOwner) throws IOException {
         String selectQuery = "SELECT * FROM LINKEDU.WATCH_LIST WHERE OWNER = '" + wlOwner + "'";
         ArrayList<String> watchList = new ArrayList<>();
         try {
@@ -290,13 +286,12 @@ public class StudentDAO extends AppDBInfoDAO {
                 i++;
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return watchList;
     }
 
-    public boolean recruiterNotInWatchListInDB(String wlOwner, String wlItem) {
+    public boolean recruiterNotInWatchListInDB(String wlOwner, String wlItem) throws IOException {
         boolean userNotInWatchList = true;
         String selectQuery = "SELECT * FROM LINKEDU.WATCH_LIST WHERE LOWER(OWNER) = '" + wlOwner.toLowerCase()
                 + "' AND LOWER(WL_ENTRY)='" + wlItem.toLowerCase() + "'";
@@ -313,13 +308,12 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return userNotInWatchList;
     }
 
-    public boolean institutionNotInWatchListInDB(String wlOwner, String wlItem) {
+    public boolean institutionNotInWatchListInDB(String wlOwner, String wlItem) throws IOException {
         boolean universityNotInWatchList = true;
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE WL_OWNER = '" + wlOwner
                 + "' AND WL_ITEM='" + wlItem + "'";
@@ -336,8 +330,7 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return universityNotInWatchList;
     }
@@ -360,7 +353,7 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public void retrieveStudenteWatchListFromDB(String wlOwner,
             ArrayList<WatchListItem> studentWatchListInstitutions,
-            ArrayList<WatchListItem> studentWatchListRecruiters) {
+            ArrayList<WatchListItem> studentWatchListRecruiters) throws IOException {
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE LOWER(WL_OWNER) = '" + wlOwner.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -386,8 +379,7 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
     }
 
@@ -404,7 +396,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 rowCount = ps.executeUpdate();
                 this.DBConn.close();
             } catch (SQLException e) {
-                System.err.println("ERROR: Problems with SQL select");
+                this.redirectToErrorPage();
             }
         }
         return rowCount;
@@ -423,7 +415,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 rowCount = ps.executeUpdate();
                 this.DBConn.close();
             } catch (SQLException e) {
-                System.err.println("ERROR: Problems with SQL select");
+                this.redirectToErrorPage();
             }
         }
         return rowCount;
