@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import dao.CommonDAO;
 import dao.LoginDAO;
 import dao.RecruiterDAO;
@@ -154,7 +153,7 @@ public class LoginController implements Serializable {
             accStatus = this.checkAccountStatus(username);
             accType = this.checkAccountType(username);
             this.loadUserProfile(username, accType);
-            this.setSessionVariables(username,accType);
+            this.setSessionVariables(username, accType);
         }
         this.redirectToNextPage(validLogin, accStatus, accType);
     }
@@ -174,7 +173,7 @@ public class LoginController implements Serializable {
         return (commonDB.getAccountTypeFromDB(username));
     }
 
-    private void setSessionVariables(String username,char AccType) {
+    private void setSessionVariables(String username, char AccType) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         session.setAttribute("loggedIn", "true");
@@ -197,14 +196,14 @@ public class LoginController implements Serializable {
 
                 String base64String;
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream(3000)) {
-                    BufferedImage img=ImageIO.read(new File("/resources/images/BlankProfileImage.png"));
+                    BufferedImage img = ImageIO.read(new File("/resources/images/BlankProfileImage.png"));
                     ImageIO.write(img, "jpg", baos);
                     baos.flush();
                     base64String = Base64.encode(baos.toByteArray());
                     baos.close();
                 }
-		byte[] bytearray = Base64.decode(base64String);
-                studentProfile.setProfileImage(new DefaultStreamedContent(new ByteArrayInputStream(bytearray), "image/png"));
+                byte[] bytearray = Base64.decode(base64String);
+                //studentProfile.setProfileImage(new DefaultStreamedContent(new ByteArrayInputStream(bytearray), "image/png"));
             }
             this.studentController.setStudentProfile(studentProfile);
         }
@@ -245,12 +244,12 @@ public class LoginController implements Serializable {
     }
 
     public void checkSessionStatus() throws IOException {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        if (!session.getAttribute("loggedIn").toString().equals("true")) {
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            externalContext.redirect("index.xhtml");
-        }
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+//        if (!session.getAttribute("loggedIn").toString().equals("true")) {
+//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//            externalContext.redirect("index.xhtml");
+//        }
     }
 
     public void verifyLink() throws SQLException, IOException {

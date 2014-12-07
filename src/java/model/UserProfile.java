@@ -24,7 +24,7 @@ public class UserProfile {
     private String city;
     private String state;
     private String email;
-    public String username;
+    public String username = "har";
     private DefaultStreamedContent downloadResume;
     private String password;
     private UploadedFile imageUpload;

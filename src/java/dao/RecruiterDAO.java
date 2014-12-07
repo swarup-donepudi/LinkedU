@@ -61,16 +61,13 @@ public class RecruiterDAO extends AppDBInfoDAO {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
             byte[] displayImg;
-            DefaultStreamedContent displayImage = null;
-
             ResultSet rs = stmt.executeQuery(selectQuery);
-
             while (rs.next()) {
                 recruiterProfile.setFname(rs.getString("FIRST_NAME"));
                 recruiterProfile.setLname(rs.getString("LAST_NAME"));
                 recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
                 recruiterProfile.setInstName(rs.getString("UNIVERSITY"));
-                recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
+                //recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
                 recruiterProfile.setEmail(rs.getString("EMAIL"));
                 recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
@@ -80,27 +77,22 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 recruiterProfile.setUsername(rs.getString("USERNAME"));
                 displayImg = rs.getBytes("UNIVERSITY_IMAGE");
                 if (displayImg != null) {
-                    displayImage = new DefaultStreamedContent(new ByteArrayInputStream(displayImg), "image/jpeg");
+                    recruiterProfile.setImageDisplay(this.binaryToDefaultStreamedContent(displayImg, "image/jpeg"));
                 }
             }
-        recruiterProfile.setImageDisplay(displayImage);
 
-        rs.close();
-        this.DBConn.close();
-        stmt.close();
+            rs.close();
+            this.DBConn.close();
+            stmt.close();
 
-    }
-    catch (SQLException e
-
-    
-        ) {
+        } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
-        e.printStackTrace();
+            e.printStackTrace();
+        }
+        return recruiterProfile;
     }
-    return recruiterProfile ;
-}
 
-public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
+    public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
         String updateQuery = "UPDATE LINKEDU.RECRUITER_PROFILE SET FIRST_NAME = '"
                 + recruiterProfile.getFname() + "', "
                 + "LAST_NAME = '"
@@ -109,8 +101,8 @@ public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String use
                 + recruiterProfile.getGender() + "', "
                 + "UNIVERSITY = '"
                 + recruiterProfile.getInstName() + "', "
-                + "UNIV_URL = '"
-                + recruiterProfile.getInstURL() + "', "
+                //+ "UNIV_URL = '"
+                // + recruiterProfile.getInstURL() + "', "
                 + "PRIMARY_PHONE = '"
                 + recruiterProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
@@ -136,7 +128,7 @@ public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String use
         }
     }
 
-    public int createRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
+    public int createRecruiterProfile(RecruiterProfile recruiterProfile, String username) throws IOException {
         int rowsInserted = 0;
         CommonDAO coomonDB = new CommonDAO();
         String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
@@ -144,7 +136,7 @@ public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String use
                 + "LAST_NAME,"
                 + "GENDER,"
                 + "UNIVERSITY,"
-                + "UNIV_URL,"
+                //  + "UNIV_URL,"
                 + "PRIMARY_PHONE,"
                 + "SECONDARY_PHONE,"
                 + "COUNTRY,"
@@ -157,7 +149,7 @@ public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String use
                 + recruiterProfile.getLname() + "','"
                 + recruiterProfile.getGender() + "','"
                 + recruiterProfile.getInstName() + "','"
-                + recruiterProfile.getInstURL() + "','"
+                //  + recruiterProfile.getInstURL() + "','"
                 + recruiterProfile.getPrimaryPhNum() + "','"
                 + recruiterProfile.getSecondaryPhNum() + "','"
                 + recruiterProfile.getCountry() + "','"
@@ -259,7 +251,7 @@ public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String use
     }
 
     public int uploadImageToDB(RecruiterProfile recPro) throws SQLException, IOException {
-        this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);        
+        this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
         InputStream f2 = recPro.getImageUpload().getInputstream();
         String query = "UPDATE LINKEDU.recruiter_profile SET university_image = ? WHERE username = ?";
         int rowCount;

@@ -64,11 +64,8 @@ public class StudentDAO extends AppDBInfoDAO {
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
-            byte[] profileImg;
-            DefaultStreamedContent displayImagetodownload = null;
+            byte[] profileImg;            
             byte[] resume;
-            DefaultStreamedContent resumeDownload = null;
-
             ResultSet rs = stmt.executeQuery(selectQuery);
 
             while (rs.next()) {
@@ -79,8 +76,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getFloat("GPA"));
                 studentProfile.setEmail(rs.getString("EMAILID"));
-                studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));
-                studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
+                //  studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
+                // studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));                
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
                 studentProfile.setCity(rs.getString("COUNTRY"));
@@ -90,14 +87,12 @@ public class StudentDAO extends AppDBInfoDAO {
                 profileImg = rs.getBytes("PROFILE_IMAGE");
                 resume = rs.getBytes("RESUME");
                 if (resume != null) {
-                    resumeDownload = new DefaultStreamedContent(new ByteArrayInputStream(resume), "pdf/docx");
+                    studentProfile.setDownloadResume(this.binaryToDefaultStreamedContent(resume, "pdf/docx"));
                 }
                 if (profileImg != null) {
-                    displayImagetodownload = new DefaultStreamedContent(new ByteArrayInputStream(profileImg), "image/jpeg");
+                    studentProfile.setImageDisplay(this.binaryToDefaultStreamedContent(profileImg, "image/jpeg"));
                 }
             }
-            studentProfile.setDownloadResume(resumeDownload);
-            studentProfile.setImageDisplay(displayImagetodownload);
             rs.close();
             this.DBConn.close();
             stmt.close();
@@ -113,9 +108,7 @@ public class StudentDAO extends AppDBInfoDAO {
         StudentProfile studentProfile = new StudentProfile();
         byte[] resume;
         DefaultStreamedContent resumeDownload = null;
-
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
-
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -138,8 +131,6 @@ public class StudentDAO extends AppDBInfoDAO {
     }
 
     public void updateStudentProfile(StudentProfile studentProfile, String username) throws IOException {
-        InputStream profileImage = studentProfile.getImageUpload().getInputstream();
-        InputStream resume = studentProfile.getResume().getInputstream();
         String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
                 + studentProfile.getFname() + "', "
                 + "LAST_NAME = '"
@@ -179,11 +170,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + studentProfile.getState() + "', "
                 + "CITY = '"
-                + studentProfile.getCity() + ");"
-                + "PROFILE_IMAGE = '"
-                + profileImage + "', "
-                + "RESUME = '"
-                + resume + "'"
+                + studentProfile.getCity()
                 + "' WHERE USERNAME='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -221,13 +208,11 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-                + "PROFILE_IMAGE,"
-                + "RESUME,"
                 + "USERNAME) "
                 + "VALUES('"
                 + studentProfile.getFname() + "','"
                 + studentProfile.getLname() + "','"
-                + "M','"
+                + studentProfile.getGender() + "','"
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
@@ -244,8 +229,6 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + profileImage + "','"
-                + resume + "','"
                 + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -254,7 +237,6 @@ public class StudentDAO extends AppDBInfoDAO {
             this.DBConn.close();
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
         }
     }
 
@@ -271,7 +253,7 @@ public class StudentDAO extends AppDBInfoDAO {
     }
 
     public List<String> convertStringToList(String delimitedString) {
-        List<String> convertedList = new ArrayList<>();;
+        List<String> convertedList = new ArrayList<>();
         convertedList.addAll(Arrays.asList(delimitedString.split(";")));
         return convertedList;
     }
@@ -420,7 +402,6 @@ public class StudentDAO extends AppDBInfoDAO {
                 ps.setBinaryStream(1, resume);
                 ps.setString(2, username);
                 rowCount = ps.executeUpdate();
-
                 this.DBConn.close();
             } catch (SQLException e) {
                 System.err.println("ERROR: Problems with SQL select");
@@ -448,7 +429,4 @@ public class StudentDAO extends AppDBInfoDAO {
         return rowCount;
     }
 
-    public void fetchFilesBack() {
-
-    }
 }

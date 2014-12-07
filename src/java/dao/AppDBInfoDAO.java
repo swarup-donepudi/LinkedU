@@ -5,12 +5,16 @@
  */
 package dao;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -24,12 +28,12 @@ public class AppDBInfoDAO {
 
     public AppDBInfoDAO() {
         //this.databaseURL = "jdbc:derby://gfish.it.ilstu.edu:1527/skdonep_Fall14_LinkedU";
-        this.databaseURL = "jdbc:derby://localhost:1527/skdonep_Fall14_LinkedU";
-        this.dbUserName = "linkedu_admin";
-        this.dbPassword = "student123";
-//        this.databaseURL = "jdbc:derby://localhost:1527/project";
-//        this.dbUserName = "itkstu";
-//        this.dbPassword = "student";
+//        this.databaseURL = "jdbc:derby://localhost:1527/skdonep_Fall14_LinkedU";
+//        this.dbUserName = "linkedu_admin";
+//        this.dbPassword = "student123";
+        this.databaseURL = "jdbc:derby://localhost:1527/project";
+        this.dbUserName = "itkstu";
+        this.dbPassword = "student";
     }
 
     public String getDatabaseURL() {
@@ -74,5 +78,15 @@ public class AppDBInfoDAO {
     public void redirectToErrorPage() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("SQLError.xhtml");
+    }
+    
+    public DefaultStreamedContent binaryToDefaultStreamedContent(byte[] binaryFile, String ext){
+        DefaultStreamedContent fileToShow = new DefaultStreamedContent(new ByteArrayInputStream(binaryFile), ext);
+        return fileToShow;
+    }
+    
+    public InputStream uploadedFileToBinary(UploadedFile sample) throws IOException{        
+        InputStream finalFile = sample.getInputstream();
+        return finalFile;
     }
 }
