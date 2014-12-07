@@ -53,14 +53,14 @@
                                 <td>  
                                     First Name </td>
                                 <td>
-                                    <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fName}"></p:inputText>
+                                    <p:inputText id="recruiterFName" value="#{recruiterController.recruiterProfile.fname}"></p:inputText>
                                 </td>
                             </tr>                        
                             <tr>
                                 <td>                
                                     Last Name  </td>
                                 <td>
-                                    <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lName}"></p:inputText>
+                                    <p:inputText id="recruiterLName" value="#{recruiterController.recruiterProfile.lname}"></p:inputText>
                                 </td>
                             </tr>
                             <tr>
@@ -205,7 +205,7 @@
                         </table>
                     </p:tab>
                 </p:tabView>
-                        <p:commandButton value="Update Profile" 
+                        <br /><p:commandButton value="Update Profile" 
                                          action="#{recruiterController.updateRecruiterProfile()}"/>
             </h:form> <br/>
             <h:outputText value="#{recruiterController.profileUpdateMessage}"></h:outputText>

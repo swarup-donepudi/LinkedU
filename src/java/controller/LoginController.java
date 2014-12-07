@@ -188,20 +188,20 @@ public class LoginController implements Serializable {
                 studentProfile.setEmail(studentEmail);
             }
             this.studentController.setStudentProfile(studentProfile);
-            if (accType == 'S') {
-                RecruiterProfile recruiterProfile;
-                RecruiterDAO recruiterDB = new RecruiterDAO();
-                if (recruiterDB.recruiterHasProfile(username)) {
-                    recruiterProfile = recruiterDB.fetchRecruiterProfile(username);
-                } else {
-                    recruiterProfile = new RecruiterProfile();
-                    recruiterProfile.setUsername(username);
-                    CommonDAO commonDB = new CommonDAO();
-                    String recruiterEmail = commonDB.getEmailFromUserInfoTable(username);
-                    recruiterProfile.setEmail(recruiterEmail);
-                }
-                this.recruiterController.setRecruiterProfile(recruiterProfile);
+        }
+        if (accType == 'R') {
+            RecruiterProfile recruiterProfile;
+            RecruiterDAO recruiterDB = new RecruiterDAO();
+            if (recruiterDB.recruiterHasProfile(username)) {
+                recruiterProfile = recruiterDB.fetchRecruiterProfile(username);
+            } else {
+                recruiterProfile = new RecruiterProfile();
+                recruiterProfile.setUsername(username);
+                CommonDAO commonDB = new CommonDAO();
+                String recruiterEmail = commonDB.getEmailFromUserInfoTable(username);
+                recruiterProfile.setEmail(recruiterEmail);
             }
+            this.recruiterController.setRecruiterProfile(recruiterProfile);
         }
     }
 

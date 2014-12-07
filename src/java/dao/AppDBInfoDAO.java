@@ -62,8 +62,12 @@ public class AppDBInfoDAO {
         try {
             DBConn = DriverManager.getConnection(databaseURL, dbUserName, dbPassword);
         } catch (SQLException e) {
-            System.out.println("SQL exception occured" + e);
+            this.redirectToErrorPage(e); 
         }
         return DBConn;
+    }
+    
+    public String redirectToErrorPage(SQLException e){
+        return("SQLError.xhtml");
     }
 }
