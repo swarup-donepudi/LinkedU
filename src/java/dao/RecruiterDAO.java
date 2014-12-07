@@ -4,7 +4,6 @@
  */
 package dao;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import model.RecruiterProfile;
 import model.StudentProfile;
 import model.WatchListItem;
-import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -30,7 +28,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
         super();
     }
 
-    public boolean recruiterHasProfile(String username) throws SQLException {
+    public boolean recruiterHasProfile(String username) throws SQLException, IOException {
         boolean recruiterHasProfile = false;
         username = username.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
@@ -47,12 +45,12 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 this.DBConn.close();
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select in RecruiterHasProfile method");
+            this.redirectToErrorPage();
         }
         return recruiterHasProfile;
     }
 
-    public RecruiterProfile fetchRecruiterProfile(String username) throws SQLException {
+    public RecruiterProfile fetchRecruiterProfile(String username) throws SQLException, IOException {
         RecruiterProfile recruiterProfile = new RecruiterProfile();
         username = username.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
@@ -86,13 +84,12 @@ public class RecruiterDAO extends AppDBInfoDAO {
             stmt.close();
 
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return recruiterProfile;
     }
 
-    public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) {
+    public void updateRecruiterProfile(RecruiterProfile recruiterProfile, String username) throws IOException {
         String updateQuery = "UPDATE LINKEDU.RECRUITER_PROFILE SET FIRST_NAME = '"
                 + recruiterProfile.getFname() + "', "
                 + "LAST_NAME = '"
@@ -123,8 +120,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 this.DBConn.close();
             }
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
     }
 
@@ -163,13 +159,12 @@ public class RecruiterDAO extends AppDBInfoDAO {
             rowsInserted = stmt.executeUpdate(insertQuery);
             this.DBConn.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return rowsInserted;
     }
 
-    public boolean studentNotInWatchListInDB(String wlOwner, String wlItem) {
+    public boolean studentNotInWatchListInDB(String wlOwner, String wlItem) throws IOException {
         boolean studentNotInWatchList = true;
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE OWNER = '" + wlOwner
                 + "' AND WL_ITEM='" + wlItem + "'";
@@ -186,8 +181,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return studentNotInWatchList;
     }
@@ -204,7 +198,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
         return rowCount;
     }
 
-    public void retrieveRecruiterWatchListFromDB(String wlOwner, ArrayList<WatchListItem> recruiterWatchList) {
+    public void retrieveRecruiterWatchListFromDB(String wlOwner, ArrayList<WatchListItem> recruiterWatchList) throws IOException {
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -224,12 +218,11 @@ public class RecruiterDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
     }
 
-    public ArrayList getStudentListFromDB(String wlOwner) {
+    public ArrayList getStudentListFromDB(String wlOwner) throws IOException {
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
         ArrayList names = new ArrayList();
         try {
@@ -244,8 +237,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            System.err.println("ERROR: Problems with SQL select");
-            e.printStackTrace();
+            this.redirectToErrorPage();
         }
         return names;
     }

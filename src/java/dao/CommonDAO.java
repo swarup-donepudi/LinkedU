@@ -4,7 +4,6 @@
  */
 package dao;
 
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,8 +23,8 @@ public class CommonDAO extends AppDBInfoDAO {
     }
 
     public String getEmailFromUserInfoTable(String username) throws IOException {
-        String emailFromUserInfo = 
-                username = username.toLowerCase();
+        String emailFromUserInfo
+                = username = username.toLowerCase();
         String getEmailQuery = "SELECT EMAILID FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -39,9 +38,9 @@ public class CommonDAO extends AppDBInfoDAO {
         }
         return emailFromUserInfo;
     }
-    
-    public char getAccountStatusFromDB(String username) throws IOException{
-        char accStatus='N';
+
+    public char getAccountStatusFromDB(String username) throws IOException {
+        char accStatus = 'N';
         username = username.toLowerCase();
         String getEmailQuery = "SELECT ACC_STATUS FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
         try {
@@ -56,8 +55,9 @@ public class CommonDAO extends AppDBInfoDAO {
         }
         return accStatus;
     }
-       public char getAccountTypeFromDB(String username) throws IOException{
-        char accType='N';
+
+    public char getAccountTypeFromDB(String username) throws IOException {
+        char accType = 'N';
         username = username.toLowerCase();
         String getEmailQuery = "SELECT ACCTYPE FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
         try {
