@@ -7,6 +7,9 @@ package controller;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -15,40 +18,33 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class TemplateController {
+
     private String pageTemplate;
-    
-@ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;    
 
     /**
      * Creates a new instance of TemplateController
      */
     public TemplateController() {
-        this.pageTemplate="templates\\AppTheme.xhtml";
-    }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
+        this.pageTemplate = "templates\\AppTheme.xhtml";
     }
 
     public String getPageTemplate() {
-        char accType=this.loginController.getLoginBean().getAccountType();
-        if(accType=='S')
-            this.pageTemplate="templates\\AppThemeStudent.xhtml";
-        else
-            this.pageTemplate="templates\\AppThemeRecruiter.xhtml";
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        char accType = session.getAttribute("LinkEDU_AccType").toString().charAt(0);
+        if (accType == 'S') {
+            this.pageTemplate = "templates\\AppThemeStudent.xhtml";
+        } else {
+            this.pageTemplate = "templates\\AppThemeRecruiter.xhtml";
+        }
         return pageTemplate;
     }
 
     public void setPageTemplate(String pageTemplate) {
         this.pageTemplate = pageTemplate;
     }
-    
-    public void selectPageTemplate(){
-        
+
+    public void selectPageTemplate() {
+
     }
 }

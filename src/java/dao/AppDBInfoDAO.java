@@ -5,9 +5,12 @@
  */
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -20,7 +23,8 @@ public class AppDBInfoDAO {
     public String dbPassword;
 
     public AppDBInfoDAO() {
-        this.databaseURL = "jdbc:derby://gfish.it.ilstu.edu:1527/skdonep_Fall14_LinkedU";
+        //this.databaseURL = "jdbc:derby://gfish.it.ilstu.edu:1527/skdonep_Fall14_LinkedU";
+        this.databaseURL = "jdbc:derby://localhost:1527/skdonep_Fall14_LinkedU";
         this.dbUserName = "linkedu_admin";
         this.dbPassword = "student123";
 //        this.databaseURL = "jdbc:derby://localhost:1527/project";
@@ -62,8 +66,13 @@ public class AppDBInfoDAO {
         try {
             DBConn = DriverManager.getConnection(databaseURL, dbUserName, dbPassword);
         } catch (SQLException e) {
-            System.out.println("SQL exception occured" + e);
+            e.printStackTrace();
         }
         return DBConn;
+    }
+
+    public void redirectToErrorPage() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SQLError.xhtml");
     }
 }

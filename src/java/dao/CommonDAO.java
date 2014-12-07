@@ -5,6 +5,7 @@
 package dao;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class CommonDAO extends AppDBInfoDAO {
         super();
     }
 
-    public String getEmailFromUserInfoTable(String username) {
+    public String getEmailFromUserInfoTable(String username) throws IOException {
         String emailFromUserInfo = 
                 username = username.toLowerCase();
         String getEmailQuery = "SELECT EMAILID FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
@@ -34,12 +35,12 @@ public class CommonDAO extends AppDBInfoDAO {
                 emailFromUserInfo = rs.getString("EMAILID");
             }
         } catch (SQLException e) {
-            System.out.println("SQL exception occured" + e);
+            this.redirectToErrorPage();
         }
         return emailFromUserInfo;
     }
     
-    public char getAccountStatusFromDB(String username){
+    public char getAccountStatusFromDB(String username) throws IOException{
         char accStatus='N';
         username = username.toLowerCase();
         String getEmailQuery = "SELECT ACC_STATUS FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
@@ -51,11 +52,11 @@ public class CommonDAO extends AppDBInfoDAO {
                 accStatus = rs.getString("ACC_STATUS").charAt(0);
             }
         } catch (SQLException e) {
-            System.out.println("SQL exception occured" + e);
+            this.redirectToErrorPage();
         }
         return accStatus;
     }
-       public char getAccountTypeFromDB(String username){
+       public char getAccountTypeFromDB(String username) throws IOException{
         char accType='N';
         username = username.toLowerCase();
         String getEmailQuery = "SELECT ACCTYPE FROM LINKEDU.USERINFO WHERE LOWER(USERNAME)='" + username + "'";
@@ -67,7 +68,7 @@ public class CommonDAO extends AppDBInfoDAO {
                 accType = rs.getString("ACCTYPE").charAt(0);
             }
         } catch (SQLException e) {
-            System.out.println("SQL exception occured" + e);
+            this.redirectToErrorPage();
         }
         return accType;
     }

@@ -14,7 +14,6 @@ and open the template in the editor.
 }
 
 html{
-    //background-image:url("#{resource['images:IndexBackground.jpg']}");
     background-repeat:no-repeat;
     background-size: 100%;
     color:black;
@@ -75,10 +74,8 @@ body{
 #signupFrame{
     float:right;
     margin-top:25px;
-    //margin-right:14%;
     padding:20px;
     padding-top: 10px;
-    //width:25%;
     height:350px;    
     background-color:#40454f;
     border-radius: 10px;
@@ -91,28 +88,13 @@ body{
     float:right;
     margin-top:25px;
     left: -10px;
-    //margin-right:14%;
     padding:20px;
     padding-top: 10px;
-    //width:25%;
     height:350px;    
-    //background-color:#40454f;
-    //border:1px solid red;
     border-radius: 10px;
     font-family: sans-serif;
     font-size: 15px;
     color:red;
-}
-
-#signUpErrors table{
-    left:-20px;
-}
-
-.UserWarning{
-    display:block;  
-    color: red;
-    font-family: sans-serif;
-    font-size: 75%;
 }
 
 input[type="text"],input[type="password"]{

@@ -137,7 +137,7 @@ public class RecruiterController implements Serializable {
         this.selectedStudent = studentDB.fetchStudentProfile(selectedStudentUsername);
     }
 
-    public String updateRecruiterProfile() throws SQLException {
+    public String updateRecruiterProfile() throws SQLException, IOException {
         RecruiterDAO recruiterDao = new RecruiterDAO();
         if (recruiterDao.recruiterHasProfile(this.recruiterProfile.getUsername())) {
             recruiterDao.updateRecruiterProfile(this.recruiterProfile, this.recruiterProfile.getUsername());
@@ -168,7 +168,7 @@ public class RecruiterController implements Serializable {
         externalContext.redirect("CompareStudents.xhtml");        
     }
 
-    public boolean isSelectedUniversityNotInWatchList() {
+    public boolean isSelectedUniversityNotInWatchList() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();

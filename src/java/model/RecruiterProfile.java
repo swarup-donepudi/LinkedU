@@ -12,7 +12,7 @@ package model;
 public class RecruiterProfile extends UserProfile {
 
     private String instName;
-    private String instURL;
+    private String deptName;
     private String instFBPage;
     private String twitterHandle;
     private String reasonForLinkEDU;
@@ -24,20 +24,20 @@ public class RecruiterProfile extends UserProfile {
     public RecruiterProfile(){
     }
 
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
     public String getInstName() {
         return instName;
     }
 
     public void setInstName(String instName) {
         this.instName = instName;
-    }
-
-    public String getInstURL() {
-        return instURL;
-    }
-
-    public void setInstURL(String instURL) {
-        this.instURL = instURL;
     }
 
     public String getInstFBPage() {

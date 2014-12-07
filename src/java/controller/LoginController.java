@@ -5,10 +5,14 @@
  */
 package controller;
 
+
 import dao.CommonDAO;
 import dao.LoginDAO;
 import dao.RecruiterDAO;
 import dao.StudentDAO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -19,10 +23,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import model.LoginBean;
 import model.RecruiterProfile;
 import model.StudentProfile;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.io.ByteArrayInputStream;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -146,7 +154,7 @@ public class LoginController implements Serializable {
             accStatus = this.checkAccountStatus(username);
             accType = this.checkAccountType(username);
             this.loadUserProfile(username, accType);
-            this.setSessionVariables(username);
+            this.setSessionVariables(username,accType);
         }
         this.redirectToNextPage(validLogin, accStatus, accType);
     }
@@ -156,52 +164,63 @@ public class LoginController implements Serializable {
         return (loginDB.validCredentials(username, password));
     }
 
-    private char checkAccountStatus(String username) {
+    private char checkAccountStatus(String username) throws IOException {
         CommonDAO commonDB = new CommonDAO();
         return (commonDB.getAccountStatusFromDB(username));
     }
 
-    private char checkAccountType(String username) {
+    private char checkAccountType(String username) throws IOException {
         CommonDAO commonDB = new CommonDAO();
         return (commonDB.getAccountTypeFromDB(username));
     }
 
-    private void setSessionVariables(String username) {
+    private void setSessionVariables(String username,char AccType) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         session.setAttribute("loggedIn", "true");
+        session.setAttribute("LinkEDU_AccType", AccType);
         session.setAttribute("username", loginBean.getUserName());
     }
 
-    private void loadUserProfile(String username, char accType) throws SQLException, ParseException {
+    private void loadUserProfile(String username, char accType) throws SQLException, ParseException, IOException {
         if (accType == 'S') {
             StudentProfile studentProfile;
-            StudentDAO profileDB = new StudentDAO();
+            StudentDAO studentDB = new StudentDAO();
             String studentUsername = this.loginBean.getUserName();
-            if (profileDB.studentHasProfile(studentUsername)) {
-                studentProfile = profileDB.fetchStudentProfile(studentUsername);
+            if (studentDB.studentHasProfile(studentUsername)) {
+                studentProfile = studentDB.fetchStudentProfile(studentUsername);
             } else {
                 studentProfile = new StudentProfile();
                 studentProfile.setUsername(studentUsername);
                 CommonDAO commonDB = new CommonDAO();
                 String studentEmail = commonDB.getEmailFromUserInfoTable(studentUsername);
-                studentProfile.setEmail(studentEmail);
+
+                String base64String;
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream(3000)) {
+                    BufferedImage img=ImageIO.read(new File("/resources/images/BlankProfileImage.png"));
+                    ImageIO.write(img, "jpg", baos);
+                    baos.flush();
+                    base64String = Base64.encode(baos.toByteArray());
+                    baos.close();
+                }
+		byte[] bytearray = Base64.decode(base64String);
+                studentProfile.setProfileImage(new DefaultStreamedContent(new ByteArrayInputStream(bytearray), "image/png"));
             }
             this.studentController.setStudentProfile(studentProfile);
-            if (accType == 'S') {
-                RecruiterProfile recruiterProfile;
-                RecruiterDAO recruiterDB = new RecruiterDAO();
-                if (recruiterDB.recruiterHasProfile(username)) {
-                    recruiterProfile = recruiterDB.fetchRecruiterProfile(username);
-                } else {
-                    recruiterProfile = new RecruiterProfile();
-                    recruiterProfile.setUsername(username);
-                    CommonDAO commonDB = new CommonDAO();
-                    String recruiterEmail = commonDB.getEmailFromUserInfoTable(username);
-                    recruiterProfile.setEmail(recruiterEmail);
-                }
-                this.recruiterController.setRecruiterProfile(recruiterProfile);
+        }
+        if (accType == 'R') {
+            RecruiterProfile recruiterProfile;
+            RecruiterDAO recruiterDB = new RecruiterDAO();
+            if (recruiterDB.recruiterHasProfile(username)) {
+                recruiterProfile = recruiterDB.fetchRecruiterProfile(username);
+            } else {
+                recruiterProfile = new RecruiterProfile();
+                recruiterProfile.setUsername(username);
+                CommonDAO commonDB = new CommonDAO();
+                String recruiterEmail = commonDB.getEmailFromUserInfoTable(username);
+                recruiterProfile.setEmail(recruiterEmail);
             }
+            this.recruiterController.setRecruiterProfile(recruiterProfile);
         }
     }
 

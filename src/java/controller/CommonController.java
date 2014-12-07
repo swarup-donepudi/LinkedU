@@ -19,6 +19,15 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean
 @SessionScoped
 public class CommonController {
+   private String sqlErrorStacktrace;
+
+    public String getSqlErrorStacktrace() {
+        return sqlErrorStacktrace;
+    }
+
+    public void setSqlErrorStacktrace(String sqlErrorStacktrace) {
+        this.sqlErrorStacktrace = sqlErrorStacktrace;
+    }
    
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
