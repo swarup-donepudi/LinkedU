@@ -7,13 +7,16 @@
 package model;
 
 import javax.mail.Part;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author skdonep
  */
 public class UserProfile {
-    private byte[] profileImage;
+    private UploadedFile uploadedProfileImage;
+    private StreamedContent profileImage;
     private String fname;
     private String lname;
     private char gender;
@@ -28,14 +31,21 @@ public class UserProfile {
     private String password;
     private Part resume;
 
-    public byte[] getProfileImage() {
+    public UploadedFile getUploadedProfileImage() {
+        return uploadedProfileImage;
+    }
+
+    public void setUploadedProfileImage(UploadedFile uploadedProfileImage) {
+        this.uploadedProfileImage = uploadedProfileImage;
+    }
+
+    public StreamedContent getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(byte[] profileImage) {
-        this.setProfileImage(profileImage);
+    public void setProfileImage(StreamedContent profileImage) {
+        this.profileImage = profileImage;
     }
-
     
     /**
      * @return the fname

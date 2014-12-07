@@ -4,7 +4,9 @@
  */
 package dao;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import model.StudentProfile;
 import model.WatchListItem;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -80,6 +84,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
                 studentProfile.setUsername(rs.getString("USERNAME"));
+                studentProfile.setProfileImage(new DefaultStreamedContent(rs.getBlob("PROFILE_IMAGE").getBinaryStream(), "image/png"));
             }
 
             rs.close();
@@ -151,7 +156,7 @@ public class StudentDAO extends AppDBInfoDAO {
         }
     }
 
-    public void createStudentProfile(StudentProfile studentProfile, String username) {
+    public void createStudentProfile(StudentProfile studentProfile, String username) throws IOException {
         CommonDAO coomonDB = new CommonDAO();
         String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
@@ -160,12 +165,12 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "DOB,"
                 + "HIGHEST_DEGREE,"
                 + "GPA,"
-                 + "SAT,"
-                 + "ACT,"
-                 + "TOEFL,"
-                 + "GRE,"
-                 + "IELTS,"
-                 + "CERTIFICATIONS,"           
+                + "SAT,"
+                + "ACT,"
+                + "TOEFL,"
+                + "GRE,"
+                + "IELTS,"
+                + "CERTIFICATIONS,"
                 + "PREFERRED_PROGRAMS,"
                 + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
@@ -179,7 +184,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "VALUES('"
                 + studentProfile.getFname() + "','"
                 + studentProfile.getLname() + "','"
-                + "M','"
+                + studentProfile.getGender()+"','"
                 + studentProfile.getDob() + "','"
                 + studentProfile.getHighestDegree() + "','"
                 + studentProfile.getGPA() + "','"
@@ -188,21 +193,33 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getTOEFL() + "','"
                 + studentProfile.getGRE() + "','"
                 + studentProfile.getIELTS() + "','"
-                + studentProfile.getCeritifications() + "','"                
+                + studentProfile.getCeritifications() + "','"
                 + this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
                 + this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
                 + studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
-                + studentProfile.getCity() + "','"
-                + studentProfile.getProfileImage() + "','"
-                + studentProfile.getResume() + "','"
+                + studentProfile.getCity() + "','";
+        if (studentProfile.getUploadedProfileImage() != null) {
+            insertQuery += "?','";
+        } else {
+            insertQuery += "null','";
+        }
+        insertQuery += studentProfile.getResume() + "','"
                 + username + "')";
+
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
-            Statement stmt = this.DBConn.createStatement();
-            stmt.execute(insertQuery);
+            if (studentProfile.getUploadedProfileImage() != null) {
+                InputStream uploadedProfileImage = studentProfile.getUploadedProfileImage().getInputstream();
+                PreparedStatement ps = this.DBConn.prepareStatement(insertQuery);
+                ps.setBinaryStream(1, uploadedProfileImage);
+                ps.execute();
+            } else {
+                Statement stmt = this.DBConn.createStatement();
+                stmt.executeUpdate(insertQuery);
+            }
             this.DBConn.close();
         } catch (SQLException e) {
             System.err.println("ERROR: Problems with SQL select");
@@ -312,10 +329,10 @@ public class StudentDAO extends AppDBInfoDAO {
         return universityNotInWatchList;
     }
 
-    public int addUniversityToWatchListInDB(String wlOwner, String wlEntry,String wlLname) throws SQLException {
+    public int addUniversityToWatchListInDB(String wlOwner, String wlEntry, String wlLname) throws SQLException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
         Statement stmt = DBConn.createStatement();
-        String insertStatement = "INSERT INTO LINKEDU.STUDENT_WATCHLIST VALUES('" + wlOwner + "','" + wlEntry + "',NULL,+'"+wlLname+"','U')";
+        String insertStatement = "INSERT INTO LINKEDU.STUDENT_WATCHLIST VALUES('" + wlOwner + "','" + wlEntry + "',NULL,+'" + wlLname + "','U')";
         int rowCount = stmt.executeUpdate(insertStatement);
         return rowCount;
     }
@@ -360,17 +377,17 @@ public class StudentDAO extends AppDBInfoDAO {
             e.printStackTrace();
         }
     }
-    
+
     public int uploadResume(String email, InputStream file) throws SQLException {
         email = email.toLowerCase();
-        boolean emailExits=false;
-        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword); 
-        String sql = "UPDATE LINKEDU.STUDENT_PROFILE (RESUME) values (?) WHERE EMAIL = '" + email +"'" ;
-            PreparedStatement stmt = DBConn.prepareStatement(sql);
-            if (file != null) {
-                // fetches input stream of the upload file for the blob column
-                stmt.setBlob(2, file);
-            }
+        boolean emailExits = false;
+        this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+        String sql = "UPDATE LINKEDU.STUDENT_PROFILE (RESUME) values (?) WHERE EMAIL = '" + email + "'";
+        PreparedStatement stmt = DBConn.prepareStatement(sql);
+        if (file != null) {
+            // fetches input stream of the upload file for the blob column
+            stmt.setBlob(2, file);
+        }
         int row = stmt.executeUpdate();
         this.DBConn.close();
         stmt.close();

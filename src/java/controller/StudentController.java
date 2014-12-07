@@ -144,7 +144,7 @@ public class StudentController {
         }
     }
 
-    public void updateStudentProfile() throws SQLException {
+    public void updateStudentProfile() throws SQLException, IOException {
         StudentDAO profileDao = new StudentDAO();
         if (profileDao.studentHasProfile(this.studentProfile.getUsername())) {
             profileDao.updateStudentProfile(this.studentProfile, this.studentProfile.getUsername());
@@ -152,8 +152,6 @@ public class StudentController {
             profileDao.createStudentProfile(this.studentProfile, this.studentProfile.getUsername());
         }
         this.profileUpdateMessage = "Profile updated successfully.";
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        externalContext.redirect("SearchInstitutions.xhtml");
     }
 
     public void showInstitutionsSearchForm() throws IOException {

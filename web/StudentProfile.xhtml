@@ -70,7 +70,7 @@
                                     Gender 
                                 </td>
                                 <td>
-                                    <p:selectOneRadio id="gender" value="#{studentController.studentProfile.gender}" >
+                                    <p:selectOneRadio required="true" id="gender" value="#{studentController.studentProfile.gender}" >
                                         <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
                                         <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
                                     </p:selectOneRadio> 
@@ -252,11 +252,15 @@
                     <p:tab title="Uploads">
                         <table id="uploadTable" cellspacing="20">
                             <tr>
-                                <td>Resume</td>
+                                <td>Profile Image</td>
                                 <td>
-                                    <p:fileUpload value="#{fileUploadView.file}" mode="simple"/>
-                                    <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" />
-                                    <p:growl id="messages" showDetail="true" /></td>
+                                    <h:form id="ProfileImageForm">
+                                    <p:fileUpload id="profileImage" value="#{studentController.studentProfile.uploadedProfileImage}" mode="simple"/>
+                                    <p:commandButton value="Upload" ajax="true">
+                                        <p:ajax process="profileImage" update="profileImageUpdateMsg" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton>
+                                    <h:outputLabel id="profileImageUpdateMsg" value="Hello"></h:outputLabel>
+                                        </h:form>
+                                </td>
                             </tr>
                             <tr>
                                 <td>YouTube</td>
@@ -270,7 +274,7 @@
                 </p:tabView>
                 <br />
                 <p:commandButton value="Update Profile" ajax="true">
-                    <p:ajax update="updateMsg" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
+                    <p:ajax process="@form" update="updateMsg" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
                 <h:outputText id="updateMsg" value="#{studentController.profileUpdateMessage}"></h:outputText>
             </h:form><br /><br />
 
