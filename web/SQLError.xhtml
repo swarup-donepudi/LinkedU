@@ -7,54 +7,9 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
-
-    <ui:decorate template="templates\AppTheme.xhtml">
-        <ui:define name="header">
-            <h:form>
-                <h:link outcome="index">
-                    <div id="logo"></div>
-                </h:link>
-            </h:form>
-        </ui:define>
-        <ui:define name="logoutFrame">
-        </ui:define>
+    <ui:decorate template="#{templateController.pageTemplate}">
         <ui:define name="content">
-            <h:form>
-                <p:dataTable id="inboxItems" value="#{messageController.userInbox}" var="message"
-                             paginator="true" rows="10">
-                    <p:column style="width: 12%">
-                        <!-- column header -->
-                        <f:facet name="header" >From</f:facet>
-                        <!-- row record -->
-                        <h:link id="selectedUsername" outcome="RecruiterProfileForStudent" value="#{message.fromAddress}" includeViewParams="true">
-                            <f:param  name="selectedUsername" value="#{message.fromAddress}" /> 
-                        </h:link>
-                    </p:column>            
-                    <p:column style="width: 20%">
-                        <!-- column header -->
-                        <f:facet name="header">Subject</f:facet>
-                        <!-- row record -->
-                        #{message.subject}
-                    </p:column>
-                    <p:column style="width: 40%">
-                        <f:facet name="header">Message</f:facet>
-                            #{message.messageBody}
-                    </p:column> 
-                    <p:column style="width: 8%">
-                        <f:facet name="header">Reply</f:facet>
-                        <h:link id="replyMsg" outcome="UserInbox" value="Reply" includeViewParams="true">
-                            <f:param  name="selectedMsg" value="#{message.msgId}" /> 
-                        </h:link>                            
-                    </p:column>
-                    <p:column style="width: 8%">
-                        <f:facet name="header">Delete</f:facet>
-                        <h:link id="deleteMsg" outcome="UserInbox" value="Delete" includeViewParams="true">
-                            <f:param  name="selectedMsg" value="#{message.msgId}" /> 
-
-                        </h:link>                            
-                    </p:column>                        
-                </p:dataTable>                
-            </h:form>    
+            SQL Error Occured
         </ui:define>
     </ui:decorate>
 </ui:composition>

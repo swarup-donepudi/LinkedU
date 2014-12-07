@@ -164,12 +164,12 @@ public class LoginController implements Serializable {
         return (loginDB.validCredentials(username, password));
     }
 
-    private char checkAccountStatus(String username) {
+    private char checkAccountStatus(String username) throws IOException {
         CommonDAO commonDB = new CommonDAO();
         return (commonDB.getAccountStatusFromDB(username));
     }
 
-    private char checkAccountType(String username) {
+    private char checkAccountType(String username) throws IOException {
         CommonDAO commonDB = new CommonDAO();
         return (commonDB.getAccountTypeFromDB(username));
     }

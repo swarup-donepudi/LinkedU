@@ -5,9 +5,12 @@
  */
 package dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -63,12 +66,13 @@ public class AppDBInfoDAO {
         try {
             DBConn = DriverManager.getConnection(databaseURL, dbUserName, dbPassword);
         } catch (SQLException e) {
-            this.redirectToErrorPage(e); 
+            e.printStackTrace();
         }
         return DBConn;
     }
-    
-    public String redirectToErrorPage(SQLException e){
-        return("SQLError.xhtml");
+
+    public void redirectToErrorPage() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("SQLError.xhtml");
     }
 }

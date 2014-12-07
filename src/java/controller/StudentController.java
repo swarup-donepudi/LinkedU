@@ -178,7 +178,7 @@ public class StudentController {
         this.selectedInstitution = institutionDB.fetchInstitutionProfileFromDB(selectedInstID);
     }
 
-    public void showRecruiterProfileToStudent() {
+    public void showRecruiterProfileToStudent() throws IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (!fc.isPostback()) {
             Map<String, String> params = fc.getExternalContext().getRequestParameterMap();

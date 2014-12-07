@@ -7,6 +7,7 @@
 package model;
 
 import dao.RecruiterDAO;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class StudentSearchCriteria {
         return student2;
     }
     
-    public void studentComparison(){
+    public void studentComparison() throws IOException{
         RecruiterDAO fetch = new RecruiterDAO();       
         this.watchListNames = fetch.getStudentListFromDB("abc");
     }
