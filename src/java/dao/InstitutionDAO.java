@@ -175,7 +175,8 @@ String recruitersQuery = "SELECT USERNAME FROM LINKEDU.RECRUITER_PROFILE WHERE U
             this.DBConn.close();
             stmt.close();
         } catch (SQLException e) {
-            this.redirectToErrorPage();
+            System.err.println("ERROR: Problems with SQL select");
+            e.printStackTrace();
         }
         
         if(instProfile.getRecruiters().size()>0){

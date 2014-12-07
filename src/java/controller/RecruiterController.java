@@ -129,7 +129,7 @@ public class RecruiterController implements Serializable {
        // }
     }
 
-    public void showStudentProfileToRecruiter() throws SQLException, ParseException, IOException {
+    public void showStudentProfileToRecruiter() throws SQLException, ParseException {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
         String selectedStudentUsername = params.get("selectedUsername");

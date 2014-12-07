@@ -28,9 +28,12 @@ public class AppDBInfoDAO {
 
     public AppDBInfoDAO() {
         //this.databaseURL = "jdbc:derby://gfish.it.ilstu.edu:1527/skdonep_Fall14_LinkedU";
-        this.databaseURL = "jdbc:derby://localhost:1527/skdonep_Fall14_LinkedU";
-        this.dbUserName = "linkedu_admin";
-        this.dbPassword = "student123";
+//        this.databaseURL = "jdbc:derby://localhost:1527/skdonep_Fall14_LinkedU";
+//        this.dbUserName = "linkedu_admin";
+//        this.dbPassword = "student123";
+        this.databaseURL = "jdbc:derby://localhost:1527/project";
+        this.dbUserName = "itkstu";
+        this.dbPassword = "student";
     }
 
     public String getDatabaseURL() {

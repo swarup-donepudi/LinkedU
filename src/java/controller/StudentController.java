@@ -181,7 +181,7 @@ public class StudentController {
         this.selectedInstitution = institutionDB.fetchInstitutionProfileFromDB(selectedInstID);
     }
 
-    public void showRecruiterProfileToStudent() throws SQLException, IOException {
+    public void showRecruiterProfileToStudent() throws SQLException {
         FacesContext fc = FacesContext.getCurrentInstance();
         if (!fc.isPostback()) {
             Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
@@ -191,7 +191,7 @@ public class StudentController {
         }
     }
 
-    public boolean isSelectedInstitutionNotInWatchList() throws IOException {
+    public boolean isSelectedInstitutionNotInWatchList() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();
@@ -201,7 +201,7 @@ public class StudentController {
         return this.selectedInstitutionNotInWatchList;
     }
 
-    public boolean isSelectedRecruiterNotInWatchList() throws IOException {
+    public boolean isSelectedRecruiterNotInWatchList() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();
@@ -249,8 +249,6 @@ public class StudentController {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();
         StudentDAO studentDB = new StudentDAO();
-        this.studentWatchListInstitutions.clear();
-        this.studentWatchListRecruiters.clear();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
 
@@ -273,7 +271,7 @@ public class StudentController {
 
     }
 
-    public DefaultStreamedContent downloadResume() throws IOException {
+    public DefaultStreamedContent downloadResume() {
         StudentDAO download = new StudentDAO();
         return download.downloadResume(studentProfile.username);
     }

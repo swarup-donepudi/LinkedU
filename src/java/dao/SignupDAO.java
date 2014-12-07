@@ -5,7 +5,6 @@
  */
 package dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +42,7 @@ public class SignupDAO extends AppDBInfoDAO {
     }
     
     
-    public int insertVerificationDetails(String username, String verifyLink) throws IOException{
+    public int insertVerificationDetails(String username, String verifyLink){
         int rowCount = 0;
         try {
             this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
@@ -56,7 +55,7 @@ public class SignupDAO extends AppDBInfoDAO {
             rowCount = stmt.executeUpdate(insertString);
             this.DBConn.close();
         } catch (SQLException e) {
-            this.redirectToErrorPage();
+            System.err.println(e.getMessage());
         }
 
         // if insert is successful, rowCount will be set to 1 (1 row inserted successfully).

@@ -257,7 +257,21 @@
                     </p:tab>
                     <p:tab title="Uploads">
                         <table id="uploadTable" cellspacing="20">
-
+                            <tr>
+                                <td>Resume</td>
+                                <td>
+                                    <p:fileUpload value="#{studentController.studentProfile.resume}" mode="simple"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Download
+                                </td>
+                                <td><p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                        <p:fileDownload value="#{studentController.downloadResume()}" />
+                                    </p:commandButton>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>
                                     Upload Image
@@ -273,7 +287,10 @@
                                 <td>
                                     YouTube
                                 </td>
-
+                                <td>
+                                    <h:inputText value="#{studentController.studentProfile.youtubeLink}"/><br/> 
+                                    <p:media value="#{studentController.studentProfile.youtubeLink}" width="420" height="315" player="flash"/>
+                                </td>
                             </tr>
 
                         </table>
