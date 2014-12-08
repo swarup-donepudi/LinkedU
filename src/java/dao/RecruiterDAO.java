@@ -63,17 +63,20 @@ public class RecruiterDAO extends AppDBInfoDAO {
             while (rs.next()) {
                 recruiterProfile.setFname(rs.getString("FIRST_NAME"));
                 recruiterProfile.setLname(rs.getString("LAST_NAME"));
-                recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
-                recruiterProfile.setInstName(rs.getString("UNIVERSITY"));
+                //recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
+                recruiterProfile.setInstName(rs.getString("INST_NAME"));
                 //recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
                 recruiterProfile.setEmail(rs.getString("EMAIL"));
-                recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
-                recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
+                recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PH"));
+                recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PH"));
                 recruiterProfile.setCountry(rs.getString("COUNTRY"));
+                recruiterProfile.setTwitterHandle(rs.getString("TWITTER_HANDLE"));
+                recruiterProfile.setInstFBPage(rs.getString("FB_PAGE"));
+                recruiterProfile.setCountryDialingCode(rs.getString("COUNTRY_DIALING_CODE"));
                 recruiterProfile.setState(rs.getString("STATE"));
                 recruiterProfile.setCity(rs.getString("CITY"));
                 recruiterProfile.setUsername(rs.getString("USERNAME"));
-                displayImg = rs.getBytes("UNIVERSITY_IMAGE");
+                displayImg = rs.getBytes("PROFILE_IMAGE");
                 if (displayImg != null) {
                     recruiterProfile.setImageDisplay(this.binaryToDefaultStreamedContent(displayImg, "image/jpeg"));
                 }
