@@ -5,7 +5,6 @@
  */
 package controller;
 
-
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -41,15 +40,11 @@ public class NavigationController implements Serializable {
     public String redirectToUserHomepage() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String linkEDUUsername = session.getAttribute("username").toString();
-        if ((!linkEDUUsername.equals("")) && (!linkEDUUsername.equals(""))) {
-            if (loginController.getLoginBean().getAccountType() == 'S') {
-                return ("StudentHome.xhtml");
-            } else {
-                return ("RecruiterHome.xhtml");
-            }
+        char accType = session.getAttribute("LinkEDU_AccType").toString().charAt(0);
+        if (accType == 'S') {
+            return ("StudentHome.xhtml");
         } else {
-            return ("index.xhtml");
+            return ("RecruiterHome.xhtml");
         }
     }
 }

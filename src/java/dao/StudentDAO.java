@@ -64,7 +64,7 @@ public class StudentDAO extends AppDBInfoDAO {
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
-            byte[] profileImg;            
+            byte[] profileImg;
             byte[] resume;
             ResultSet rs = stmt.executeQuery(selectQuery);
 
@@ -72,12 +72,24 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setFname(rs.getString("FIRST_NAME"));
                 studentProfile.setLname(rs.getString("LAST_NAME"));
                 studentProfile.setGender(rs.getString("GENDER").charAt(0));
-                studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
+                if (rs.getString("DOB") != null) {
+                    studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
+                } else {
+                    studentProfile.setDob(null);
+                }
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
                 studentProfile.setGPA(rs.getFloat("GPA"));
                 studentProfile.setEmail(rs.getString("EMAILID"));
-                //  studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
-                // studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));                
+                if (rs.getString("PREFERRED_UNIVS") != null) {
+                    studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
+                } else {
+                    studentProfile.setPreferredInsts(null);
+                }
+                if (rs.getString("PREFERRED_PROGRAMS") != null) {
+                    studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));
+                } else {
+                    studentProfile.setPreferredPrograms(null);
+                }
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
                 studentProfile.setCity(rs.getString("COUNTRY"));
@@ -130,37 +142,47 @@ public class StudentDAO extends AppDBInfoDAO {
     }
 
     public void updateStudentProfile(StudentProfile studentProfile, String username) throws IOException {
-        String updateQuery = "UPDATE STUDENT_PROFILE SET FIRST_NAME = '"
+        String updateQuery = "UPDATE LINKEDU.STUDENT_PROFILE SET FIRST_NAME = '"
                 + studentProfile.getFname() + "', "
                 + "LAST_NAME = '"
                 + studentProfile.getLname() + "', "
                 + "GENDER = '"
                 + studentProfile.getGender() + "', "
-                + "DOB = '"
-                + studentProfile.getDob() + "', "
-                + "HIGHEST_DEGREE = '"
-                + studentProfile.getHighestDegree() + "', "
-                + "GPA = '"
-                + studentProfile.getGPA() + "', "
-                + "SAT = '"
-                + studentProfile.getGPA() + "', "
-                + "ACT = '"
-                + studentProfile.getGPA() + "', "
-                + "TOEFL = '"
-                + studentProfile.getGPA() + "', "
-                + "GRE = '"
-                + studentProfile.getGPA() + "', "
-                + "IELTS = '"
-                + studentProfile.getGPA() + "', "
+                + "DOB = ";
+        if (studentProfile.getDob() == null) {
+            updateQuery += "null,HIGHEST_DEGREE = '";
+        } else {
+            updateQuery += "'" + studentProfile.getDob() + "',HIGHEST_DEGREE = '";
+        }
+        updateQuery += studentProfile.getHighestDegree() + "', "
+                + "GPA = "
+                + studentProfile.getGPA() + ", "
+                + "SAT = "
+                + studentProfile.getGPA() + ", "
+                + "ACT = "
+                + studentProfile.getGPA() + ", "
+                + "TOEFL = "
+                + studentProfile.getGPA() + ", "
+                + "GRE = "
+                + studentProfile.getGPA() + ", "
+                + "IELTS = "
+                + studentProfile.getGPA() + ", "
                 + "CERTIFICATIONS = '"
                 + studentProfile.getGPA() + "', "
                 + "EMAILID = '"
                 + studentProfile.getGPA() + "', "
-                + "PREFERRED_PROGRAMS = '"
-                + this.convertListtoString(studentProfile.getPreferredPrograms()) + "', "
-                + "PREFERRED_UNIVS = '"
-                + this.convertListtoString(studentProfile.getPreferredInsts()) + "', "
-                + "PRIMARY_PHONE = '"
+                + "PREFERRED_PROGRAMS = ";
+        if (studentProfile.getPreferredPrograms() == null) {
+            updateQuery += "null,PREFERRED_UNIVS = ";
+        } else {
+            updateQuery += "'" + this.convertListtoString(studentProfile.getPreferredPrograms()) + "',PREFERRED_UNIVS = ";
+        }
+        if (studentProfile.getPreferredInsts() == null) {
+            updateQuery += "null,";
+        } else {
+            updateQuery += "'" + this.convertListtoString(studentProfile.getPreferredInsts()) + "',";
+        }
+        updateQuery += "PRIMARY_PHONE = '"
                 + studentProfile.getPrimaryPhNum() + "', "
                 + "SECONDARY_PHONE = '"
                 + studentProfile.getSecondaryPhNum() + "', "
@@ -170,7 +192,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getState() + "', "
                 + "CITY = '"
                 + studentProfile.getCity()
-                + "' WHERE USERNAME='" + username + "'";
+                + "' WHERE LOWER(USERNAME)='" + username.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -185,16 +207,16 @@ public class StudentDAO extends AppDBInfoDAO {
     public void createStudentProfile(StudentProfile studentProfile, String username) throws IOException {
         CommonDAO coomonDB = new CommonDAO();
         UploadedFile profileImageUpload = studentProfile.getImageUpload();
-        InputStream profileImage=null;
-        if(profileImageUpload!=null){
+        InputStream profileImage = null;
+        if (profileImageUpload != null) {
             profileImage = studentProfile.getImageUpload().getInputstream();
         }
         UploadedFile resumeUpload = studentProfile.getResume();
-        InputStream resume=null;
-        if(resumeUpload!=null){
-             resume = studentProfile.getResume().getInputstream();
+        InputStream resume = null;
+        if (resumeUpload != null) {
+            resume = studentProfile.getResume().getInputstream();
         }
-        //String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
+        String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
         String insertQuery = "INSERT INTO LINKEDU.STUDENT_PROFILE(FIRST_NAME,"
                 + "LAST_NAME,"
                 + "GENDER,"
@@ -207,8 +229,9 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "GRE,"
                 + "IELTS,"
                 + "CERTIFICATIONS,"
-               // + "PREFERRED_PROGRAMS,"
-               // + "PREFERRED_UNIVS,"
+                + "EMAILID,"
+                + "PREFERRED_PROGRAMS,"
+                + "PREFERRED_UNIVS,"
                 + "PRIMARY_PHONE,"
                 + "SECONDARY_PHONE,"
                 + "COUNTRY,"
@@ -218,9 +241,13 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "VALUES('"
                 + studentProfile.getFname() + "','"
                 + studentProfile.getLname() + "','"
-                + studentProfile.getGender() + "','"
-                + studentProfile.getDob() + "','"
-                + studentProfile.getHighestDegree() + "',"
+                + studentProfile.getGender() + "',";
+        if (studentProfile.getDob() == null) {
+            insertQuery += "null,'";
+        } else {
+            insertQuery += "'" + studentProfile.getDob() + "','";
+        }
+        insertQuery += studentProfile.getHighestDegree() + "',"
                 + studentProfile.getGPA() + ","
                 + studentProfile.getSAT() + ","
                 + studentProfile.getACT() + ","
@@ -228,9 +255,18 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getGRE() + ","
                 + studentProfile.getIELTS() + ",'"
                 + studentProfile.getCeritifications() + "','"
-                //+ this.convertListtoString(studentProfile.getPreferredPrograms()) + "','"
-                //+ this.convertListtoString(studentProfile.getPreferredInsts()) + "','"
-                + studentProfile.getPrimaryPhNum() + "','"
+                + emailFromUserInfo + "',";
+        if (studentProfile.getPreferredPrograms() == null) {
+            insertQuery += "null,";
+        } else {
+            insertQuery += "'" + this.convertListtoString(studentProfile.getPreferredInsts()) + "',";
+        }
+        if (studentProfile.getPreferredInsts() == null) {
+            insertQuery += "null,'";
+        } else {
+            insertQuery += "'" + this.convertListtoString(studentProfile.getPreferredInsts()) + "','";
+        }
+        insertQuery += studentProfile.getPrimaryPhNum() + "','"
                 + studentProfile.getSecondaryPhNum() + "','"
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"

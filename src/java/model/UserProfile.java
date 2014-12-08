@@ -29,13 +29,6 @@ public class UserProfile {
     private String password;
     private UploadedFile imageUpload;
     private DefaultStreamedContent imageDisplay;
-    private double GPA;
-    private int SAT;
-    private int TOEFL;
-    private double IELTS;
-
-    
-
     
     /**
      * @return the fname
@@ -249,62 +242,5 @@ public class UserProfile {
     public void setImageDisplay(DefaultStreamedContent imageDisplay) {
         this.imageDisplay = imageDisplay;
     }
-
-    /**
-     * @return the GPA
-     */
-    public double getGPA() {
-        return GPA;
-    }
-
-    /**
-     * @param GPA the GPA to set
-     */
-    public void setGPA(double GPA) {
-        this.GPA = GPA;
-    }
-
-    /**
-     * @return the SAT
-     */
-    public int getSAT() {
-        return SAT;
-    }
-
-    /**
-     * @param SAT the SAT to set
-     */
-    public void setSAT(int SAT) {
-        this.SAT = SAT;
-    }
-
-    /**
-     * @return the TOEFL
-     */
-    public int getTOEFL() {
-        return TOEFL;
-    }
-
-    /**
-     * @param TOEFL the TOEFL to set
-     */
-    public void setTOEFL(int TOEFL) {
-        this.TOEFL = TOEFL;
-    }
-
-    /**
-     * @return the IELTS
-     */
-    public double getIELTS() {
-        return IELTS;
-    }
-
-    /**
-     * @param IELTS the IELTS to set
-     */
-    public void setIELTS(double IELTS) {
-        this.IELTS = IELTS;
-    }
-
 }
 

@@ -136,6 +136,7 @@ public class StudentController {
     }
 
     public void loadStudentProfile() throws IOException, SQLException, ParseException {
+        this.profileUpdateMessage="";
         FacesContext externalContext = FacesContext.getCurrentInstance();
         if (externalContext.isPostback()) {
             StudentDAO studentDao = new StudentDAO();
