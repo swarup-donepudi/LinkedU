@@ -78,8 +78,13 @@ public class StudentDAO extends AppDBInfoDAO {
                     studentProfile.setDob(null);
                 }
                 studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-                studentProfile.setGPA(rs.getFloat("GPA"));
+                studentProfile.setGpa(rs.getDouble("GPA"));
+                studentProfile.setIelts(rs.getDouble("IELTS"));
                 studentProfile.setEmail(rs.getString("EMAILID"));
+                studentProfile.setACT(rs.getInt("ACT"));
+                studentProfile.setSAT(rs.getInt("SAT"));
+                studentProfile.setTOEFL(rs.getInt("TOEFL"));
+                studentProfile.setGRE(rs.getInt("GRE"));
                 if (rs.getString("PREFERRED_UNIVS") != null) {
                     studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
                 } else {
@@ -96,6 +101,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
                 studentProfile.setUsername(rs.getString("USERNAME"));
+               // studentProfile.setYoutubeLink(rs.getString("Youtube_Link"));
                 profileImg = rs.getBytes("PROFILE_IMAGE");
                 resume = rs.getBytes("RESUME");
                 if (resume != null) {
@@ -115,8 +121,7 @@ public class StudentDAO extends AppDBInfoDAO {
         return studentProfile;
     }
 
-    public DefaultStreamedContent downloadResume(String username) throws IOException {
-        StudentProfile studentProfile = new StudentProfile();
+    public DefaultStreamedContent downloadResume(String username) throws IOException {        
         byte[] resume;
         DefaultStreamedContent resumeDownload = null;
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
@@ -152,25 +157,25 @@ public class StudentDAO extends AppDBInfoDAO {
         if (studentProfile.getDob() == null) {
             updateQuery += "null,HIGHEST_DEGREE = '";
         } else {
-            updateQuery += "'" + studentProfile.getDob() + "',HIGHEST_DEGREE = '";
+            updateQuery += "" + studentProfile.getDob() + ",HIGHEST_DEGREE = '";
         }
         updateQuery += studentProfile.getHighestDegree() + "', "
                 + "GPA = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getGpa() + ", "
                 + "SAT = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getSAT() + ", "
                 + "ACT = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getACT() + ", "
                 + "TOEFL = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getTOEFL() + ", "
                 + "GRE = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getGRE() + ", "
                 + "IELTS = "
-                + studentProfile.getGPA() + ", "
+                + studentProfile.getIelts() + ", "
                 + "CERTIFICATIONS = '"
-                + studentProfile.getGPA() + "', "
+                + studentProfile.getCeritifications() + "', "
                 + "EMAILID = '"
-                + studentProfile.getGPA() + "', "
+                + studentProfile.getEmail() + "', "
                 + "PREFERRED_PROGRAMS = ";
         if (studentProfile.getPreferredPrograms() == null) {
             updateQuery += "null,PREFERRED_UNIVS = ";
@@ -192,6 +197,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getState() + "', "
                 + "CITY = '"
                 + studentProfile.getCity()
+//                + "YOUTUBE_LINK = '"
+//                + studentProfile.getYoutubeLink()
                 + "' WHERE LOWER(USERNAME)='" + username.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -237,7 +244,9 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-                + "USERNAME) "
+             //   + "YOUTUBE_LINK,"
+                + "USERNAME"
+                + ") "
                 + "VALUES('"
                 + studentProfile.getFname() + "','"
                 + studentProfile.getLname() + "','"
@@ -248,12 +257,12 @@ public class StudentDAO extends AppDBInfoDAO {
             insertQuery += "'" + studentProfile.getDob() + "','";
         }
         insertQuery += studentProfile.getHighestDegree() + "',"
-                + studentProfile.getGPA() + ","
+                + studentProfile.getGpa() + ","
                 + studentProfile.getSAT() + ","
                 + studentProfile.getACT() + ","
                 + studentProfile.getTOEFL() + ","
                 + studentProfile.getGRE() + ","
-                + studentProfile.getIELTS() + ",'"
+                + studentProfile.getIelts() + ",'"
                 + studentProfile.getCeritifications() + "','"
                 + emailFromUserInfo + "',";
         if (studentProfile.getPreferredPrograms() == null) {
@@ -271,6 +280,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
+               // + studentProfile.getYoutubeLink()+ "','"
                 + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);

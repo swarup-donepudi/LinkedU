@@ -84,8 +84,8 @@ public class SearchDAO extends AppDBInfoDAO {
             studentProfile.setGender(rs.getString("GENDER").charAt(0));
             studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
             studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-            studentProfile.setGPA(rs.getFloat("GPA"));
-            studentProfile.setIELTS(rs.getFloat("IELTS"));
+            studentProfile.setGpa(rs.getFloat("GPA"));
+            studentProfile.setIelts(rs.getFloat("IELTS"));
             studentProfile.setSAT(rs.getInt("sat"));
             studentProfile.setTOEFL(rs.getInt("toefl"));
             studentProfile.setACT(rs.getInt("act"));
@@ -121,8 +121,8 @@ public class SearchDAO extends AppDBInfoDAO {
             studentProfile.setGender(rs.getString("GENDER").charAt(0));
             studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
             studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-            studentProfile.setGPA(rs.getFloat("GPA"));
-            studentProfile.setIELTS(rs.getFloat("IELTS"));
+            studentProfile.setGpa(rs.getFloat("GPA"));
+            studentProfile.setIelts(rs.getFloat("IELTS"));
             studentProfile.setSAT(rs.getInt("sat"));
             studentProfile.setTOEFL(rs.getInt("toefl"));
             studentProfile.setACT(rs.getInt("act"));

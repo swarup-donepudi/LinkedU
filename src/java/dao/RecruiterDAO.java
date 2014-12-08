@@ -54,7 +54,6 @@ public class RecruiterDAO extends AppDBInfoDAO {
         RecruiterProfile recruiterProfile = new RecruiterProfile();
         username = username.toLowerCase();
         String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
-
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -67,6 +66,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 recruiterProfile.setInstName(rs.getString("INST_NAME"));
                 //recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
                 recruiterProfile.setEmail(rs.getString("EMAIL"));
+                recruiterProfile.setDeptName(rs.getString("DEPT_NAME"));
                 recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PH"));
                 recruiterProfile.setSecondaryPhNum(rs.getString("SECONDARY_PH"));
                 recruiterProfile.setCountry(rs.getString("COUNTRY"));
@@ -97,16 +97,26 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getFname() + "', "
                 + "LAST_NAME = '"
                 + recruiterProfile.getLname() + "', "
-                + "GENDER = '"
-                + recruiterProfile.getGender() + "', "
-                + "UNIVERSITY = '"
+                //  + "GENDER = '"
+                // + recruiterProfile.getGender() + "', "
+                + "INST_NAME = '"
                 + recruiterProfile.getInstName() + "', "
+                + "DEPT_NAME = '"
+                + recruiterProfile.getDeptName() + "', "
+                + "FB_PAGE = '"
+                + recruiterProfile.getInstFBPage() + "', "
+                + "TWITTER_HANDLE = '"
+                + recruiterProfile.getTwitterHandle() + "', "
+                + "LINKEDU_REASON = '"
+                + recruiterProfile.getReasonForLinkEDU() + "', "
+                + "COUNTRY_DIALING_CODE = '"
+                + recruiterProfile.getCountryDialingCode() + "', "
                 //+ "UNIV_URL = '"
                 // + recruiterProfile.getInstURL() + "', "
-                + "PRIMARY_PHONE = '"
-                + recruiterProfile.getPrimaryPhNum() + "', "
-                + "SECONDARY_PHONE = '"
-                + recruiterProfile.getSecondaryPhNum() + "', "
+//                + "PRIMARY_PH = '"
+//                + recruiterProfile.getPrimaryPhNum() + "', "
+//                + "SECONDARY_PH = '"
+//                + recruiterProfile.getSecondaryPhNum() + "', "
                 + "COUNTRY = '"
                 + recruiterProfile.getCountry() + "', "
                 + "STATE = '"
@@ -131,31 +141,49 @@ public class RecruiterDAO extends AppDBInfoDAO {
         int rowsInserted = 0;
         CommonDAO coomonDB = new CommonDAO();
         String emailFromUserInfo = coomonDB.getEmailFromUserInfoTable(username);
-        String insertQuery = "INSERT INTO LINKEDU.RECRUITER_PROFILE(FIRST_NAME,"
+        String insertQuery = "INSERT INTO LINKEDU.RECRUITER_PROFILE(USERNAME, FIRST_NAME,"
                 + "LAST_NAME,"
-                + "GENDER,"
-                + "UNIVERSITY,"
-                //  + "UNIV_URL,"
-                + "PRIMARY_PHONE,"
-                + "SECONDARY_PHONE,"
-                + "COUNTRY,"
-                + "STATE,"
+                + "INST_NAME,"
+                + "DEPT_NAME,"
+                + "FB_PAGE,"
+                + "TWITTER_HANDLE,"
+                + "EMAIL,"
+                + "LINKEDU_REASON,"
+                + "COUNTRY_DIALING_CODE,"
+                + "PRIMARY_PH,"
+                + "SECONDARY_PH,"
                 + "CITY,"
-                + "USERNAME,"
-                + "EMAIL)"
+                + "STATE,"
+                + "COUNTRY,"
+                // + "GENDER,"
+                //                + "GPA,"
+                //                + "TOEFL,"
+                //                + "SAT,"
+                //                + "IELTS,"                
+                + ")"
                 + "VALUES('"
+                + username + "','"
                 + recruiterProfile.getFname() + "','"
                 + recruiterProfile.getLname() + "','"
-                + recruiterProfile.getGender() + "','"
                 + recruiterProfile.getInstName() + "','"
-                //  + recruiterProfile.getInstURL() + "','"
+                + recruiterProfile.getDeptName() + "','"
+                + recruiterProfile.getInstFBPage() + "','"
+                + recruiterProfile.getTwitterHandle() + "','"
+                + emailFromUserInfo + "','"
+                + recruiterProfile.getReasonForLinkEDU() + "','"
+                + recruiterProfile.getCountryDialingCode() + "','"
                 + recruiterProfile.getPrimaryPhNum() + "','"
                 + recruiterProfile.getSecondaryPhNum() + "','"
-                + recruiterProfile.getCountry() + "','"
-                + recruiterProfile.getState() + "','"
                 + recruiterProfile.getCity() + "','"
-                + username + "','"
-                + emailFromUserInfo + "')";
+                + recruiterProfile.getState() + "','"
+                + recruiterProfile.getCountry() + "'"
+//                + recruiterProfile.getGender() + "',"
+//                + recruiterProfile.getGpa() + ","
+//                + recruiterProfile.getToefl() + ","
+//                + recruiterProfile.getSat() + ","
+//                + recruiterProfile.getIelts() 
+                + ")";
+
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -248,8 +276,8 @@ public class RecruiterDAO extends AppDBInfoDAO {
     public int uploadImageToDB(RecruiterProfile recPro) throws SQLException, IOException {
         this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
         InputStream f2 = recPro.getImageUpload().getInputstream();
-        String query = "UPDATE LINKEDU.recruiter_profile SET university_image = ? WHERE username = ?";
-        int rowCount;
+        String query = "UPDATE LINKEDU.recruiter_profile SET PROFILE_image = ? WHERE username = ?";
+        int rowCount=0;
         try (PreparedStatement ps = this.DBConn.prepareStatement(query)) {
             ps.setBinaryStream(1, f2);
             ps.setString(2, recPro.username);
@@ -257,7 +285,10 @@ public class RecruiterDAO extends AppDBInfoDAO {
 //        String selectSQL = "SELECT university_image FROM LINKEDU.recruiter_profile WHERE username = ?";
 //        ps = this.DBConn.prepareStatement(selectSQL);  
 //        ps.setString(1, username);
+        }catch (SQLException e) {
+            this.redirectToErrorPage();
         }
+        
         return rowCount;
     }
 }

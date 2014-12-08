@@ -5,9 +5,11 @@
  */
 package model;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -18,20 +20,12 @@ public class StudentProfile extends UserProfile {
 
     private Date dob;
     private String highestDegree;
-    private double GPA;
-    private int SAT;
-    private int TOEFL;
-    private double IELTS;
     private List<String> preferredPrograms;
-    private List<String> preferredInsts;
-
-    private int ACT;
-
-    private int GRE;
-
+    private List<String> preferredInsts;  
     private String ceritifications;
     private UploadedFile resume;
-    private String youtubeLink;
+    private String youtubeLink = "http://www.youtube.com/v/XGSy3_Czz8k";
+    private DefaultStreamedContent img;
 
     public StudentProfile() {
         this.preferredPrograms = new ArrayList<>();
@@ -46,7 +40,8 @@ public class StudentProfile extends UserProfile {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(Date dob) throws ParseException {
+//
         this.dob = dob;
     }
 
@@ -74,33 +69,6 @@ public class StudentProfile extends UserProfile {
         this.preferredInsts = preferredInsts;
     }
 
-    /**
-     * @return the ACT
-     */
-    public int getACT() {
-        return ACT;
-    }
-
-    /**
-     * @param ACT the ACT to set
-     */
-    public void setACT(int ACT) {
-        this.ACT = ACT;
-    }
-
-    /**
-     * @return the GRE
-     */
-    public int getGRE() {
-        return GRE;
-    }
-
-    /**
-     * @param GRE the GRE to set
-     */
-    public void setGRE(int GRE) {
-        this.GRE = GRE;
-    }
 
     /**
      * @return the ceritifications
@@ -120,7 +88,7 @@ public class StudentProfile extends UserProfile {
      * @return the youtubeLink
      */
     public String getYoutubeLink() {
-        return youtubeLink;
+        return youtubeLink.replace("watch?v=", "v/");
     }
 
     /**
@@ -128,12 +96,6 @@ public class StudentProfile extends UserProfile {
      */
     public void setYoutubeLink(String youtubeLink) {
         this.youtubeLink = youtubeLink;
-    }
-
-    public String fetchYoutubeLink() {
-        String a = getYoutubeLink();
-        return a;
-
     }
 
     /**
@@ -144,59 +106,18 @@ public class StudentProfile extends UserProfile {
     }
 
     /**
-     * @return the GPA
+     * @return the img
      */
-    public double getGPA() {
-        return GPA;
+    public DefaultStreamedContent getImg() {
+        return img;
     }
 
     /**
-     * @param GPA the GPA to set
+     * @param img the img to set
      */
-    public void setGPA(double GPA) {
-        this.GPA = GPA;
+    public void setImg(DefaultStreamedContent img) {
+        this.img = img;
     }
 
-    /**
-     * @return the SAT
-     */
-    public int getSAT() {
-        return SAT;
-    }
-
-    /**
-     * @param SAT the SAT to set
-     */
-    public void setSAT(int SAT) {
-        this.SAT = SAT;
-    }
-
-    /**
-     * @return the TOEFL
-     */
-    public int getTOEFL() {
-        return TOEFL;
-    }
-
-    /**
-     * @param TOEFL the TOEFL to set
-     */
-    public void setTOEFL(int TOEFL) {
-        this.TOEFL = TOEFL;
-    }
-
-    /**
-     * @return the IELTS
-     */
-    public double getIELTS() {
-        return IELTS;
-    }
-
-    /**
-     * @param IELTS the IELTS to set
-     */
-    public void setIELTS(double IELTS) {
-        this.IELTS = IELTS;
-    }
 
 }

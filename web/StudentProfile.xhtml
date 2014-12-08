@@ -53,9 +53,9 @@
                         <table id="personalInfo" cellspacing="20">
                             <tr>
                                 <td>Profile Image</td>
-                                <td><p:graphicImage id="imagedisplay" value="#{recruiterController.recruiterProfile.imageDisplay}" width="300px" height="300px">
-                            </p:graphicImage>
-                            </td>
+                                <td><p:graphicImage id="imagedisplay" value="#{studentController.studentProfile.imageDisplay}" width="100px" height="100px">
+                                    </p:graphicImage>
+                                </td>
                             </tr>
                             <tr>
                                 <td>  
@@ -87,7 +87,7 @@
                                     DOB 
                                 </td>
                                 <td>
-                                    <p:calendar id="event" value="#{studentController.studentProfile.dob}">
+                                    <p:calendar id="event" value="#{studentController.studentProfile.dob}"  maxdate="7/1/2000">
                                         <p:ajax event="dateSelect" listener="#{studentController.onDateSelect}"/>
                                     </p:calendar>
                                 </td>
@@ -109,7 +109,7 @@
                                     GPA 
                                 </td>
                                 <td> 
-                                    <p:inputText id="gpa" value="#{studentController.studentProfile.GPA}"/>
+                                    <p:inputText id="gpa" value="#{studentController.studentProfile.gpa}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -150,7 +150,7 @@
                                         IELTS  
                                     </td>
                                     <td> 
-                                        <p:inputText id="ieltsScore" value="#{studentController.studentProfile.IELTS}"></p:inputText>
+                                        <p:inputText id="ieltsScore" value="#{studentController.studentProfile.ielts}"></p:inputText>
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,6 +257,12 @@
                     </p:tab>
                     <p:tab title="Uploads">
                         <table id="uploadTable" cellspacing="20">
+                            <tr>
+                                <td>Profile Image</td>
+                                <td><p:graphicImage id="imagedisplays" value="#{studentController.studentProfile.imageDisplay}" width="100px" height="100px">
+                                    </p:graphicImage>
+                                </td>
+                            </tr>
 
                             <tr>
                                 <td>
@@ -271,7 +277,14 @@
                             </tr>
                             <tr>
                                 <td>
-                                    YouTube
+                                    YouTube URL: 
+                                </td>
+                                <td>
+                                    <h:inputText id="youtubelink" value="#{studentController.studentProfile.youtubeLink}"/>
+                                </td>
+                                <td><object width="420" height="315"
+                                            data="#{studentController.studentProfile.youtubeLink}">
+                                    </object>
                                 </td>
 
                             </tr>

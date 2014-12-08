@@ -29,6 +29,12 @@ public class UserProfile {
     private String password;
     private UploadedFile imageUpload;
     private DefaultStreamedContent imageDisplay;
+    private double GPA;
+    private int SAT;
+    private int ACT;
+    private int TOEFL;
+    private int GRE;
+    private double IELTS;
     
     /**
      * @return the fname
@@ -241,6 +247,90 @@ public class UserProfile {
      */
     public void setImageDisplay(DefaultStreamedContent imageDisplay) {
         this.imageDisplay = imageDisplay;
+    }
+
+    /**
+     * @return the gpa
+     */
+    public double getGpa() {
+        return GPA;
+    }
+
+    /**
+     * @param gpa the gpa to set
+     */
+    public void setGpa(double gpa) {
+        this.GPA = gpa;
+    }
+
+    /**
+     * @return the sat
+     */
+    public int getSAT() {
+        return SAT;
+    }
+
+    /**
+     * @param SAT the sat to set
+     */
+    public void setSAT(int SAT) {
+        this.SAT = SAT;
+    }
+
+    /**
+     * @return the act
+     */
+    public int getACT() {
+        return ACT;
+    }
+
+    /**
+     * @param ACT the act to set
+     */
+    public void setACT(int ACT) {
+        this.ACT = ACT;
+    }
+
+    /**
+     * @return the gre
+     */
+    public int getGRE() {
+        return GRE;
+    }
+
+    /**
+     * @param GRE the gre to set
+     */
+    public void setGRE(int GRE) {
+        this.GRE = GRE;
+    }
+
+    /**
+     * @return the ielts
+     */
+    public double getIelts() {
+        return IELTS;
+    }
+
+    /**
+     * @param ielts the ielts to set
+     */
+    public void setIelts(double ielts) {
+        this.IELTS = ielts;
+    }
+
+    /**
+     * @return the toefl
+     */
+    public int getTOEFL() {
+        return TOEFL;
+    }
+
+    /**
+     * @param TOEFL the toefl to set
+     */
+    public void setTOEFL(int TOEFL) {
+        this.TOEFL = TOEFL;
     }
 }
 
