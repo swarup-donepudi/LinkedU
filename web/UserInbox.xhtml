@@ -7,6 +7,9 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
     </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{messageController.fetchInboxItems()}"/>
+    </f:metadata>
     <ui:decorate template="#{templateController.pageTemplate}">
         <ui:define name="content">
             <h:form>
@@ -16,9 +19,7 @@
                         <!-- column header -->
                         <f:facet name="header" >From</f:facet>
                         <!-- row record -->
-                        <h:link id="selectedUsername" outcome="RecruiterProfileForStudent" value="#{message.fromAddress}" includeViewParams="true">
-                            <f:param  name="selectedUsername" value="#{message.fromAddress}" /> 
-                        </h:link>
+                        <h:commandLink id="selectedUsername" action="#{navigationController.redirectToSenderProfile(message.fromAddress)}" value="#{message.fromAddress}"></h:commandLink>
                     </p:column>            
                     <p:column style="width: 20%">
                         <!-- column header -->
@@ -40,7 +41,7 @@
                         <f:facet name="header">Delete</f:facet>
                         <h:link id="deleteMsg" outcome="UserInbox" value="Delete" includeViewParams="true">
                             <f:param  name="selectedMsg" value="#{message.msgId}" /> 
-                        
+
                         </h:link>                            
                     </p:column>                        
                 </p:dataTable>                

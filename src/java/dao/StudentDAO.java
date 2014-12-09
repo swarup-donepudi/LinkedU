@@ -348,8 +348,8 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public boolean recruiterNotInWatchListInDB(String wlOwner, String wlItem) throws IOException {
         boolean userNotInWatchList = true;
-        String selectQuery = "SELECT * FROM LINKEDU.WATCH_LIST WHERE LOWER(OWNER) = '" + wlOwner.toLowerCase()
-                + "' AND LOWER(WL_ENTRY)='" + wlItem.toLowerCase() + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE LOWER(WL_OWNER) = '" + wlOwner.toLowerCase()
+                + "' AND LOWER(WL_ITEM)='" + wlItem.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -370,8 +370,8 @@ public class StudentDAO extends AppDBInfoDAO {
 
     public boolean institutionNotInWatchListInDB(String wlOwner, String wlItem) throws IOException {
         boolean universityNotInWatchList = true;
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE WL_OWNER = '" + wlOwner
-                + "' AND WL_ITEM='" + wlItem + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_WATCHLIST WHERE LOWER(WL_OWNER) = '" + wlOwner.toLowerCase()
+                + "' AND LOWER(WL_ITEM)='" + wlItem.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();

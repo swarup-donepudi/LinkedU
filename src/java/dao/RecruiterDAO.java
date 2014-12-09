@@ -62,9 +62,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
             while (rs.next()) {
                 recruiterProfile.setFname(rs.getString("FIRST_NAME"));
                 recruiterProfile.setLname(rs.getString("LAST_NAME"));
-                //recruiterProfile.setGender(rs.getString("GENDER").charAt(0));
                 recruiterProfile.setInstName(rs.getString("INST_NAME"));
-                //recruiterProfile.setInstURL(rs.getString("UNIV_URL"));
                 recruiterProfile.setEmail(rs.getString("EMAIL"));
                 recruiterProfile.setDeptName(rs.getString("DEPT_NAME"));
                 recruiterProfile.setPrimaryPhNum(rs.getString("PRIMARY_PH"));

@@ -29,11 +29,11 @@ public class MessagesDAO extends AppDBInfoDAO {
 
     public int insertMessageIntoDB(MessageBean messageBean) throws IOException {
         int rowCount = 0;
-        String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROMADDRESS,"
-                + "TOADDRESS,"
+        String insertQuery = "INSERT INTO LINKEDU.MESSAGES(FROM_ADDR,"
+                + "TO_ADDR,"
                 + "SUBJECT,"
-                + "MESSAGEBODY,"
-                + "STATUS) "
+                + "MESSAGE,"
+                + "MSG_STATUS) "
                 + "VALUES('"
                 + messageBean.getFromAddress() + "','"
                 + messageBean.getToAddress() + "','"
@@ -83,7 +83,7 @@ public class MessagesDAO extends AppDBInfoDAO {
                 messageBean.setFromAddress(rs.getString("FROM_ADDR"));
                 messageBean.setSubject(rs.getString("SUBJECT"));
                 messageBean.setMessageBody(rs.getString("MESSAGE"));
-                messageBean.setStatus(rs.getString("STATUS").charAt(0));
+                messageBean.setStatus(rs.getString("MSG_STATUS").charAt(0));
                 messageBean.setMsgId(rs.getInt("MSG_ID"));
                 messageBean.setTimeStamp(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("TIMESTAMP")));
                 inboxItems.add(messageBean);

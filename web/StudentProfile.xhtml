@@ -271,8 +271,21 @@
                                 <td>
                                     <p:fileUpload value="#{studentController.studentProfile.imageUpload}" mode="simple"/><br />
                                 </td>
+                                
+                            </tr>
+                            <tr>
                                 <td>
+                                    Upload Resume
+                                </td>
+                                <td>
+                                    <p:fileUpload value="#{studentController.studentProfile.resume}" mode="simple"/><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    
                                     <p:commandButton value="Upload" ajax="false" actionListener="#{studentController.uploadResumeImg()}" />
+                               
                                 </td>
                             </tr>
                             <tr>

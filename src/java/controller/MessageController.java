@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.MessageBean;
 
 /**
@@ -20,32 +22,32 @@ import model.MessageBean;
 @ManagedBean
 @ApplicationScoped
 public class MessageController {
-    
+
     @ManagedProperty(value = "#{loginController}")
     private LoginController loginController;
-    
+
     @ManagedProperty(value = "#{recruiterController}")
     private RecruiterController recruiterController;
-    
+
     @ManagedProperty(value = "#{studentController}")
-    private StudentController studentController; 
-    
+    private StudentController studentController;
+
     private MessageBean messageBean;
-    
+
     private String msgSendStatus;
-    
+
     private int unreadMsgsCount;
-    
+
     private ArrayList<MessageBean> userInbox;
-    
+
     private String toolTipInbox;
-    
+
     /**
      * Creates a new instance of MessageController
      */
     public MessageController() {
         messageBean = new MessageBean();
-        this.userInbox= new ArrayList<MessageBean>();
+        this.userInbox = new ArrayList<MessageBean>();
     }
 
     public LoginController getLoginController() {
@@ -91,8 +93,7 @@ public class MessageController {
     public int getUnreadMsgsCount() throws ParseException, IOException {
         String username = loginController.getLoginBean().getUserName();
         this.unreadMsgsCount = this.fetchUnreadMsgsCount(username);
-        this.toolTipInbox="You have "+this.unreadMsgsCount+" unread messages";
-        this.fetchInboxItems();
+        this.toolTipInbox = "You have " + this.unreadMsgsCount + " unread messages";
         return unreadMsgsCount;
     }
 
@@ -115,46 +116,46 @@ public class MessageController {
     public void setToolTipInbox(String toolTipInbox) {
         this.toolTipInbox = toolTipInbox;
     }
-    
-    public void insertMessage() throws IOException{        
-        String fromAddres=null;
-        String toAddress=null;
-        char status='N';
-        
-        if(loginController.getLoginBean().getAccountType()=='S'){
+
+    public void insertMessage() throws IOException {
+        String fromAddres = null;
+        String toAddress = null;
+        char status = 'N';
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        char accType = session.getAttribute("LinkEDU_AccType").toString().charAt(0);
+        if (accType == 'S') {
             fromAddres = this.studentController.getStudentProfile().getUsername();
             toAddress = this.studentController.getSelectedRecruiter().getUsername();
-        }
-        else{
+        } else {
             fromAddres = this.recruiterController.getRecruiterProfile().getUsername();
             toAddress = this.recruiterController.getSelectedStudent().getUsername();
         }
-        
+
         this.messageBean.setFromAddress(fromAddres);
         this.messageBean.setToAddress(toAddress);
         this.messageBean.setStatus(status);
-        
+
         MessagesDAO messagesDB = new MessagesDAO();
-        
+
         int messagesInserted = messagesDB.insertMessageIntoDB(this.messageBean);
-        if(messagesInserted == 1){
-            this.msgSendStatus="Message Sent Successfully";
-        }
-        else{
-            this.msgSendStatus="Error sending message. Apologies for inconvinience";
+        if (messagesInserted == 1) {
+            this.msgSendStatus = "Message Sent Successfully";
+        } else {
+            this.msgSendStatus = "Error sending message. Apologies for inconvinience";
         }
     }
-    
-    public int fetchUnreadMsgsCount(String username) throws IOException{
-        int unreadCount=0;
-        MessagesDAO messagesDB= new MessagesDAO();
+
+    public int fetchUnreadMsgsCount(String username) throws IOException {
+        int unreadCount = 0;
+        MessagesDAO messagesDB = new MessagesDAO();
         unreadCount = messagesDB.fetchUnreadMsgsCountFromDB(username);
         return unreadCount;
     }
-    
-    public void fetchInboxItems() throws ParseException, IOException{
+
+    public void fetchInboxItems() throws ParseException, IOException {
         String username = loginController.getLoginBean().getUserName();
         MessagesDAO messagesDB = new MessagesDAO();
-        this.userInbox=messagesDB.fetchInoxItemsFromDB(username);
+        this.userInbox = messagesDB.fetchInoxItemsFromDB(username);
     }
 }

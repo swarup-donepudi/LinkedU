@@ -14,7 +14,7 @@
             var validUsernameFlag = false;
             var validPasswordFlag = false;
             var validAccountTypeFlag = false;
-            var genderSelected=false;
+            var genderSelected = false;
             function ValidateEmail() {
                 var UsernameMsgAjax = document.getElementById("signupForm:newEmailMsgAjax").innerHTML;
                 var newEmail = document.getElementById("signupForm:newEmail");
@@ -24,15 +24,17 @@
                 {
                     document.getElementById("newEmailMsg").innerHTML = "";
                     validEmailFlag = true;
-                    if(UsernameMsgAjax == "Email Already Exists"){
+                    if (UsernameMsgAjax == "Email Already Exists") {
                         alert("Our database shows that this emailID has already been registered! Please use different emailID");
                         validEmailFlag = false;
                     }
                 }
                 else
                 {
-                    document.getElementById("newEmailMsg").innerHTML = "Invalid Email<br/>";
-                    validEmailFlag = false;
+                    if (newEmail.value != "") {
+                        document.getElementById("newEmailMsg").innerHTML = "Invalid Email<br/>";
+                        validEmailFlag = false;
+                    }
                 }
             }
 
@@ -41,19 +43,21 @@
                 var username = document.getElementById("signupForm:newUsername");
                 var usernameFormat = /^[A-Za-z0-9_]{3,15}$/;
                 validUsernameFlag = false;
- 
+
                 if (username.value.match(usernameFormat)) {
                     document.getElementById("newUsernameMsg").innerHTML = "";
                     validUsernameFlag = true;
-                        if(UsernameMsgAjax == "Username Already Exists"){
-                            alert("Please change the Username");  
-                            validUsernameFlag = false;
-                        }
+                    if (UsernameMsgAjax == "Username Already Exists") {
+                        alert("Please change the Username");
+                        validUsernameFlag = false;
+                    }
                 }
-                else 
+                else
                 {
-                    document.getElementById("newUsernameMsg").innerHTML = "Invalid Username<br/>";
-                    validUsernameFlag = false;
+                    if (username.value != "") {
+                        document.getElementById("newUsernameMsg").innerHTML = "Invalid Username<br/>";
+                        validUsernameFlag = false;
+                    }
                 }
 
 
@@ -89,12 +93,12 @@
                 }
                 return true;
             }
-            
-            function changedAccType(){
-                genderSelected=true;
+
+            function changedAccType() {
+                genderSelected = true;
                 document.getElementById("newAccountTypeMsg").innerHTML = "";
             }
-            
+
             function validateSignupForm() {
                 var newUsername = document.getElementById("signupForm:newUsername");
                 var newPwd1 = document.getElementById("signupForm:newPwd1");
@@ -102,17 +106,17 @@
                 var newEmail = document.getElementById("signupForm:newEmail");
                 var newAccountType = document.getElementById("signupForm:newAccountType");
                 var validForm = true;
-                
+
                 if (newUsername.value == "") {
                     document.getElementById("newUsernameMsg").innerHTML = "Enter Username";
-                    validForm =  false;
+                    validForm = false;
                 }
                 else {
                     document.getElementById("newUsernameMsg").innerHTML = "";
                 }
                 if (newPwd1.value == "") {
                     document.getElementById("newPwd1Msg").innerHTML = "Password Missing";
-                    validForm =  false;
+                    validForm = false;
                 }
                 else {
                     document.getElementById("newPwd1Msg").innerHTML = "";
@@ -120,7 +124,7 @@
 
                 if (newPwd2.value == "") {
                     document.getElementById("newPwd2Msg").innerHTML = "Retype the password";
-                    validForm =  false;
+                    validForm = false;
                 }
                 else {
                     document.getElementById("newPwd2Msg").innerHTML = "";
@@ -128,30 +132,30 @@
 
                 if (newEmail.value == "") {
                     document.getElementById("newEmailMsg").innerHTML = "Email Field Empty";
-                    validForm =  false;
+                    validForm = false;
                 }
                 else {
                     document.getElementById("newEmailMsg").innerHTML = "";
                 }
-                
-                
+
+
                 if (genderSelected) {
-                    document.getElementById("newAccountTypeMsg").innerHTML = "";  
+                    document.getElementById("newAccountTypeMsg").innerHTML = "";
                     validAccountTypeFlag = true;
                 }
                 else {
-                    document.getElementById("newAccountTypeMsg").innerHTML = "Select Account Type";        
+                    document.getElementById("newAccountTypeMsg").innerHTML = "Select Account Type";
                     validAccountTypeFlag = false;
                 }
 
                 if (validEmailFlag)
-                     if (validUsernameFlag)
-                                 if(validPasswordFlag)
-                                             if(validAccountTypeFlag)
-                                                         if(validForm) 
-                    return true;
-                
-                    return false;
+                    if (validUsernameFlag)
+                        if (validPasswordFlag)
+                            if (validAccountTypeFlag)
+                                if (validForm)
+                                    return true;
+
+                return false;
             }
 
         </script>
@@ -206,7 +210,7 @@
                                     <td>I'm a</td><td><p:selectOneRadio id="newAccountType" onchange="changedAccType()" value="#{signupController.signupBean.accountType}" ><h4 class="UserWarning" id="noType"></h4>
                                             <f:selectItem itemValue="S" itemLabel="&#xA0;Student" />
                                             <f:selectItem itemValue="R" itemLabel="&#xA0;Recruiter" />
-                                            
+
                                         </p:selectOneRadio></td>
                                 </tr>
                                 <tr>

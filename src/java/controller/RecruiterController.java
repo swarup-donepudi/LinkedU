@@ -197,6 +197,7 @@ public class RecruiterController implements Serializable {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         String wlOwner = session.getAttribute("username").toString();        
         RecruiterDAO recruiterDB = new RecruiterDAO();
+        this.recruiterWatchList = new ArrayList<>();
         recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);
     }
     

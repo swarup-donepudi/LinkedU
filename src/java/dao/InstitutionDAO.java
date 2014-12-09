@@ -161,7 +161,7 @@ public class InstitutionDAO extends AppDBInfoDAO {
             }
         }
         
-String recruitersQuery = "SELECT USERNAME FROM LINKEDU.RECRUITER_PROFILE WHERE UNIVERSITY = '" + instProfile.getInstName() + "'";
+String recruitersQuery = "SELECT USERNAME FROM LINKEDU.RECRUITER_PROFILE WHERE LOWER(INST_NAME) = '" + instProfile.getInstName().toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
