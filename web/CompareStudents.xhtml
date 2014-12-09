@@ -4,11 +4,12 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:event type="preRenderView" listener="#{recruiterController.studentSearchCriteria.studentComparison()}"/>
-    </f:metadata>
+    
     <f:metadata>
         <f:event type="preRenderView" listener="#{loginController.checkSessionStatus()}"/>
+    </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{recruiterController.fetchingStudentNames()}"/>
     </f:metadata>
     <ui:decorate template="templates\AppThemeRecruiter.xhtml">
         <ui:define name="content">
@@ -24,7 +25,7 @@
                 <p:selectOneMenu id="student2" value="#{recruiterController.studentSearchCriteria.student2}">
                     <f:selectItems value="#{recruiterController.studentSearchCriteria.watchListNames}" />
                 </p:selectOneMenu><br/><br/>
-                <p:commandButton id="searchButton" action="#{recruiterController.compareStudents()}" value="Search">
+                <p:commandButton id="searchButton" action="#{recruiterController.compareStudents}" value="Search">
                     <f:ajax execute="studentdetails" />
                 </p:commandButton><br /><br />
             </h:form>

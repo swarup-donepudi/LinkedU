@@ -41,7 +41,7 @@ public class RecruiterController implements Serializable {
     private boolean selectedStudentNotInWatchList;
     private String watchListUpdateMsg;
     private ArrayList<WatchListItem> recruiterWatchList;
-   
+
     /**
      * Creates a new instance of RecruiterController
      */
@@ -52,8 +52,6 @@ public class RecruiterController implements Serializable {
         this.studentSearchResults = new ArrayList<>();
         this.recruiterWatchList = new ArrayList<>();
     }
-
-  
 
     public ArrayList<WatchListItem> getRecruiterWatchList() {
         return recruiterWatchList;
@@ -81,6 +79,11 @@ public class RecruiterController implements Serializable {
 
     public StudentSearchCriteria getStudentSearchCriteria() {
         return studentSearchCriteria;
+    }
+
+    public void fetchingStudentNames() throws IOException {
+        RecruiterDAO fetch = new RecruiterDAO();
+        studentSearchCriteria.watchListNames = fetch.getStudentListFromDB(recruiterProfile.username);
     }
 
     public void setStudentSearchCriteria(StudentSearchCriteria studentSearchCriteria) {
@@ -121,20 +124,23 @@ public class RecruiterController implements Serializable {
 
     public void loadRecruiterProfile() throws IOException, SQLException {
         FacesContext externalContext = FacesContext.getCurrentInstance();
-        //if (externalContext.isPostback()) {
+        if (externalContext.isPostback()) {
             RecruiterDAO profileDao = new RecruiterDAO();
             if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
                 this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
             }
-       // }
+        }
     }
 
     public void showStudentProfileToRecruiter() throws SQLException, ParseException, IOException {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-        String selectedStudentUsername = params.get("selectedUsername");
-        StudentDAO studentDB = new StudentDAO();
-        this.selectedStudent = studentDB.fetchStudentProfile(selectedStudentUsername);
+        FacesContext externalContext = FacesContext.getCurrentInstance();
+        if (!externalContext.isPostback()) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            String selectedStudentUsername = params.get("selectedUsername");
+            StudentDAO studentDB = new StudentDAO();
+            this.selectedStudent = studentDB.fetchStudentProfile(selectedStudentUsername);
+        }
     }
 
     public String updateRecruiterProfile() throws SQLException, IOException {
@@ -149,15 +155,12 @@ public class RecruiterController implements Serializable {
         return ("RecruiterProfile.xhtml");
     }
 
-    public String searchStudents() throws SQLException, IOException, ParseException {
+    public void searchStudents() throws SQLException, IOException, ParseException {
         this.studentSearchResults.clear();
         if (this.studentSearchCriteria.getPreferredInst() != null) {
             SearchDAO db = new SearchDAO();
             this.studentSearchResults = db.retrieveStudentSearchResults(studentSearchCriteria, studentSearchResults);
         }
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        //externalContext.redirect("SearchStudents.xhtml");
-        return null;
     }
 
     public void compareStudents() throws SQLException, IOException, ParseException {
@@ -165,7 +168,12 @@ public class RecruiterController implements Serializable {
         SearchDAO db = new SearchDAO();
         this.studentSearchResults = db.retrieveStudentResultsForComparison(studentSearchCriteria, studentSearchResults);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.redirect("CompareStudents.xhtml");        
+        externalContext.redirect("CompareStudents.xhtml");
+    }
+    
+    public void redirectToCompare() throws IOException{
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect("CompareStudents.xhtml");
     }
 
     public boolean isSelectedUniversityNotInWatchList() throws IOException {
@@ -181,7 +189,7 @@ public class RecruiterController implements Serializable {
     public void addStudentToWatchList() throws SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();        
+        String wlOwner = session.getAttribute("username").toString();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         int insertCount = recruiterDB.addStudentToWatchListInDB(wlOwner, this.selectedStudent);
 
@@ -195,24 +203,22 @@ public class RecruiterController implements Serializable {
     public void loadRecruiterWatchList() throws SQLException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();        
+        String wlOwner = session.getAttribute("username").toString();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         this.recruiterWatchList = new ArrayList<>();
         recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);
     }
-    
-    public void uploadImage() throws SQLException, IOException{
+
+    public void uploadImage() throws SQLException, IOException {
         RecruiterDAO upload = new RecruiterDAO();
         int uploadStatus = upload.uploadImageToDB(recruiterProfile);
-        if(uploadStatus==0){
+        if (uploadStatus == 0) {
             recruiterProfile.setUploadStatus("Upload not successfull. Please retry");
-        }
-        else{
+        } else {
             recruiterProfile.setUploadStatus("Upload successfull. Congratulations");
         }
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.redirect("RecruiterProfile.xhtml");
     }
 
-    
 }

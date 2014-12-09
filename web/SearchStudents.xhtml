@@ -23,8 +23,8 @@
                     </tr>
                     <tr>
                         <td>                        
-                            <p:commandButton ajax="true" id="searchButton" action="#{recruiterController.searchStudents()}" value="Search">
-                                <f:ajax execute="StudentSearchForm" render="studentSearchResults" />
+                            <p:commandButton ajax="true" id="searchButton" value="Search">
+                                <p:ajax process="@form" update="studentSearchResults" listener="#{recruiterController.searchStudents()}" event="click"/>
                             </p:commandButton></td>
                     </tr>
                 </table>

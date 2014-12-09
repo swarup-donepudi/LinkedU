@@ -20,7 +20,7 @@ public class StudentSearchCriteria {
     private String preferredInst;
     private String student1;
     private String student2;
-    private List watchListNames;
+    public List watchListNames;
 
     public float getGPA() {
         return GPA;
@@ -33,6 +33,8 @@ public class StudentSearchCriteria {
     public String getPreferredPrograms() {
         return preferredPrograms;
     }
+    
+    
 
     public void setPreferredPrograms(String preferredPrograms) {
         this.preferredPrograms = preferredPrograms;
@@ -65,11 +67,6 @@ public class StudentSearchCriteria {
      */
     public String getStudent2() {
         return student2;
-    }
-    
-    public void studentComparison() throws IOException{
-        RecruiterDAO fetch = new RecruiterDAO();       
-        this.watchListNames = fetch.getStudentListFromDB("abc");
     }
 
     /**

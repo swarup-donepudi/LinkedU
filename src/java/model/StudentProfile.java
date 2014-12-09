@@ -24,10 +24,11 @@ public class StudentProfile extends UserProfile {
     private List<String> preferredInsts;  
     private String ceritifications;
     private UploadedFile resume;
-    private String youtubeLink = "http://www.youtube.com/v/XGSy3_Czz8k";
+    private String youtubeLink;
     private DefaultStreamedContent img;
 
     public StudentProfile() {
+        this.youtubeLink="";
         this.preferredPrograms = new ArrayList<>();
         this.preferredInsts = new ArrayList<>();
     }

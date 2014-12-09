@@ -59,7 +59,7 @@ public class StudentDAO extends AppDBInfoDAO {
     public StudentProfile fetchStudentProfile(String username) throws ParseException, IOException {
         StudentProfile studentProfile = new StudentProfile();
 
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE LOWER(USERNAME) = '" + username.toLowerCase() + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -101,7 +101,8 @@ public class StudentDAO extends AppDBInfoDAO {
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
                 studentProfile.setUsername(rs.getString("USERNAME"));
-               // studentProfile.setYoutubeLink(rs.getString("Youtube_Link"));
+                if(rs.getString("Youtube_Link")!=null)
+                    studentProfile.setYoutubeLink(rs.getString("Youtube_Link"));
                 profileImg = rs.getBytes("PROFILE_IMAGE");
                 resume = rs.getBytes("RESUME");
                 if (resume != null) {
@@ -268,7 +269,7 @@ public class StudentDAO extends AppDBInfoDAO {
         if (studentProfile.getPreferredPrograms() == null) {
             insertQuery += "null,";
         } else {
-            insertQuery += "'" + this.convertListtoString(studentProfile.getPreferredInsts()) + "',";
+            insertQuery += "'" + this.convertListtoString(studentProfile.getPreferredPrograms()) + "',";
         }
         if (studentProfile.getPreferredInsts() == null) {
             insertQuery += "null,'";

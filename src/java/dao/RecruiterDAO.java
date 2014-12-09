@@ -252,7 +252,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
     }
 
     public ArrayList getStudentListFromDB(String wlOwner) throws IOException {
-        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE WL_OWNER = '" + wlOwner + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.RECRUITER_WATCHLIST WHERE LOWER(WL_OWNER) = '" + wlOwner.toLowerCase() + "'";
         ArrayList names = new ArrayList();
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
