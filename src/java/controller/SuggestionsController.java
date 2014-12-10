@@ -237,7 +237,11 @@ public class SuggestionsController {
             selectedItem = this.recruiterController.getRecruiterProfile().getCity();
         }
         
-        String keyname = null;
+        String[] citySuggestionParts = selectedItem.split(",");
+        cityName = citySuggestionParts[0];
+        stateName = citySuggestionParts[1].substring(1);
+        countryName = citySuggestionParts[2].substring(1);
+        /*String keyname = null;
         String output = null;
 
         try {
@@ -292,7 +296,7 @@ public class SuggestionsController {
                 default:
                     break;
             }
-        }
+        }*/
         SuggestionsDAO suggestionDB = new SuggestionsDAO();
         int countryCodeNum = suggestionDB.fetchCountryDialingCodeFromDB(countryName);
         countryCode = "+"+countryCodeNum;

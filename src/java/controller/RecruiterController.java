@@ -123,7 +123,7 @@ public class RecruiterController implements Serializable {
 
     public void loadRecruiterProfile() throws IOException, SQLException {
         FacesContext externalContext = FacesContext.getCurrentInstance();
-        if (externalContext.isPostback()) {
+        if (!externalContext.isPostback()) {
             RecruiterDAO profileDao = new RecruiterDAO();
             if (profileDao.recruiterHasProfile(this.recruiterProfile.username)) {
                 this.recruiterProfile = profileDao.fetchRecruiterProfile(this.recruiterProfile.username);
