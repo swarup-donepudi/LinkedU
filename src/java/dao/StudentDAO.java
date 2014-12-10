@@ -96,13 +96,15 @@ public class StudentDAO extends AppDBInfoDAO {
                     studentProfile.setPreferredPrograms(null);
                 }
                 studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
+                studentProfile.setCountryDialingCode(rs.getString("COUNTRY_DIALING_CODE"));
                 studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
-                studentProfile.setCity(rs.getString("COUNTRY"));
+                studentProfile.setCountry(rs.getString("COUNTRY"));
                 studentProfile.setState(rs.getString("STATE"));
                 studentProfile.setCity(rs.getString("CITY"));
                 studentProfile.setUsername(rs.getString("USERNAME"));
-                if(rs.getString("Youtube_Link")!=null)
+                if (rs.getString("Youtube_Link") != null) {
                     studentProfile.setYoutubeLink(rs.getString("Youtube_Link"));
+                }
                 profileImg = rs.getBytes("PROFILE_IMAGE");
                 resume = rs.getBytes("RESUME");
                 if (resume != null) {
@@ -122,7 +124,7 @@ public class StudentDAO extends AppDBInfoDAO {
         return studentProfile;
     }
 
-    public DefaultStreamedContent downloadResume(String username) throws IOException {        
+    public DefaultStreamedContent downloadResume(String username) throws IOException {
         byte[] resume;
         DefaultStreamedContent resumeDownload = null;
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE USERNAME = '" + username + "'";
@@ -197,9 +199,9 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + studentProfile.getState() + "', "
                 + "CITY = '"
-                + studentProfile.getCity()+ "', "
+                + studentProfile.getCity() + "', "
                 + "YOUTUBE_LINK = '"
-                + studentProfile.getYoutubeLink()+ "' "
+                + studentProfile.getYoutubeLink() + "' "
                 + "WHERE LOWER(USERNAME)='" + username.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -281,7 +283,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-                + studentProfile.getYoutubeLink()+ "','"
+                + studentProfile.getYoutubeLink() + "','"
                 + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
