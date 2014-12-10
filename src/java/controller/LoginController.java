@@ -101,11 +101,11 @@ public class LoginController implements Serializable {
     public void sendForgotPasswordEmail() throws SQLException, IOException {
         setErrorMessage("");
         LoginDAO loginDB = new LoginDAO();
-        String username = loginDB.verifyEmailID(loginBean.getUserName());
+            String username = loginDB.verifyEmailID(loginBean.getUserName());
         if (!username.equals("")) {
             String verifyString = this.generateRandonString();
             int count = loginDB.addVerificationDetails(username, verifyString);
-            String link = "http://localhost:8080/LinkedU/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
+            String link = "http://gfish2.it.ilstu.edu/mananda_Fall14_LinkedU/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
             EmailController sendemail = new EmailController();
             sendemail.mail(loginBean.getUserName(), "Change password", this.mailBody(link));
             setErrorMessage("Email Sent");

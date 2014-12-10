@@ -8,6 +8,7 @@ import dao.MessagesDAO;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -28,7 +29,7 @@ public class MessageController {
 
     @ManagedProperty(value = "#{studentController}")
     private StudentController studentController;
-
+    private String replyMessageBody;
     private MessageBean messageBean;
 
     private String msgSendStatus;
@@ -46,7 +47,15 @@ public class MessageController {
         messageBean = new MessageBean();
         this.userInbox = new ArrayList<MessageBean>();
     }
-    
+
+    public String getReplyMessageBody() {
+        return replyMessageBody;
+    }
+
+    public void setReplyMessageBody(String replyMessageBody) {
+        this.replyMessageBody = replyMessageBody;
+    }
+
     public RecruiterController getRecruiterController() {
         return recruiterController;
     }
@@ -122,7 +131,7 @@ public class MessageController {
             fromAddres = this.recruiterController.getRecruiterProfile().getUsername();
             toAddress = this.recruiterController.getSelectedStudent().getUsername();
         }
-
+        this.messageBean.getMessageBody();
         this.messageBean.setFromAddress(fromAddres);
         this.messageBean.setToAddress(toAddress);
         this.messageBean.setStatus(status);
@@ -136,9 +145,43 @@ public class MessageController {
             this.msgSendStatus = "Error sending message. Apologies for inconvinience";
         }
     }
-    
-    public void deleteMessage(int msgID) throws IOException{
-        MessagesDAO messages=new MessagesDAO();
+
+    public void replyToInboxMessage() throws IOException {
+        String fromAddres = null;
+        String toAddress = null;
+        String replyMsgBody = null;
+        char status = 'N';
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        char accType = session.getAttribute("LinkEDU_AccType").toString().charAt(0);
+        if (accType == 'S') {
+            fromAddres = this.studentController.getStudentProfile().getUsername();
+            FacesContext fc = FacesContext.getCurrentInstance();
+            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            toAddress = params.get("replyingTo");
+            replyMsgBody = params.get("replyMessageBody");
+
+        } else {
+            fromAddres = this.recruiterController.getRecruiterProfile().getUsername();
+            toAddress = this.recruiterController.getSelectedStudent().getUsername();
+        }
+
+        this.messageBean.setFromAddress(fromAddres);
+        this.messageBean.setToAddress(toAddress);
+        this.messageBean.setMessageBody(replyMsgBody);
+        this.messageBean.setStatus(status);
+
+        MessagesDAO messagesDB = new MessagesDAO();
+        int messagesInserted = messagesDB.insertMessageIntoDB(this.messageBean);
+        if (messagesInserted == 1) {
+            this.msgSendStatus = "Message Sent Successfully";
+        } else {
+            this.msgSendStatus = "Error sending message. Apologies for inconvinience";
+        }
+    }
+
+    public void deleteMessage(int msgID) throws IOException {
+        MessagesDAO messages = new MessagesDAO();
         messages.deleteMessageFromDB(msgID);
     }
 

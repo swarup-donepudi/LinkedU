@@ -32,20 +32,23 @@
                             #{message.messageBody}
                     </p:column> 
                     <p:column style="width: 8%">
-                        <p:lightBox id="lighbox2">
+                        <p:lightBox id="replyLightBox">
                             <f:facet name="header">Reply</f:facet>
                             <h:outputLink value="#">
                                 <h:outputText value="Reply" />
                             </h:outputLink>
 
                             <f:facet name="inline">
-                                <h:form id="RequestMoreInfoFormOverlay">
+                                <h:form id="replyPanelForm">
                                     <table cellspacing="30" style="color: white">
                                         <tr>
-                                            <td>Subject</td><td><p:inputText id="subject" size="80" value="#{messageController.messageBean.subject}"></p:inputText></td>
+                                            <td>To</td><td><p:inputText id="toAddr" size="80" value="#{message.fromAddress}"></p:inputText></td>
                                         </tr>
                                         <tr>
-                                            <td>Message</td><td><p:inputTextarea  id="message" value="#{messageController.messageBean.messageBody}"
+                                            <td>Subject</td><td><p:inputText id="subject" size="80" value="#{message.subject}"></p:inputText></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Message</td><td><p:inputTextarea  id="messageBody" value="#{messageController.replyMessageBody}"
                                                                                   counter="display" scrollHeight="60"
                                                                                   maxlength="2000" counterTemplate="{0} characters remaining">
                                                 </p:inputTextarea>
@@ -53,14 +56,18 @@
                                         </tr>
                                         <tr>
                                             <td>                        
-                                                <p:commandButton id="sendButton" action="#{messageController.insertMessage()}" value="Send"></p:commandButton></td>
+                                                <p:commandButton ajax="true" id="sendButton" value="Send">
+                                                    <f:param  name="replyingTo" value="#{message.fromAddress}" />
+                                                    <f:param name="replyMessageBody" value="MessageBody"/>
+                                                    <p:ajax process="@this messageBody" listener="#{messageController.replyToInboxMessage()}" event="click"></p:ajax>
+                                                </p:commandButton></td>
                                         </tr>
                                         <tr>
                                             <td>                        
                                                 <h:outputText id="msgSendStatus" value="#{messageController.msgSendStatus}"></h:outputText></td>
                                         </tr>                        
                                     </table>
-                                </h:form>
+                                    </h:form>
                             </f:facet>
 
                         </p:lightBox>

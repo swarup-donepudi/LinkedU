@@ -146,7 +146,7 @@ public class SignupController implements Serializable {
     public void createVerificationString(SignupBean user) throws SQLException, IOException {
         SignupDAO verify = new SignupDAO();
         String randomString = this.generateRandonString();
-        String link = "http://localhost:8080/LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
+        String link = "http://gfish2.it.ilstu.edu/mananda_Fall14_LinkedU/faces/ConfirmEmail.xhtml?verifylink=" + randomString;
         EmailController mailing = new EmailController();
         mailing.mail(user.getEmail(), "Verify your Email Address", this.mailBody(link));
         verify.insertVerificationDetails(user.getUserName(), randomString);
