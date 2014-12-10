@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,28 +80,11 @@ public class SearchDAO extends AppDBInfoDAO {
             ResultSet rs = stmt.executeQuery(selectQuery);
             while (rs.next()) {
                 StudentProfile studentProfile = new StudentProfile();
+                studentProfile.setUsername(rs.getString("USERNAME"));
                 studentProfile.setFname(rs.getString("FIRST_NAME"));
                 studentProfile.setLname(rs.getString("LAST_NAME"));
-                studentProfile.setGender(rs.getString("GENDER").charAt(0));
-                if(rs.getString("DOB")!=null)
-                    studentProfile.setDob(new SimpleDateFormat("YYYY-MM-DD", Locale.ENGLISH).parse(rs.getString("DOB")));
-                studentProfile.setHighestDegree(rs.getString("HIGHEST_DEGREE"));
-                studentProfile.setGpa(rs.getFloat("GPA"));
-                studentProfile.setIelts(rs.getFloat("IELTS"));
-                studentProfile.setSAT(rs.getInt("sat"));
-                studentProfile.setTOEFL(rs.getInt("toefl"));
-                studentProfile.setACT(rs.getInt("act"));
-                studentProfile.setGRE(rs.getInt("gre"));
-                studentProfile.setCeritifications(rs.getString("certifications"));
-                studentProfile.setPreferredPrograms(this.convertStringToList(rs.getString("PREFERRED_PROGRAMS")));//Replace the hard coded value with PREFERRED_PROGRAMS Column name
-                studentProfile.setPreferredInsts(this.convertStringToList(rs.getString("PREFERRED_UNIVS")));
-                studentProfile.setPrimaryPhNum(rs.getString("PRIMARY_PHONE"));
-                studentProfile.setSecondaryPhNum(rs.getString("SECONDARY_PHONE"));
-                studentProfile.setCity(rs.getString("COUNTRY"));
-                studentProfile.setState(rs.getString("STATE"));
-                studentProfile.setCity(rs.getString("CITY"));
-                studentProfile.setUsername(rs.getString("USERNAME"));
-                studentProfile.setYoutubeLink(rs.getString("YOUTUBE_LINK"));
+                DecimalFormat df = new DecimalFormat("#.##");
+                studentProfile.setGpa(Double.parseDouble(df.format(rs.getFloat("GPA"))));
                 studentSearchResults.add(studentProfile);
             }
             rs.close();

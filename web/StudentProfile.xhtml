@@ -13,6 +13,7 @@
     <ui:decorate template="templates\AppThemeStudent.xhtml">
         <ui:define name="content">
             <h:form id="editStudentProfileForm" enctype="multipart/form-data">
+                <h:outputText id="profileUpdateMsg" value="#{studentController.profileUpdateMessage}"></h:outputText><br/><br />
                 <p:tabView id="institutionTabs">
                     <p:tab title="User Account">
                         <table id="studentProfileTable" cellspacing="20">
@@ -80,16 +81,6 @@
                                         <f:selectItem itemValue="M" itemLabel="&#xA0;Male" />
                                         <f:selectItem itemValue="F" itemLabel="&#xA0;Female" />
                                     </p:selectOneRadio> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>                          
-                                    DOB 
-                                </td>
-                                <td>
-                                    <p:calendar id="event" value="#{studentController.studentProfile.dob}"  maxdate="7/1/2000">
-                                        <p:ajax event="dateSelect" listener="#{studentController.onDateSelect}"/>
-                                    </p:calendar>
                                 </td>
                             </tr>
                         </table>
@@ -252,9 +243,6 @@
                             </tr>
                         </table>
                     </p:tab>
-                    <p:tab title="Notifications">
-
-                    </p:tab>
                     <p:tab title="Uploads">
                         <table id="uploadTable" cellspacing="20">
                             <tr>
@@ -269,7 +257,7 @@
                                     Upload Image
                                 </td>
                                 <td>
-                                    <p:fileUpload value="#{studentController.studentProfile.imageUpload}" mode="simple"/><br />
+                                    <p:fileUpload id="profileImageUpload" value="#{studentController.studentProfile.imageUpload}" mode="simple"/><br />
                                 </td>
 
                             </tr>
@@ -278,13 +266,14 @@
                                     Upload Resume
                                 </td>
                                 <td>
-                                    <p:fileUpload value="#{studentController.studentProfile.resume}" mode="simple"/><br />
+                                    <p:fileUpload id="profileResumeUpload" value="#{studentController.studentProfile.resume}" mode="simple"/><br />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
 
-                                    <p:commandButton value="Upload" ajax="false" actionListener="#{studentController.uploadResumeImg()}" />
+                                    <p:commandButton value="Upload" ajax="false" action="#{studentController.uploadResumeImg}">
+                                    </p:commandButton>
 
                                 </td>
                             </tr>
@@ -307,8 +296,7 @@
                 </p:tabView>
                 <br />
                 <p:commandButton value="Update Profile" ajax="true">
-                    <p:ajax update="updateMsg" process="@form" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
-                <h:outputText id="updateMsg" value="#{studentController.profileUpdateMessage}"></h:outputText>
+                    <p:ajax update="editStudentProfileForm:profileUpdateMsg" process="@form" listener="#{studentController.updateStudentProfile}" event="click"/></p:commandButton><br /><br />
             </h:form><br /><br />
 
         </ui:define>

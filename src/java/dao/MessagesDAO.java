@@ -50,7 +50,19 @@ public class MessagesDAO extends AppDBInfoDAO {
         }
         return rowCount;
     }
-
+    public int deleteMessageFromDB(int msgID) throws IOException{
+        int deleteCount=0;
+        String deleteStatement="DELETE FROM LINKEDU.MESSAGES WHERE MSG_ID="+msgID;
+        try {
+            this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
+            Statement stmt = this.DBConn.createStatement();
+            deleteCount = stmt.executeUpdate(deleteStatement);
+        } catch (SQLException e) {
+            this.redirectToErrorPage();
+        }
+        return deleteCount;
+    
+    }
     public int fetchUnreadMsgsCountFromDB(String username) throws IOException {
         username = username.toLowerCase();
         int unreadCount = 0;

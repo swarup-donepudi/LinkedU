@@ -50,6 +50,12 @@
                     <p:tab title="Personal Info">
                         <table id="recruiterPersonalInfo" cellspacing="20">
                             <tr>
+                                <td>Profile Image</td>
+                                <td><p:graphicImage id="imagedisplay" value="#{recruiterController.recruiterProfile.imageDisplay}" width="100px" height="100px">
+                                    </p:graphicImage></td>
+                            </tr>
+
+                            <tr>
                                 <td>  
                                     First Name </td>
                                 <td>
@@ -229,15 +235,11 @@
                             </td>
                             <td> <p:commandButton value="upload" ajax="false" actionListener="#{recruiterController.uploadImage()}" /></td>
                             <td>
-<!--                                <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-                                    <p:fileDownload value="#{recruiterController.recruiterProfile.downloadResume}" />
-                                </p:commandButton>-->
+                                <!--                                <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                                                    <p:fileDownload value="#{recruiterController.recruiterProfile.downloadResume}" />
+                                                                </p:commandButton>-->
                             </td>
                         </tr>
-                        <td>Image Uploaded: </td>
-                        <td><p:graphicImage id="imagedisplay" value="#{recruiterController.recruiterProfile.imageDisplay}" width="300px" height="300px">
-                            </p:graphicImage><br /></td>
-
                     </p:tab>
                 </p:tabView>
                 <p:commandButton ajax = "false" value="Update Profile" 

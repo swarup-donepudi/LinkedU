@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -29,7 +29,7 @@ import model.WatchListItem;
  * @author skdonep
  */
 @ManagedBean(name = "recruiterController")
-@ApplicationScoped
+@SessionScoped
 public class RecruiterController implements Serializable {
 
     private StudentSearchCriteria studentSearchCriteria;
@@ -178,7 +178,7 @@ public class RecruiterController implements Serializable {
     public boolean isSelectedUniversityNotInWatchList() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         String wlItem = this.selectedStudent.getUsername();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         this.selectedStudentNotInWatchList = recruiterDB.studentNotInWatchListInDB(wlOwner, wlItem);
@@ -188,7 +188,7 @@ public class RecruiterController implements Serializable {
     public void addStudentToWatchList() throws SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         int insertCount = recruiterDB.addStudentToWatchListInDB(wlOwner, this.selectedStudent);
 
@@ -202,7 +202,7 @@ public class RecruiterController implements Serializable {
     public void loadRecruiterWatchList() throws SQLException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         RecruiterDAO recruiterDB = new RecruiterDAO();
         this.recruiterWatchList = new ArrayList<>();
         recruiterDB.retrieveRecruiterWatchListFromDB(wlOwner, this.recruiterWatchList);

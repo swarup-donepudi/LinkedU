@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
@@ -32,7 +32,7 @@ import org.primefaces.model.DefaultStreamedContent;
  * @author skdonep
  */
 @ManagedBean(name = "studentController")
-@ApplicationScoped
+@SessionScoped
 public class StudentController {
 
     private StudentProfile studentProfile;
@@ -136,9 +136,9 @@ public class StudentController {
     }
 
     public void loadStudentProfile() throws IOException, SQLException, ParseException {
-        this.profileUpdateMessage="";
         FacesContext externalContext = FacesContext.getCurrentInstance();
         if (!externalContext.isPostback()) {
+            this.profileUpdateMessage = "";
             StudentDAO studentDao = new StudentDAO();
             if (studentDao.studentHasProfile(this.studentProfile.username)) {
                 this.studentProfile = studentDao.fetchStudentProfile(this.studentProfile.username);
@@ -193,7 +193,7 @@ public class StudentController {
     public boolean isSelectedInstitutionNotInWatchList() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         String wlItem = this.selectedInstitution.getInstName();
         StudentDAO studentDB = new StudentDAO();
         this.selectedInstitutionNotInWatchList = studentDB.institutionNotInWatchListInDB(wlOwner, wlItem);
@@ -203,7 +203,7 @@ public class StudentController {
     public boolean isSelectedRecruiterNotInWatchList() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         String wlItem = this.selectedRecruiter.getUsername();
         StudentDAO studentDB = new StudentDAO();
         this.setSelectedRecruiterNotInWatchList(studentDB.recruiterNotInWatchListInDB(wlOwner, wlItem));
@@ -213,7 +213,7 @@ public class StudentController {
     public void addInstitutionToWatchList() throws SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         String wlItem = this.selectedInstitution.getDoeUID();
         String wlLname = this.selectedInstitution.getInstName();
         StudentDAO studentDB = new StudentDAO();
@@ -228,7 +228,7 @@ public class StudentController {
     public void addRecruiterToWatchList() throws SQLException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         String wlItem = this.selectedRecruiter.getUsername();
         String itemFName = this.selectedRecruiter.getFname();
         String itemLname = this.selectedRecruiter.getLname();
@@ -246,14 +246,14 @@ public class StudentController {
     public void loadStudentWatchList() throws SQLException, IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        String wlOwner = session.getAttribute("username").toString();
+        String wlOwner = session.getAttribute("LinkEDU_Username").toString();
         StudentDAO studentDB = new StudentDAO();
         this.studentWatchListInstitutions.clear();
         this.studentWatchListRecruiters.clear();
         studentDB.retrieveStudenteWatchListFromDB(wlOwner, studentWatchListInstitutions, studentWatchListRecruiters);
     }
 
-    public void uploadResumeImg() throws IOException, SQLException, MessagingException {
+    public String uploadResumeImg() throws IOException, SQLException, MessagingException, ParseException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         StudentDAO upload = new StudentDAO();
         int uploadCheck = 0;
@@ -264,12 +264,13 @@ public class StudentController {
             uploadCheck += upload.uploadImg(studentProfile.username, studentProfile);
         }
         if (uploadCheck == 0) {
-
-            externalContext.redirect("StudentHome.xhtml");
+            this.profileUpdateMessage = "Upload Failed";
         } else {
-            externalContext.redirect("StudentProfile.xhtml");
+            this.profileUpdateMessage = "Upload Successful";
+            StudentDAO studentDao = new StudentDAO();
+            this.studentProfile = studentDao.fetchStudentProfile(this.studentProfile.username);
         }
-
+        return "StudentProfile?faces-redirect=true";
     }
 
     public DefaultStreamedContent downloadResume() throws IOException {

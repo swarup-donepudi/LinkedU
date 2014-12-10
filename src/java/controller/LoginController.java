@@ -14,9 +14,9 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Random;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -31,7 +31,7 @@ import model.StudentProfile;
  * @author hgindra
  */
 @ManagedBean(name = "loginController")
-@ApplicationScoped
+@RequestScoped
 public class LoginController implements Serializable {
 
     @ManagedProperty(value = "#{recruiterController}")
@@ -171,7 +171,7 @@ public class LoginController implements Serializable {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         session.setAttribute("loggedIn", "true");
         session.setAttribute("LinkEDU_AccType", AccType);
-        session.setAttribute("username", loginBean.getUserName());
+        session.setAttribute("LinkEDU_Username", loginBean.getUserName());
     }
 
     private void loadUserProfile(String username, char accType) throws SQLException, ParseException, IOException {
@@ -212,12 +212,10 @@ public class LoginController implements Serializable {
             if (accStatus == 'A') {
                 if (accType == 'S') {
                     externalContext.redirect("StudentHome.xhtml");
-                }
-                else if (accType == 'R') {
+                } else if (accType == 'R') {
                     externalContext.redirect("RecruiterHome.xhtml");
                 }
-            }
-            else if (accStatus == 'I') {
+            } else if (accStatus == 'I') {
                 externalContext.redirect("InactiveAccount.xhtml");
             }
         } else {
@@ -228,7 +226,12 @@ public class LoginController implements Serializable {
     public void checkSessionStatus() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        if (!session.getAttribute("loggedIn").toString().equals("true")) {
+        if (session.getAttribute("loggedIn") != null) {
+            if (!session.getAttribute("loggedIn").toString().equals("true")) {
+                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                externalContext.redirect("index.xhtml");
+            }
+        } else {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             externalContext.redirect("index.xhtml");
         }

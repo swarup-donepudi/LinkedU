@@ -32,17 +32,45 @@
                             #{message.messageBody}
                     </p:column> 
                     <p:column style="width: 8%">
-                        <f:facet name="header">Reply</f:facet>
-                        <h:link id="replyMsg" outcome="UserInbox" value="Reply" includeViewParams="true">
-                            <f:param  name="selectedMsg" value="#{message.msgId}" /> 
-                        </h:link>                            
+                        <p:lightBox id="lighbox2">
+                            <f:facet name="header">Reply</f:facet>
+                            <h:outputLink value="#">
+                                <h:outputText value="Reply" />
+                            </h:outputLink>
+
+                            <f:facet name="inline">
+                                <h:form id="RequestMoreInfoFormOverlay">
+                                    <table cellspacing="30" style="color: white">
+                                        <tr>
+                                            <td>Subject</td><td><p:inputText id="subject" size="80" value="#{messageController.messageBean.subject}"></p:inputText></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Message</td><td><p:inputTextarea  id="message" value="#{messageController.messageBean.messageBody}"
+                                                                                  counter="display" scrollHeight="60"
+                                                                                  maxlength="2000" counterTemplate="{0} characters remaining">
+                                                </p:inputTextarea>
+                                                <h:outputText id="display" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>                        
+                                                <p:commandButton id="sendButton" action="#{messageController.insertMessage()}" value="Send"></p:commandButton></td>
+                                        </tr>
+                                        <tr>
+                                            <td>                        
+                                                <h:outputText id="msgSendStatus" value="#{messageController.msgSendStatus}"></h:outputText></td>
+                                        </tr>                        
+                                    </table>
+                                </h:form>
+                            </f:facet>
+
+                        </p:lightBox>
                     </p:column>
                     <p:column style="width: 8%">
                         <f:facet name="header">Delete</f:facet>
-                        <h:link id="deleteMsg" outcome="UserInbox" value="Delete" includeViewParams="true">
-                            <f:param  name="selectedMsg" value="#{message.msgId}" /> 
+                        <h:commandLink id="deleteMsg" value="Delete">
 
-                        </h:link>                            
+                            <f:ajax listener="#{messageController.deleteMessage(message.msgId)}" event="click" render="inboxItems"/>
+                        </h:commandLink>                            
                     </p:column>                        
                 </p:dataTable>                
             </h:form>    

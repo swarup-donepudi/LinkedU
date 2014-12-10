@@ -8,9 +8,9 @@ import dao.MessagesDAO;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.MessageBean;
@@ -20,11 +20,8 @@ import model.MessageBean;
  * @author skdonep
  */
 @ManagedBean
-@ApplicationScoped
+@SessionScoped
 public class MessageController {
-
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;
 
     @ManagedProperty(value = "#{recruiterController}")
     private RecruiterController recruiterController;
@@ -49,15 +46,7 @@ public class MessageController {
         messageBean = new MessageBean();
         this.userInbox = new ArrayList<MessageBean>();
     }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-
+    
     public RecruiterController getRecruiterController() {
         return recruiterController;
     }
@@ -91,7 +80,9 @@ public class MessageController {
     }
 
     public int getUnreadMsgsCount() throws ParseException, IOException {
-        String username = loginController.getLoginBean().getUserName();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String username = session.getAttribute("LinkEDU_Username").toString();
         this.unreadMsgsCount = this.fetchUnreadMsgsCount(username);
         this.toolTipInbox = "You have " + this.unreadMsgsCount + " unread messages";
         return unreadMsgsCount;
@@ -145,6 +136,11 @@ public class MessageController {
             this.msgSendStatus = "Error sending message. Apologies for inconvinience";
         }
     }
+    
+    public void deleteMessage(int msgID) throws IOException{
+        MessagesDAO messages=new MessagesDAO();
+        messages.deleteMessageFromDB(msgID);
+    }
 
     public int fetchUnreadMsgsCount(String username) throws IOException {
         int unreadCount = 0;
@@ -154,7 +150,9 @@ public class MessageController {
     }
 
     public void fetchInboxItems() throws ParseException, IOException {
-        String username = loginController.getLoginBean().getUserName();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        String username = session.getAttribute("LinkEDU_Username").toString();
         MessagesDAO messagesDB = new MessagesDAO();
         this.userInbox = messagesDB.fetchInoxItemsFromDB(username);
     }

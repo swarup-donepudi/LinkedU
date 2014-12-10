@@ -35,7 +35,7 @@ public class StudentDAO extends AppDBInfoDAO {
     public boolean studentHasProfile(String username) throws SQLException, IOException {
         boolean studentHasProfile = false;
 
-        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE LOWER(USERNAME) = '" + username + "'";
+        String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE WHERE LOWER(USERNAME) = '" + username.toLowerCase() + "'";
 
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
@@ -197,10 +197,10 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "STATE = '"
                 + studentProfile.getState() + "', "
                 + "CITY = '"
-                + studentProfile.getCity()
-//                + "YOUTUBE_LINK = '"
-//                + studentProfile.getYoutubeLink()
-                + "' WHERE LOWER(USERNAME)='" + username.toLowerCase() + "'";
+                + studentProfile.getCity()+ "', "
+                + "YOUTUBE_LINK = '"
+                + studentProfile.getYoutubeLink()+ "' "
+                + "WHERE LOWER(USERNAME)='" + username.toLowerCase() + "'";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
             Statement stmt = this.DBConn.createStatement();
@@ -245,7 +245,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + "COUNTRY,"
                 + "STATE,"
                 + "CITY,"
-             //   + "YOUTUBE_LINK,"
+                + "YOUTUBE_LINK,"
                 + "USERNAME"
                 + ") "
                 + "VALUES('"
@@ -281,7 +281,7 @@ public class StudentDAO extends AppDBInfoDAO {
                 + studentProfile.getCountry() + "','"
                 + studentProfile.getState() + "','"
                 + studentProfile.getCity() + "','"
-               // + studentProfile.getYoutubeLink()+ "','"
+                + studentProfile.getYoutubeLink()+ "','"
                 + username + "')";
         try {
             this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);

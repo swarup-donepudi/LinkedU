@@ -38,21 +38,11 @@ public class SuggestionsController {
     private RecruiterController recruiterController;
     @ManagedProperty(value = "#{studentController}")
     private StudentController studentController;
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;
 
     /**
      * Creates a new instance of SuggestionsController
      */
     public SuggestionsController() {
-    }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
     }
 
     public RecruiterController getRecruiterController() {

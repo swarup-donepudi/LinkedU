@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import java.io.IOException;
@@ -27,15 +26,13 @@ public class LogoutController implements Serializable {
      */
     public LogoutController() {
     }
-    
-    public void logoutUser() throws IOException{
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-            if(session.getAttribute("loggedIn").equals("true")){
-                session.setAttribute("loggedIn", "false");                
-                externalContext.redirect("index.xhtml");
-            }
+
+    public String logoutUser() throws IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        if (session.getAttribute("loggedIn").equals("true")) {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        }
+        return "index?faces-redirect=true";
     }
-    
 }

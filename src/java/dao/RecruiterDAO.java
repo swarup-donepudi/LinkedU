@@ -111,10 +111,10 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getCountryDialingCode() + "', "
                 //+ "UNIV_URL = '"
                 // + recruiterProfile.getInstURL() + "', "
-//                + "PRIMARY_PH = '"
-//                + recruiterProfile.getPrimaryPhNum() + "', "
-//                + "SECONDARY_PH = '"
-//                + recruiterProfile.getSecondaryPhNum() + "', "
+                //                + "PRIMARY_PH = '"
+                //                + recruiterProfile.getPrimaryPhNum() + "', "
+                //                + "SECONDARY_PH = '"
+                //                + recruiterProfile.getSecondaryPhNum() + "', "
                 + "COUNTRY = '"
                 + recruiterProfile.getCountry() + "', "
                 + "STATE = '"
@@ -153,12 +153,11 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + "CITY,"
                 + "STATE,"
                 + "COUNTRY,"
-                // + "GENDER,"
-                //                + "GPA,"
-                //                + "TOEFL,"
-                //                + "SAT,"
-                //                + "IELTS,"                
-                + ")"
+                + "GPA,"
+                + "TOEFL,"
+                + "SAT,"
+                + "IELTS"
+                + ") "
                 + "VALUES('"
                 + username + "','"
                 + recruiterProfile.getFname() + "','"
@@ -174,12 +173,11 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getSecondaryPhNum() + "','"
                 + recruiterProfile.getCity() + "','"
                 + recruiterProfile.getState() + "','"
-                + recruiterProfile.getCountry() + "'"
-//                + recruiterProfile.getGender() + "',"
-//                + recruiterProfile.getGpa() + ","
-//                + recruiterProfile.getToefl() + ","
-//                + recruiterProfile.getSat() + ","
-//                + recruiterProfile.getIelts() 
+                + recruiterProfile.getCountry() + "',"
+                + recruiterProfile.getGpa() + ","
+                + recruiterProfile.getTOEFL() + ","
+                + recruiterProfile.getSAT() + ","
+                + recruiterProfile.getIelts()
                 + ")";
 
         try {
@@ -275,7 +273,7 @@ public class RecruiterDAO extends AppDBInfoDAO {
         this.DBConn = this.openDBConnection(this.databaseURL, this.dbUserName, this.dbPassword);
         InputStream f2 = recPro.getImageUpload().getInputstream();
         String query = "UPDATE LINKEDU.recruiter_profile SET PROFILE_image = ? WHERE username = ?";
-        int rowCount=0;
+        int rowCount = 0;
         try (PreparedStatement ps = this.DBConn.prepareStatement(query)) {
             ps.setBinaryStream(1, f2);
             ps.setString(2, recPro.username);
@@ -283,10 +281,10 @@ public class RecruiterDAO extends AppDBInfoDAO {
 //        String selectSQL = "SELECT university_image FROM LINKEDU.recruiter_profile WHERE username = ?";
 //        ps = this.DBConn.prepareStatement(selectSQL);  
 //        ps.setString(1, username);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             this.redirectToErrorPage();
         }
-        
+
         return rowCount;
     }
 }

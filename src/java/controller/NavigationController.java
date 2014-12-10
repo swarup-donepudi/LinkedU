@@ -22,21 +22,10 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class NavigationController implements Serializable {
 
-    @ManagedProperty(value = "#{loginController}")
-    private LoginController loginController;
-
     /**
      * Creates a new instance of NavigationController
      */
     public NavigationController() {
-    }
-
-    public LoginController getLoginController() {
-        return loginController;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
     }
 
     public String redirectToUserHomepage() {
@@ -55,7 +44,7 @@ public class NavigationController implements Serializable {
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
         char accType = session.getAttribute("LinkEDU_AccType").toString().charAt(0);
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        String redirectURL = null;
+        String redirectURL;
         if (accType == 'S') {
             redirectURL = "RecruiterProfileForStudent.xhtml?selectedUsername=" + username;
             externalContext.redirect(redirectURL);
