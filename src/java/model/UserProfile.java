@@ -34,23 +34,8 @@ public class UserProfile {
     private int ACT;
     private int TOEFL;
     private int GRE;
-    private double IELTS;
+    private double IELTS;    
 
-    public double getGPA() {
-        return GPA;
-    }
-
-    public void setGPA(double GPA) {
-        this.GPA = GPA;
-    }
-
-    public double getIELTS() {
-        return IELTS;
-    }
-
-    public void setIELTS(double IELTS) {
-        this.IELTS = IELTS;
-    }
     
     /**
      * @return the fname

@@ -73,6 +73,11 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 recruiterProfile.setCountryDialingCode(rs.getString("COUNTRY_DIALING_CODE"));
                 recruiterProfile.setState(rs.getString("STATE"));
                 recruiterProfile.setCity(rs.getString("CITY"));
+                recruiterProfile.setReasonForLinkEDU(rs.getString("LINKEDU_REASON"));
+                recruiterProfile.setGpa(rs.getDouble("GPA"));
+                recruiterProfile.setIelts(rs.getDouble("IELTS"));
+                recruiterProfile.setSAT(rs.getInt("SAT"));
+                recruiterProfile.setTOEFL(rs.getInt("TOEFL"));              
                 recruiterProfile.setUsername(rs.getString("USERNAME"));
                 displayImg = rs.getBytes("PROFILE_IMAGE");
                 if (displayImg != null) {
@@ -95,8 +100,6 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getFname() + "', "
                 + "LAST_NAME = '"
                 + recruiterProfile.getLname() + "', "
-                //  + "GENDER = '"
-                // + recruiterProfile.getGender() + "', "
                 + "INST_NAME = '"
                 + recruiterProfile.getInstName() + "', "
                 + "DEPT_NAME = '"
@@ -109,18 +112,26 @@ public class RecruiterDAO extends AppDBInfoDAO {
                 + recruiterProfile.getReasonForLinkEDU() + "', "
                 + "COUNTRY_DIALING_CODE = '"
                 + recruiterProfile.getCountryDialingCode() + "', "
-                //+ "UNIV_URL = '"
-                // + recruiterProfile.getInstURL() + "', "
-                //                + "PRIMARY_PH = '"
-                //                + recruiterProfile.getPrimaryPhNum() + "', "
-                //                + "SECONDARY_PH = '"
-                //                + recruiterProfile.getSecondaryPhNum() + "', "
+                + "PRIMARY_PH = '"
+                + recruiterProfile.getPrimaryPhNum() + "', "
+                + "SECONDARY_PH = '"
+                + recruiterProfile.getSecondaryPhNum() + "', "
                 + "COUNTRY = '"
                 + recruiterProfile.getCountry() + "', "
                 + "STATE = '"
                 + recruiterProfile.getState() + "', "
                 + "CITY = '"
                 + recruiterProfile.getCity() + "', "
+                + "GPA = '"
+                + recruiterProfile.getGpa() + "', "
+                + "TOEFL = '"
+                + recruiterProfile.getTOEFL() + "', "
+                + "SAT = '"
+                + recruiterProfile.getSAT() + "', "
+                + "IELTS = '"
+                + recruiterProfile.getIelts() + "', "
+                + "TWITTER_HANDLE = '"
+                + recruiterProfile.getTwitterHandle() + "', "
                 + "EMAIL = '"
                 + recruiterProfile.getEmail()
                 + "' WHERE USERNAME='" + username + "'";

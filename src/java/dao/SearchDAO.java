@@ -52,24 +52,15 @@ public class SearchDAO extends AppDBInfoDAO {
 
     public ArrayList<StudentProfile> retrieveStudentSearchResults(StudentSearchCriteria ssc, ArrayList<StudentProfile> studentSearchResults) throws SQLException, ParseException, IOException {
         this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
-        String institutions = ssc.getPreferredInst();
-        float gpa = ssc.getGPA();
+        String institutions = ssc.getPreferredInst();        
         String programs = ssc.getPreferredPrograms();
         String selectQuery = "SELECT * FROM LINKEDU.STUDENT_PROFILE";
         Statement stmt = DBConn.createStatement();
         if (!institutions.equals("")) {
             selectQuery += " WHERE LOWER(PREFERRED_UNIVS) LIKE '%" + institutions.toLowerCase() + "%' ";
-        }
-        if (gpa != 0.0) {
-            if (!institutions.equals("")) {
-                selectQuery += " AND";
-            } else {
-                selectQuery += " where ";
-            }
-            selectQuery += " GPA > = " + ssc.getGPA() + "";
-        }
+        }        
         if (!programs.equals("")) {
-            if (!institutions.equals("") || (gpa != 0.0)) {
+            if (!institutions.equals("")) {
                 selectQuery += " and";
             } else {
                 selectQuery += " where ";

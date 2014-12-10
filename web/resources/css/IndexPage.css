@@ -67,8 +67,9 @@ body{
     background-size: 100%;
     opacity:0.8;
     font-family: sans-serif;
-    font-size: 20px;
-    color:#1a33b5;        
+    font-size: 18px;
+    color:#1a33b5;
+    
 }
 
 #signupFrame{
@@ -124,4 +125,11 @@ button[type="submit"]{
 
 a{
     color:white;
+}
+
+#sponsoredimage{
+    
+   border: 2px solid;
+   border-radius: 25px;
+
 }

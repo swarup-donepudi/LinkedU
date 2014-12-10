@@ -13,20 +13,14 @@ import java.util.List;
  * @author skdonep
  */
 public class StudentSearchCriteria {
-    private float GPA;
+    
     private String preferredPrograms;
     private String preferredInst;
     private String student1;
     private String student2;
     public List watchListNames;
 
-    public float getGPA() {
-        return GPA;
-    }
-
-    public void setGPA(float GPA) {
-        this.GPA = GPA;
-    }
+    
 
     public String getPreferredPrograms() {
         return preferredPrograms;

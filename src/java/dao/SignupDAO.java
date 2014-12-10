@@ -5,12 +5,18 @@
  */
 package dao;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.SignupBean;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -191,6 +197,26 @@ public class SignupDAO extends AppDBInfoDAO {
         // Else, insert failed.
         return rowCount;
 
+    }
+    
+    public ArrayList fetchALlImage() {
+        ArrayList images = new ArrayList();
+        try {
+           this.DBConn = this.openDBConnection(databaseURL, dbUserName, dbPassword);
+            String query = "Select * from LINKEDU.SPONSORED_UNIVERSITIES ";
+            Statement stmt = DBConn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            byte[] file;
+            DefaultStreamedContent allimages = null;
+            while(rs.next()){
+                file = rs.getBytes("IMAGES");
+                allimages = new DefaultStreamedContent(new ByteArrayInputStream(file), "image/jpeg");
+                images.add(allimages);
+            }
+            rs.close();
+        } catch (SQLException ex) {           
+        }
+        return images;
     }
 
 }

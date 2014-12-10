@@ -16,7 +16,7 @@ import java.text.ParseException;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -31,7 +31,7 @@ import model.StudentProfile;
  * @author hgindra
  */
 @ManagedBean(name = "loginController")
-@RequestScoped
+@SessionScoped
 public class LoginController implements Serializable {
 
     @ManagedProperty(value = "#{recruiterController}")
@@ -255,8 +255,6 @@ public class LoginController implements Serializable {
         int count = loginDB.changePasswordLogin(loginBean.getUserName(), loginBean.getPassword());
         if (count == 1) {
             externalContext.redirect("index.xhtml");
-        } else {
-            externalContext.redirect("PlsRetryAgain.xhtml");
         }
 
     }

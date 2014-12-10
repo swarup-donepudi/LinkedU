@@ -9,6 +9,7 @@ package model;
 import java.io.Serializable;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -24,6 +25,8 @@ public class SignupBean implements Serializable {
     char accountType;
     private char acc_status;
     private String verifyString;
+    private DefaultStreamedContent sponsoredImage;
+    
 
     public String getUserName() {
         return userName;
@@ -83,5 +86,19 @@ public class SignupBean implements Serializable {
      */
     public void setVerifyString(String verifyString) {
         this.verifyString = verifyString;
+    }
+
+    /**
+     * @return the sponsoredImage
+     */
+    public DefaultStreamedContent getSponsoredImage() {
+        return sponsoredImage;
+    }
+
+    /**
+     * @param sponsoredImage the sponsoredImage to set
+     */
+    public void setSponsoredImage(DefaultStreamedContent sponsoredImage) {
+        this.sponsoredImage = sponsoredImage;
     }
 }

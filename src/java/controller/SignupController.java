@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -17,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.SignupBean;
+import org.primefaces.model.DefaultStreamedContent;
 
 /**
  *
@@ -34,6 +36,7 @@ public class SignupController implements Serializable {
     private String usernameMsg;
     private boolean duplicateUsername;
     private String emailMsg;
+    private ArrayList<DefaultStreamedContent> allSponsoredImages;
 
     /**
      * Creates a new instance of SignupController
@@ -185,5 +188,27 @@ public class SignupController implements Serializable {
         } else {
             externalContext.redirect("InvalidVerificationLink.xhtml");
         }
+    }
+    
+    public void fetchAllSponsoredImages() throws SQLException{
+        SignupDAO fetch = new SignupDAO();
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(4);
+        this.setAllSponsoredImages(fetch.fetchALlImage());
+        signupBean.setSponsoredImage(this.allSponsoredImages.get(randomInt));
+    }
+
+    /**
+     * @return the allSponsoredImages
+     */
+    public ArrayList<DefaultStreamedContent> getAllSponsoredImages() {
+        return allSponsoredImages;
+    }
+
+    /**
+     * @param allSponsoredImages the allSponsoredImages to set
+     */
+    public void setAllSponsoredImages(ArrayList<DefaultStreamedContent> allSponsoredImages) {
+        this.allSponsoredImages = allSponsoredImages;
     }
 }

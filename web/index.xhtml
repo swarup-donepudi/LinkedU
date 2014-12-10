@@ -161,8 +161,13 @@
         </script>
         <title>LinkedU Login</title>
     </h:head>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{signupController.fetchAllSponsoredImages()}"/>
+    </f:metadata>
     <h:outputStylesheet library="css" name="IndexPage.css"  />
     <h:body>
+        
+        
         <div id="indexHeader">
             <div id="logo"></div><!-- Closing Logo Frame DIV -->
             <div id="loginFrame">
@@ -178,8 +183,13 @@
             </div>
         </div>
         <div id="WelcomeBanner">
+            <h:form id="sponsoredimages" enctype="multipart/form-data">
+            <p:graphicImage id="sponsoredimage" value="#{signupController.signupBean.sponsoredImage}" width="500px" height="350px">
+            </p:graphicImage>
+        </h:form>
             <p><h2>Students find their dream Institution</h2><br/>
                 <h2>Educational Institutions find potential students</h2><br/></p>
+            
         </div>
         <h:form id="signupForm" >
             <table id="signupTable" cellspacing="10">
