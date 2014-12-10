@@ -105,7 +105,7 @@ public class LoginController implements Serializable {
         if (!username.equals("")) {
             String verifyString = this.generateRandonString();
             int count = loginDB.addVerificationDetails(username, verifyString);
-            String link = "http://gfish2.it.ilstu.edu/mananda_Fall14_LinkedU/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
+            String link = "http://gfish2.it.ilstu.edu/mananda_Fall14_LinkedU3/faces/ChangePassword.xhtml?fgetLink=" + verifyString;
             EmailController sendemail = new EmailController();
             sendemail.mail(loginBean.getUserName(), "Change password", this.mailBody(link));
             setErrorMessage("Email Sent");
