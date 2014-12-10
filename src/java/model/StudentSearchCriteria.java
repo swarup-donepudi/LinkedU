@@ -6,8 +6,6 @@
 
 package model;
 
-import dao.RecruiterDAO;
-import java.io.IOException;
 import java.util.List;
 
 /**

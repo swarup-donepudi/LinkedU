@@ -25,7 +25,7 @@
                 <p:selectOneMenu id="student2" value="#{recruiterController.studentSearchCriteria.student2}">
                     <f:selectItems value="#{recruiterController.studentSearchCriteria.watchListNames}" />
                 </p:selectOneMenu><br/><br/>
-                <p:commandButton id="searchButton" action="#{recruiterController.compareStudents}" value="Search">
+                <p:commandButton id="searchButton" action="#{recruiterController.compareStudents}" value="Compare">
                     <f:ajax execute="studentdetails" />
                 </p:commandButton><br /><br />
             </h:form>

@@ -23,7 +23,6 @@ import model.RecruiterProfile;
 import model.StudentProfile;
 import model.StudentSearchCriteria;
 import model.WatchListItem;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
