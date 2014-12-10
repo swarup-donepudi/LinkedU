@@ -6,6 +6,7 @@
 
 package model;
 
+import java.text.DecimalFormat;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
@@ -261,7 +262,8 @@ public class UserProfile {
      * @param gpa the gpa to set
      */
     public void setGpa(double gpa) {
-        this.GPA = gpa;
+        DecimalFormat df = new DecimalFormat("#.##");        
+        this.GPA = Double.parseDouble(df.format(gpa));
     }
 
     /**
@@ -317,7 +319,8 @@ public class UserProfile {
      * @param ielts the ielts to set
      */
     public void setIelts(double ielts) {
-        this.IELTS = ielts;
+        DecimalFormat df = new DecimalFormat("#.##");        
+        this.IELTS = Double.parseDouble(df.format(ielts));       
     }
 
     /**
